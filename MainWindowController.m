@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize personArray, proxy, loginModel;
+@synthesize personArray, proxy, loginModel, searchModel;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -73,11 +73,15 @@
 
 #pragma mark -
 
--(void) didFinishProxyRequest: (XMLRPCRequest *)request {
+-(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response {
     
     if ([[request method] isEqualToString:@"LogIn"]) {
         
         loginModel = [LoginModel initAsSingleton];
+        
+        [loginModel setToken:[[response object] objectForKey:@"token"]];
+        [loginModel setStatus:[[response object] objectForKey:@"status"]];
+        [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
         
         NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
         double byteSizeString = (uint64_t) hash.fileSize;
@@ -92,6 +96,25 @@
         [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
         
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
+
+        searchModel = [SearchModel initAsSingleton];
+        NSDictionary *responseData = [[NSDictionary alloc] init];
+        NSMutableArray *searchModelCollection = [[NSMutableArray alloc] init];
+        
+        responseData = [[response object] objectForKey:@"data"];
+        
+        for (NSString* key in responseData) {
+            
+            [searchModel setMovieName: [responseData valueForKey:@"MovieName"]];
+            [searchModel setZipDownloadLink: [responseData valueForKey:@"zipDownloadLink"]];
+            [searchModel setLanguageName:[responseData valueForKey:@"languageName"]];
+            [searchModel setMovieName:[responseData valueForKey:@"MovieName"]];
+            [searchModel setMovieReleaseName:[responseData valueForKey:@"movieReleaseName"]];
+            [searchModel setIdMovie:[responseData valueForKey:@"idMovie"]];
+            [searchModel setSubActualCD:[responseData valueForKey:@"subActualCD"]];
+            [searchModelCollection addObject:searchModel];
+        }
+
         return;
     }
 }

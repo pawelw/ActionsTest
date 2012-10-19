@@ -15,7 +15,7 @@
 
 @protocol ProxyDelegate
 @optional
--(void) didFinishProxyRequest: (XMLRPCRequest *)request;
+-(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse: (XMLRPCResponse *)response;
 @end
 
 @interface Proxy : NSObject <XMLRPCConnectionDelegate> {

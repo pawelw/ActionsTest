@@ -29,21 +29,15 @@
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
     if ([response isFault]) {
-        NSLog(@"Fault code: %@", [response faultCode]);
+        //NSLog(@"Fault code: %@", [response faultCode]);
         
-        NSLog(@"Fault string: %@", [response faultString]);
+        //NSLog(@"Fault string: %@", [response faultString]);
     } else {
-        NSLog(@"Parsed response: %@", [response object]);
+        //NSLog(@"Parsed response: %@", [response object]);
     }
-    
-    loginModel = [LoginModel initAsSingleton];
-    
-    [loginModel setToken:[[response object] objectForKey:@"token"]];
-    [loginModel setStatus:[[response object] objectForKey:@"status"]];
-    [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
-    
+        
     NSLog(@"%@", [manager activeConnectionIdentifiers]);
-    [delegate didFinishProxyRequest:request]; // Custom delegate
+    [delegate didFinishProxyRequest:request withResponse:response]; // Custom delegate
 }
 
 - (void)request: (XMLRPCRequest *)request didFailWithError: (NSError *)error {

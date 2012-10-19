@@ -9,6 +9,8 @@
 #import "SearchModel.h"
 
 @implementation SearchModel
+@synthesize zipDownloadLink, languageName, movieName, movieReleaseName, idMovie, subActualCD;
+
 static SearchModel* _shared = nil;
 
 + (SearchModel *) initAsSingleton
