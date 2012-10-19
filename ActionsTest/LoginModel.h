@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface LoginModel : NSObject {
     NSString *responseTime;
 	NSString *status;
