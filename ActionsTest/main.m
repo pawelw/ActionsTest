@@ -2,7 +2,7 @@
 //  main.m
 //  ActionsTest
 //
-//  Created by Pawel Witkowski on 19/10/2012.
+//  Created by Pawel Witkowski on 11/10/2012.
 //  Copyright (c) 2012 Pawel Witkowski. All rights reserved.
 //
 
