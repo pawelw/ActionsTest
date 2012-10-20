@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, proxy, loginModel, searchModel;
+@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -116,6 +116,9 @@
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
             
         }
+        
+        [subtitlesTable setEnabled:YES];
+        
         return;
     }
 }
