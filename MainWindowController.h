@@ -20,14 +20,12 @@
     LoginModel *loginModel;
     SearchModel *searchModel;
     VideoHash hash;
-    NSMutableArray *personArray;
+    NSMutableArray *searchModelCollection;
 }
 
-@property(nonatomic, retain) NSMutableArray *personArray;
+@property(nonatomic, retain) NSMutableArray *searchModelCollection;
 @property(nonatomic, retain) Proxy *proxy;
 @property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) SearchModel *searchModel;
-
-- (IBAction)onBrowseClicked:(id)sender;
 
 @end

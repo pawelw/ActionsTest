@@ -13,6 +13,14 @@
 
 static SearchModel* _shared = nil;
 
+-(id) init {
+    if(![super init]) {
+        return nil; // Bail early
+    }
+    return self;
+}
+
+
 + (SearchModel *) initAsSingleton
 {
     @synchronized(self)
@@ -23,6 +31,21 @@ static SearchModel* _shared = nil;
         }
     }
     return _shared;
+}
+
+-(id)copyWithZone:(NSZone *)zone
+{
+    // We'll ignore the zone for now
+    SearchModel *another = [[SearchModel alloc] init];
+    another.movieName = [movieName copyWithZone: zone];
+    another.zipDownloadLink = [zipDownloadLink copyWithZone: zone];
+    another.languageName = [languageName copyWithZone: zone];
+    another.movieName = [movieName copyWithZone: zone];
+    another.movieReleaseName = [movieReleaseName copyWithZone: zone];
+    another.idMovie = [idMovie copyWithZone: zone];
+    another.subActualCD = [subActualCD copyWithZone: zone];
+    
+    return another;
 }
 
 @end

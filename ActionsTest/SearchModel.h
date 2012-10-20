@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SearchModel : NSObject {
+@interface SearchModel : NSObject <NSCopying> {
+    @private
     NSString *zipDownloadLink;
     NSString *languageName;
     NSString *movieName;
@@ -25,5 +26,6 @@
 @property (nonatomic, retain) NSString *subActualCD;
 
 +(SearchModel *)initAsSingleton;
+-(id)copyWithZone:(NSZone *)zone;
 
 @end

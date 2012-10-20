@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize personArray, proxy, loginModel, searchModel;
+@synthesize searchModelCollection, proxy, loginModel, searchModel;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -96,25 +96,26 @@
         [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
         
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
-
-        searchModel = [SearchModel initAsSingleton];
+        
         NSDictionary *responseData = [[NSDictionary alloc] init];
-        NSMutableArray *searchModelCollection = [[NSMutableArray alloc] init];
         
         responseData = [[response object] objectForKey:@"data"];
+        searchModel = [[SearchModel alloc] init];
+        searchModelCollection = [[NSMutableArray alloc] init];
         
         for (NSString* key in responseData) {
             
-            [searchModel setMovieName: [responseData valueForKey:@"MovieName"]];
-            [searchModel setZipDownloadLink: [responseData valueForKey:@"zipDownloadLink"]];
-            [searchModel setLanguageName:[responseData valueForKey:@"languageName"]];
-            [searchModel setMovieName:[responseData valueForKey:@"MovieName"]];
-            [searchModel setMovieReleaseName:[responseData valueForKey:@"movieReleaseName"]];
-            [searchModel setIdMovie:[responseData valueForKey:@"idMovie"]];
-            [searchModel setSubActualCD:[responseData valueForKey:@"subActualCD"]];
-            [searchModelCollection addObject:searchModel];
+            [searchModel setMovieName: [key valueForKey:@"MovieName"]];
+            [searchModel setZipDownloadLink: [key valueForKey:@"ZipDownloadLink"]];
+            [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
+            [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
+            [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
+            [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
+            
+            // Using key setter method to activate delegation of data to NSTableView
+            [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
+            
         }
-
         return;
     }
 }
