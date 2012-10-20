@@ -13,7 +13,7 @@
 #import "OSHashAlgorithm.h"
 #import "OrderedDictionary.h"
 
-@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate> {
+@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
     NSTableView *subtitlesTable;
     NSButton *downloadButton;
@@ -27,7 +27,11 @@
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
 @property(nonatomic, retain) NSMutableArray *searchModelCollection;
 @property(nonatomic, retain) Proxy *proxy;
-@property(nonatomic, retain) NSTableView *subtitlesTable;
+@property(nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
 @property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) SearchModel *searchModel;
+@property (retain) IBOutlet NSArrayController* subsArrayController;
+
+- (IBAction)onBrowseClicked:(id)sender;
+
 @end

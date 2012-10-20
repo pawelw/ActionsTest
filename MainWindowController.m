@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton;
+@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -34,6 +34,7 @@
 {
     NSLog(@"windowDidLoad");
     [super windowDidLoad];
+    subtitlesTable.delegate = self;
     
 }
 
@@ -121,6 +122,20 @@
         
         return;
     }
+}
+
+#pragma mark -
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
+
+    [downloadButton setEnabled:YES];
+    
+    NSTableView *table = [aNotification object];
+    NSInteger selection = table.selectedRow;
+    NSMutableArray* collection = [subsArrayController arrangedObjects];
+    
+    SearchModel *result = [collection objectAtIndex:selection];
+
 }
 
 
