@@ -60,15 +60,15 @@
 		E54702E0162F4A27000756EF /* LoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
 		E54702E2162F4DD9000756EF /* Proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proxy.h; sourceTree = "<group>"; };
 		E54702E3162F4DD9000756EF /* Proxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proxy.m; sourceTree = "<group>"; };
-		E591D5521626D3A900AFEC92 /* ActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E591D5521626D3A900AFEC92 /* Subtitler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Subtitler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E591D5561626D3A900AFEC92 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E591D5591626D3A900AFEC92 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E591D55A1626D3A900AFEC92 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E591D55B1626D3A900AFEC92 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		E591D55E1626D3A900AFEC92 /* ActionsTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ActionsTest-Info.plist"; sourceTree = "<group>"; };
+		E591D55E1626D3A900AFEC92 /* Subtitler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Subtitler-Info.plist"; sourceTree = "<group>"; };
 		E591D5601626D3A900AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E591D5621626D3A900AFEC92 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E591D5641626D3A900AFEC92 /* ActionsTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActionsTest-Prefix.pch"; sourceTree = "<group>"; };
+		E591D5641626D3A900AFEC92 /* Subtitler-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Subtitler-Prefix.pch"; sourceTree = "<group>"; };
 		E591D5661626D3A900AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		E591D5681626D3A900AFEC92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E591D5691626D3A900AFEC92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		E591D5531626D3A900AFEC92 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E591D5521626D3A900AFEC92 /* ActionsTest.app */,
+				E591D5521626D3A900AFEC92 /* Subtitler.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,10 +193,10 @@
 			isa = PBXGroup;
 			children = (
 				E59336811635652C005B0066 /* bg.png */,
-				E591D55E1626D3A900AFEC92 /* ActionsTest-Info.plist */,
+				E591D55E1626D3A900AFEC92 /* Subtitler-Info.plist */,
 				E591D55F1626D3A900AFEC92 /* InfoPlist.strings */,
 				E591D5621626D3A900AFEC92 /* main.m */,
-				E591D5641626D3A900AFEC92 /* ActionsTest-Prefix.pch */,
+				E591D5641626D3A900AFEC92 /* Subtitler-Prefix.pch */,
 				E591D5651626D3A900AFEC92 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
@@ -234,9 +234,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E591D5511626D3A900AFEC92 /* ActionsTest */ = {
+		E591D5511626D3A900AFEC92 /* Subtitler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "ActionsTest" */;
+			buildConfigurationList = E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "Subtitler" */;
 			buildPhases = (
 				E591D54E1626D3A900AFEC92 /* Sources */,
 				E591D54F1626D3A900AFEC92 /* Frameworks */,
@@ -246,9 +246,9 @@
 			);
 			dependencies = (
 			);
-			name = ActionsTest;
+			name = Subtitler;
 			productName = ActionsTest;
-			productReference = E591D5521626D3A900AFEC92 /* ActionsTest.app */;
+			productReference = E591D5521626D3A900AFEC92 /* Subtitler.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -260,7 +260,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Pawel Witkowski";
 			};
-			buildConfigurationList = E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "ActionsTest" */;
+			buildConfigurationList = E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "Subtitler" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -273,7 +273,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E591D5511626D3A900AFEC92 /* ActionsTest */,
+				E591D5511626D3A900AFEC92 /* Subtitler */,
 			);
 		};
 /* End PBXProject section */
@@ -412,9 +412,9 @@
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/SubDownloader-dfhboerosjnircdrvukjfjacabfb/Build/Products/Release\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ActionsTest/ActionsTest-Prefix.pch";
-				INFOPLIST_FILE = "ActionsTest/ActionsTest-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "ActionsTest/Subtitler-Prefix.pch";
+				INFOPLIST_FILE = "ActionsTest/Subtitler-Info.plist";
+				PRODUCT_NAME = Subtitler;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -430,9 +430,9 @@
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/SubDownloader-dfhboerosjnircdrvukjfjacabfb/Build/Products/Release\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ActionsTest/ActionsTest-Prefix.pch";
-				INFOPLIST_FILE = "ActionsTest/ActionsTest-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "ActionsTest/Subtitler-Prefix.pch";
+				INFOPLIST_FILE = "ActionsTest/Subtitler-Info.plist";
+				PRODUCT_NAME = Subtitler;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -440,7 +440,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "ActionsTest" */ = {
+		E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "Subtitler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E591D56E1626D3AA00AFEC92 /* Debug */,
@@ -449,7 +449,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "ActionsTest" */ = {
+		E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "Subtitler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E591D5711626D3AA00AFEC92 /* Debug */,
