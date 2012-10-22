@@ -27,6 +27,7 @@
     VideoHash hash;
     NSMutableArray *searchModelCollection;
     NSString *movieLocalPath;
+    
 }
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
 @property(nonatomic, retain) NSMutableArray *searchModelCollection;

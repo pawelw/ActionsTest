@@ -24,14 +24,11 @@
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
-    //[window setBackgroundColor:[NSColor colorWithPatternImage:[NSImage imageNamed:@"bg.png"]]];
+    
     if (self) {
         // Initialization code here.
         NSLog(@"Setting bg");
         
-        NSImage *bg = [NSImage imageNamed:@"bg.png"];
-        [[window contentView] setWantsLayer:YES];
-        [[window contentView] layer].contents = bg;
     }
     
     return self;

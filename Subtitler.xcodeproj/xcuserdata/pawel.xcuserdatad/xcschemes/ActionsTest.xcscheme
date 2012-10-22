@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-               BuildableName = "ActionsTest.app"
+               BuildableName = "Subtitler.app"
                BlueprintName = "Subtitler"
                ReferencedContainer = "container:Subtitler.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-            BuildableName = "ActionsTest.app"
+            BuildableName = "Subtitler.app"
             BlueprintName = "Subtitler"
             ReferencedContainer = "container:Subtitler.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-            BuildableName = "ActionsTest.app"
+            BuildableName = "Subtitler.app"
             BlueprintName = "Subtitler"
             ReferencedContainer = "container:Subtitler.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-            BuildableName = "ActionsTest.app"
+            BuildableName = "Subtitler.app"
             BlueprintName = "Subtitler"
             ReferencedContainer = "container:Subtitler.xcodeproj">
          </BuildableReference>
