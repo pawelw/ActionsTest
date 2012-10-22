@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "Proxy.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
@@ -21,8 +22,11 @@
     Proxy *proxy;
     LoginModel *loginModel;
     SearchModel *searchModel;
+    SearchModel *selectedSubtitle;
+    NSArray *selectedFilesURLs;
     VideoHash hash;
     NSMutableArray *searchModelCollection;
+    NSString *movieLocalPath;
 }
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
 @property(nonatomic, retain) NSMutableArray *searchModelCollection;
@@ -33,5 +37,6 @@
 @property (retain) IBOutlet NSArrayController* subsArrayController;
 
 - (IBAction)onBrowseClicked:(id)sender;
+- (IBAction)onDownloadClicked:(id)sender;
 
 @end

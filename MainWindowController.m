@@ -18,13 +18,20 @@
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
+    
     return self;
 }
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
+    //[window setBackgroundColor:[NSColor colorWithPatternImage:[NSImage imageNamed:@"bg.png"]]];
     if (self) {
         // Initialization code here.
+        NSLog(@"Setting bg");
+        
+        NSImage *bg = [NSImage imageNamed:@"bg.png"];
+        [[window contentView] setWantsLayer:YES];
+        [[window contentView] layer].contents = bg;
     }
     
     return self;
@@ -35,7 +42,6 @@
     NSLog(@"windowDidLoad");
     [super windowDidLoad];
     subtitlesTable.delegate = self;
-    
 }
 
 // Any ole method
@@ -62,9 +68,14 @@
 }
 
 - (IBAction)onBrowseClicked:(id)sender {
-    NSArray *urls = [self openFiles];
+    selectedFilesURLs = [self openFiles];
     
-    hash = [OSHashAlgorithm hashForURL:[urls lastObject]];
+    if( selectedFilesURLs == nil)
+        return;
+    
+    hash = [OSHashAlgorithm hashForURL:[selectedFilesURLs lastObject]];
+    movieLocalPath = [[selectedFilesURLs lastObject] path];
+    movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
     
     // Init Proxy
     proxy = [[Proxy alloc] init];
@@ -76,6 +87,7 @@
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response {
     
+    NSLog(@"hujek: %@", self);
     if ([[request method] isEqualToString:@"LogIn"]) {
         
         loginModel = [LoginModel initAsSingleton];
@@ -99,7 +111,6 @@
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
         
         NSDictionary *responseData = [[NSDictionary alloc] init];
-        
         responseData = [[response object] objectForKey:@"data"];
         searchModel = [[SearchModel alloc] init];
         searchModelCollection = [[NSMutableArray alloc] init];
@@ -118,9 +129,8 @@
             
         }
         
+        //[[self mutableArrayValueForKey:@"searchModelCollection"] addObjectsFromArray:[temp copy]];
         [subtitlesTable setEnabled:YES];
-        
-        return;
     }
 }
 
@@ -128,15 +138,31 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 
-    [downloadButton setEnabled:YES];
+    NSInteger selection = subtitlesTable.selectedRow;
     
-    NSTableView *table = [aNotification object];
-    NSInteger selection = table.selectedRow;
+    if(selection < 0) {
+        [downloadButton setEnabled:NO];
+        return;
+    } else {
+        [downloadButton setEnabled:YES];
+    }
+    
+    // Select elements from collections of models
     NSMutableArray* collection = [subsArrayController arrangedObjects];
-    
-    SearchModel *result = [collection objectAtIndex:selection];
-
+    selectedSubtitle = [collection objectAtIndex:selection];
 }
 
+- (IBAction)onDownloadClicked:(id)sender {
+    [downloadButton setEnabled:NO];
+    [self saveSubtitles];
+}
+
+- (void) saveSubtitles {
+    NSString* fileToSaveTo = [selectedSubtitle movieReleaseName];
+    NSString* fileURL = [selectedSubtitle zipDownloadLink];
+    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    [data writeToFile:[NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,fileToSaveTo] atomically:YES];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:selectedFilesURLs];
+}
 
 @end
