@@ -22,6 +22,7 @@
 		E54702DD162F45BE000756EF /* XMLRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702C9162F45AE000756EF /* XMLRPCResponse.m */; };
 		E54702E1162F4A27000756EF /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702E0162F4A27000756EF /* LoginModel.m */; };
 		E54702E4162F4DD9000756EF /* Proxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702E3162F4DD9000756EF /* Proxy.m */; };
+		E55105541635AA9300492186 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = E55105531635AA9300492186 /* bg2.png */; };
 		E591D5611626D3A900AFEC92 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E591D55F1626D3A900AFEC92 /* InfoPlist.strings */; };
 		E591D5631626D3A900AFEC92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5621626D3A900AFEC92 /* main.m */; };
 		E591D5671626D3A900AFEC92 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E591D5651626D3A900AFEC92 /* Credits.rtf */; };
@@ -69,6 +70,7 @@
 		E54702E0162F4A27000756EF /* LoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
 		E54702E2162F4DD9000756EF /* Proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proxy.h; sourceTree = "<group>"; };
 		E54702E3162F4DD9000756EF /* Proxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proxy.m; sourceTree = "<group>"; };
+		E55105531635AA9300492186 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
 		E591D5521626D3A900AFEC92 /* Subtitler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Subtitler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E591D5561626D3A900AFEC92 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E591D5591626D3A900AFEC92 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -215,6 +217,7 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E55105531635AA9300492186 /* bg2.png */,
 				E5D169E216359FEF0002848B /* 325.gif */,
 				E5D169DD163597A70002848B /* button_on.png */,
 				E5D169DB163595500002848B /* button.png */,
@@ -337,6 +340,7 @@
 				E5D169DC163595500002848B /* button.png in Resources */,
 				E5D169DE163597A70002848B /* button_on.png in Resources */,
 				E5D169E316359FEF0002848B /* 325.gif in Resources */,
+				E55105541635AA9300492186 /* bg2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
