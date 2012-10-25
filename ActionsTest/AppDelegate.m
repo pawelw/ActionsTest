@@ -11,7 +11,7 @@
 
 @implementation AppDelegate
 
-@synthesize window, preloaderController;
+@synthesize window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -25,10 +25,12 @@
      [mainWindowController showWindow:nil];
 }
 
-- (void)createErrorAlertSheet {
-    NSAlert *myAlert = [NSAlert alertWithMessageText:@"It appears that you have no internet connection" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
-    [myAlert beginSheetModalForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+- (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info {
+    NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
+//    NSAlert *myAlert = [NSAlert alertWithMessageText:@"huj" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
+    [myAlert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
+
 
 
 @end

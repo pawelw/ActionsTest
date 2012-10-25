@@ -29,6 +29,7 @@
     NSString *movieLocalPath;
     BOOL preloaderHidden;
     NSString *preloaderLabel;
+    AppDelegate *appDelegate;
     
 }
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;

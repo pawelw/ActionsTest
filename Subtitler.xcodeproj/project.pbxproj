@@ -42,6 +42,7 @@
 		E5D169E316359FEF0002848B /* 325.gif in Resources */ = {isa = PBXBuildFile; fileRef = E5D169E216359FEF0002848B /* 325.gif */; };
 		E5D74AC1163044EE00FC56E3 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */; };
 		E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */; };
+		E5FD0F1216397F3600B618D4 /* button_download.png in Resources */ = {isa = PBXBuildFile; fileRef = E5FD0F1116397F3600B618D4 /* button_download.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSHashAlgorithm.h; sourceTree = "<group>"; };
 		E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSHashAlgorithm.m; sourceTree = "<group>"; };
+		E5FD0F1116397F3600B618D4 /* button_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_download.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E5FD0F1116397F3600B618D4 /* button_download.png */,
 				E55105531635AA9300492186 /* bg2.png */,
 				E5D169E216359FEF0002848B /* 325.gif */,
 				E5D169DD163597A70002848B /* button_on.png */,
@@ -341,6 +344,7 @@
 				E5D169DE163597A70002848B /* button_on.png in Resources */,
 				E5D169E316359FEF0002848B /* 325.gif in Resources */,
 				E55105541635AA9300492186 /* bg2.png in Resources */,
+				E5FD0F1216397F3600B618D4 /* button_download.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,8 +27,9 @@
     
     if (self) {
         // Initialization code here.
-        NSLog(@"Setting bg");
-        
+        appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
+        subtitlesTable.delegate = self;
+        [self initPreloader];
     }
     
     return self;
@@ -38,10 +39,6 @@
 {
     NSLog(@"windowDidLoad");
     [super windowDidLoad];
-    subtitlesTable.delegate = self;
-    
-    [self initPreloader];
-    
 }
 
 -(void) initPreloader {
@@ -145,11 +142,17 @@
     }
 }
 
+-(void) didFaultProxyRequest {
+    [appDelegate showAlertSheet:@"The Internet connection appears to be offline!" andInfo:@"You must be connected to the internet in order to serach for subtitles on the server."];
+    self.preloaderHidden = YES;
+}
+
 #pragma mark -
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 
     NSInteger selection = subtitlesTable.selectedRow;
+    NSLog(@"SELECTED");
     
     if(selection < 0) {
         [downloadButton setEnabled:NO];

@@ -42,6 +42,7 @@
 
 - (void)request: (XMLRPCRequest *)request didFailWithError: (NSError *)error {
     // Call appDelegation method to pop up "No Internet connection Alert"
+    [delegate didFaultProxyRequest];
 }
 
 - (BOOL)request: (XMLRPCRequest *)request canAuthenticateAgainstProtectionSpace: (NSURLProtectionSpace *)protectionSpace {
