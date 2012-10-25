@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController;
+@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -39,6 +39,14 @@
     NSLog(@"windowDidLoad");
     [super windowDidLoad];
     subtitlesTable.delegate = self;
+    
+    [self initPreloader];
+    
+}
+
+-(void) initPreloader {
+    self.preloaderHidden = YES;
+    self.preloadeLabel = @"Connecting with server...";
 }
 
 // Any ole method
@@ -78,13 +86,17 @@
     proxy = [[Proxy alloc] init];
     [proxy setDelegate:self];
     [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
+    
+    // show preloader
+    self.preloaderHidden = NO;
 }
 
 #pragma mark -
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response {
     
-    NSLog(@"hujek: %@", self);
+    self.preloadeLabel = @"Searching for subtitles...";
+    
     if ([[request method] isEqualToString:@"LogIn"]) {
         
         loginModel = [LoginModel initAsSingleton];
@@ -106,6 +118,8 @@
         [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
         
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
+        
+        self.preloaderHidden = YES;
         
         NSDictionary *responseData = [[NSDictionary alloc] init];
         responseData = [[response object] objectForKey:@"data"];
@@ -152,6 +166,7 @@
 - (IBAction)onDownloadClicked:(id)sender {
     [downloadButton setEnabled:NO];
     [self saveSubtitles];
+    self.preloadeLabel = @"Downloading subtitles...";
 }
 
 - (void) saveSubtitles {

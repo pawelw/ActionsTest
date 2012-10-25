@@ -7,15 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 @class MainWindowController;
+@class PreloaderViewController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
 
 @private
     MainWindowController *mainWindowController;
+    PreloaderViewController *preloaderController;
 }
 
 @property (assign) IBOutlet NSWindow *window;
+@property (retain) PreloaderViewController *preloaderController;
 
 - (void)createErrorAlertSheet;
 

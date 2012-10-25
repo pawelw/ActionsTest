@@ -27,6 +27,8 @@
     VideoHash hash;
     NSMutableArray *searchModelCollection;
     NSString *movieLocalPath;
+    BOOL preloaderHidden;
+    NSString *preloaderLabel;
     
 }
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
@@ -36,6 +38,8 @@
 @property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) SearchModel *searchModel;
 @property (retain) IBOutlet NSArrayController* subsArrayController;
+@property (nonatomic, retain) NSString *preloadeLabel;
+@property BOOL preloaderHidden;
 
 - (IBAction)onBrowseClicked:(id)sender;
 - (IBAction)onDownloadClicked:(id)sender;

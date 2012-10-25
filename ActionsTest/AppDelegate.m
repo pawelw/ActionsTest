@@ -11,7 +11,7 @@
 
 @implementation AppDelegate
 
-@synthesize window;
+@synthesize window, preloaderController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
