@@ -18,12 +18,12 @@
     NSString *subActualCD;
 }
 
-@property (nonatomic, retain) NSString *zipDownloadLink;
-@property (nonatomic, retain) NSString *languageName;
-@property (nonatomic, retain) NSString *movieName;
-@property (nonatomic, retain) NSString *movieReleaseName;
-@property (nonatomic, retain) NSString *idMovie;
-@property (nonatomic, retain) NSString *subActualCD;
+@property (readwrite, copy) NSString *zipDownloadLink;
+@property (readwrite, copy) NSString *languageName;
+@property (readwrite, copy) NSString *movieName;
+@property (readwrite, copy) NSString *movieReleaseName;
+@property (readwrite, copy) NSString *idMovie;
+@property (readwrite, copy) NSString *subActualCD;
 
 +(SearchModel *)initAsSingleton;
 -(id)copyWithZone:(NSZone *)zone;

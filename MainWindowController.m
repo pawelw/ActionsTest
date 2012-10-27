@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel;
+@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -30,6 +30,9 @@
         appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         subtitlesTable.delegate = self;
         [self initPreloader];
+        
+        nameSorters = [NSArray arrayWithObject:
+                      [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
     }
     
     return self;
@@ -51,6 +54,7 @@
 {
     // Create a File Open Dialog class.
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
     
     // Set array of file types
     NSArray *fileTypesArray;
@@ -58,6 +62,7 @@
     
     // Enable options in the dialog.
     [openDlg setCanChooseFiles:YES];
+    [openDlg setDirectoryURL:movieDirectory];
     [openDlg setAllowedFileTypes:fileTypesArray];
     [openDlg setAllowsMultipleSelection:TRUE];
     
@@ -152,7 +157,6 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 
     NSInteger selection = subtitlesTable.selectedRow;
-    NSLog(@"SELECTED");
     
     if(selection < 0) {
         [downloadButton setEnabled:NO];
@@ -166,18 +170,31 @@
     selectedSubtitle = [collection objectAtIndex:selection];
 }
 
+- (void)tableView:(NSTableView *)tableView
+sortDescriptorsDidChange:(NSArray *)oldDescriptors
+{
+    NSLog(@"sorting was clicked");
+    NSArray *newDescriptors = [tableView sortDescriptors];
+    [searchModelCollection sortUsingDescriptors:newDescriptors];
+    [tableView reloadData];
+}
+
 - (IBAction)onDownloadClicked:(id)sender {
     [downloadButton setEnabled:NO];
-    [self saveSubtitles];
     self.preloadeLabel = @"Downloading subtitles...";
+    
+    [self saveSubtitles];
+    
 }
 
 - (void) saveSubtitles {
+    
     NSString* fileToSaveTo = [selectedSubtitle movieReleaseName];
     NSString* fileURL = [selectedSubtitle zipDownloadLink];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
     [data writeToFile:[NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,fileToSaveTo] atomically:YES];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:selectedFilesURLs];
+    self.preloaderHidden = YES;
 }
 
 @end

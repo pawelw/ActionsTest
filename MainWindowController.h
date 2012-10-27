@@ -17,6 +17,8 @@
 @interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
     NSTableView *subtitlesTable;
+    
+    
     NSButton *downloadButton;
     // Proxy class is responsible for all Webservices calls
     Proxy *proxy;
@@ -36,6 +38,7 @@
 @property(nonatomic, retain) NSMutableArray *searchModelCollection;
 @property(nonatomic, retain) Proxy *proxy;
 @property(nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
+@property (assign) NSArray *nameSorters;
 @property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) SearchModel *searchModel;
 @property (retain) IBOutlet NSArrayController* subsArrayController;

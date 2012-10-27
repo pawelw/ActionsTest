@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E505D84E163C2AD9001132FB /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E505D84D163C2AD9001132FB /* icon.icns */; };
 		E52CD906162856FE007DD062 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D5591626D3A900AFEC92 /* AppKit.framework */; };
 		E52CD90716285705007DD062 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55A1626D3A900AFEC92 /* CoreData.framework */; };
 		E52CD9081628570A007DD062 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55B1626D3A900AFEC92 /* Foundation.framework */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E505D84D163C2AD9001132FB /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		E53678F216317EFF004E45E2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../MainWindow.xib; sourceTree = "<group>"; };
 		E54702B6162F45AE000756EF /* NSData+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E54702B7162F45AE000756EF /* NSData+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		E591D5471626D3A900AFEC92 = {
 			isa = PBXGroup;
 			children = (
+				E505D84D163C2AD9001132FB /* icon.icns */,
 				E5347BD2162F297000639873 /* XMLRPC */,
 				E591D55C1626D3A900AFEC92 /* ActionsTest */,
 				E591D5551626D3A900AFEC92 /* Frameworks */,
@@ -345,6 +348,7 @@
 				E5D169E316359FEF0002848B /* 325.gif in Resources */,
 				E55105541635AA9300492186 /* bg2.png in Resources */,
 				E5FD0F1216397F3600B618D4 /* button_download.png in Resources */,
+				E505D84E163C2AD9001132FB /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +480,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ActionsTest/Subtitler-Prefix.pch";
 				INFOPLIST_FILE = "ActionsTest/Subtitler-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = Subtitler;
 				WRAPPER_EXTENSION = app;
 			};
@@ -494,6 +499,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ActionsTest/Subtitler-Prefix.pch";
 				INFOPLIST_FILE = "ActionsTest/Subtitler-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = Subtitler;
 				WRAPPER_EXTENSION = app;
 			};
