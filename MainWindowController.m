@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, proxy, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters;
+@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -33,6 +33,12 @@
         
         nameSorters = [NSArray arrayWithObject:
                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
+        
+        // Add notification center observer for drop file view
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
+        //NSLog(@"Registered with notification center");
+    
     }
     
     return self;
@@ -48,6 +54,17 @@
     self.preloaderHidden = YES;
     self.preloadeLabel = @"Connecting with server...";
 }
+
+#pragma mark - notification center methods
+
+-(void) loginNotificationReceived: (id) object {
+    NSLog(@"OBJECT: %@", object);
+    DropView *dropView = [object valueForKey:@"object"];
+    NSLog(@"OBJECT: %@", dropView.fileURL);
+    [self initLoginCall:dropView.fileURL];
+}
+
+#pragma mark - general class methods
 
 // Any ole method
 -(NSArray *) openFiles
@@ -80,7 +97,12 @@
     if( selectedFilesURLs == nil)
         return;
     
-    hash = [OSHashAlgorithm hashForURL:[selectedFilesURLs lastObject]];
+    [self initLoginCall:[selectedFilesURLs lastObject]];
+}
+
+-(void) initLoginCall: (NSURL *) url {
+    
+    hash = [OSHashAlgorithm hashForURL:url];
     movieLocalPath = [[selectedFilesURLs lastObject] path];
     movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
     
@@ -93,7 +115,26 @@
     self.preloaderHidden = NO;
 }
 
-#pragma mark -
+
+- (IBAction)onDownloadClicked:(id)sender {
+    [downloadButton setEnabled:NO];
+    self.preloadeLabel = @"Downloading subtitles...";
+    
+    [self saveSubtitles];
+    
+}
+
+- (void) saveSubtitles {
+    
+    NSString* fileToSaveTo = [selectedSubtitle movieReleaseName];
+    NSString* fileURL = [selectedSubtitle zipDownloadLink];
+    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    [data writeToFile:[NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,fileToSaveTo] atomically:YES];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:selectedFilesURLs];
+    self.preloaderHidden = YES;
+}
+
+#pragma mark - proxy protocol methods
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response {
     
@@ -152,7 +193,7 @@
     self.preloaderHidden = YES;
 }
 
-#pragma mark -
+#pragma mark - tableView protocol methods
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 
@@ -168,33 +209,19 @@
     // Select elements from collections of models
     NSMutableArray* collection = [subsArrayController arrangedObjects];
     selectedSubtitle = [collection objectAtIndex:selection];
+    
+   // [[self valueForKey:@"selectedSubtitle"] setValue:[collection objectAtIndex:selection]];
+   // [selectedSubtitle setValue:[collection objectAtIndex:selection]];
 }
 
-- (void)tableView:(NSTableView *)tableView
-sortDescriptorsDidChange:(NSArray *)oldDescriptors
-{
-    NSLog(@"sorting was clicked");
-    NSArray *newDescriptors = [tableView sortDescriptors];
-    [searchModelCollection sortUsingDescriptors:newDescriptors];
-    [tableView reloadData];
-}
+//- (void)tableView:(NSTableView *)tableView
+//sortDescriptorsDidChange:(NSArray *)oldDescriptors
+//{
+//    NSLog(@"sorting was clicked");
+//    NSArray *newDescriptors = [tableView sortDescriptors];
+//    [searchModelCollection sortUsingDescriptors:newDescriptors];
+//    [tableView reloadData];
+//}
 
-- (IBAction)onDownloadClicked:(id)sender {
-    [downloadButton setEnabled:NO];
-    self.preloadeLabel = @"Downloading subtitles...";
-    
-    [self saveSubtitles];
-    
-}
-
-- (void) saveSubtitles {
-    
-    NSString* fileToSaveTo = [selectedSubtitle movieReleaseName];
-    NSString* fileURL = [selectedSubtitle zipDownloadLink];
-    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-    [data writeToFile:[NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,fileToSaveTo] atomically:YES];
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:selectedFilesURLs];
-    self.preloaderHidden = YES;
-}
 
 @end

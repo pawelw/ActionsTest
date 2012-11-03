@@ -13,6 +13,7 @@
 #import "SearchModel.h"
 #import "OSHashAlgorithm.h"
 #import "OrderedDictionary.h"
+#import "DropView.h"
 
 @interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
@@ -33,19 +34,21 @@
     NSString *preloaderLabel;
     AppDelegate *appDelegate;
     
+    
 }
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
 @property(nonatomic, retain) NSMutableArray *searchModelCollection;
-@property(nonatomic, retain) Proxy *proxy;
 @property(nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
 @property (assign) NSArray *nameSorters;
 @property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) SearchModel *searchModel;
+@property(nonatomic, retain) SearchModel *selectedSubtitle;
 @property (retain) IBOutlet NSArrayController* subsArrayController;
 @property (nonatomic, retain) NSString *preloadeLabel;
 @property BOOL preloaderHidden;
 
 - (IBAction)onBrowseClicked:(id)sender;
 - (IBAction)onDownloadClicked:(id)sender;
+- (void) initLoginCall: (NSURL *) url;
 
 @end

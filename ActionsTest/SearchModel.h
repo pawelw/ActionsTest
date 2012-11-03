@@ -20,7 +20,7 @@
 
 @property (readwrite, copy) NSString *zipDownloadLink;
 @property (readwrite, copy) NSString *languageName;
-@property (readwrite, copy) NSString *movieName;
+@property (nonatomic, retain) NSString *movieName;
 @property (readwrite, copy) NSString *movieReleaseName;
 @property (readwrite, copy) NSString *idMovie;
 @property (readwrite, copy) NSString *subActualCD;
