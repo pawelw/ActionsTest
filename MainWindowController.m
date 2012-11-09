@@ -152,13 +152,13 @@
 }
 
 
-- (IBAction)onDownloadClicked:(id)sender
-{
-    [downloadButton setEnabled:NO];
-    self.preloadeLabel = @"Downloading subtitles...";
-    
-    [self saveSubtitles];
-}
+//- (IBAction)onDownloadClicked:(id)sender
+//{
+//    [downloadButton setEnabled:NO];
+//    self.preloadeLabel = @"Downloading subtitles...";
+//    
+//    [self saveSubtitles];
+//}
 
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
@@ -166,8 +166,14 @@
     NSInteger row = [subtitlesTable rowForView:sender];
     NSLog(@"%@", [NSNumber numberWithInteger:row]);
     
+    
     self.preloadeLabel = @"Downloading subtitles...";
     self.preloaderHidden = NO;
+    
+    // Select elements from collections of models
+    NSMutableArray* collection = [subsArrayController arrangedObjects];
+    selectedSubtitle = [collection objectAtIndex:row];
+    //[[self valueForKey:@"selectedSubtitle"] setValue:[collection objectAtIndex:row]];
     
     [self saveSubtitles];
 }

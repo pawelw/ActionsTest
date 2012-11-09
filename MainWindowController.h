@@ -42,7 +42,6 @@
     AppDelegate *appDelegate;
 }
 
-@property (unsafe_unretained) IBOutlet NSButton *inlineDownloadButton;
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
 @property (nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
 @property (nonatomic, retain) IBOutlet NSScrollView *scrollTableView;
@@ -60,8 +59,8 @@
 @property BOOL isExpanded;
 
 - (IBAction)onBrowseClicked:(id)sender;
-- (IBAction)onDownloadClicked:(id)sender;
-- (IBAction)onInlineDownloadClicked:(id)sender;
+//- (IBAction)onDownloadClicked:(id)sender;
+- (IBAction)onInlineDownloadClicked:(id)sender; // this is connected via code not interface builder
 
 - (void) initLoginCall: (NSURL *) url;
 
