@@ -12,9 +12,11 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
 
-@private
-    MainWindowController *mainWindowController;
+
+MainWindowController *mainWindowController;
 }
+
+@property(nonatomic, retain) MainWindowController *mainWindowController;
 
 - (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info;
 

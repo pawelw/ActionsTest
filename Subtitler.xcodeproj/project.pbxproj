@@ -32,6 +32,9 @@
 		E591D56A1626D3A900AFEC92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5691626D3A900AFEC92 /* AppDelegate.m */; };
 		E591D56D1626D3AA00AFEC92 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E591D56B1626D3AA00AFEC92 /* MainMenu.xib */; };
 		E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C93E164C948400B5B3D7 /* download_green.png */; };
+		E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */; };
+		E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C964164D332C00B5B3D7 /* download_green_2.png */; };
+		E5A2C967164D3A1400B5B3D7 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C966164D3A1400B5B3D7 /* gradient.png */; };
 		E5AC9312162F6E29001F39E0 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC9311162F6E29001F39E0 /* SearchModel.m */; };
 		E5C21E461630BBE8006D125B /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C21E451630BBE8006D125B /* MainWindowController.m */; };
 		E5D169C51635810D0002848B /* SubsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D169C41635810D0002848B /* SubsArrayController.m */; };
@@ -90,6 +93,10 @@
 		E591D5691626D3A900AFEC92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E591D56C1626D3AA00AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E5A2C93E164C948400B5B3D7 /* download_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_green.png; sourceTree = "<group>"; };
+		E5A2C95D164CA01700B5B3D7 /* SubsTableRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsTableRow.h; sourceTree = "<group>"; };
+		E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsTableRow.m; sourceTree = "<group>"; };
+		E5A2C964164D332C00B5B3D7 /* download_green_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_green_2.png; sourceTree = "<group>"; };
+		E5A2C966164D3A1400B5B3D7 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
 		E5AC9310162F6E29001F39E0 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
 		E5AC9311162F6E29001F39E0 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
 		E5C21E441630BBE8006D125B /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindowController.h; path = ../MainWindowController.h; sourceTree = "<group>"; };
@@ -215,6 +222,8 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E5A2C966164D3A1400B5B3D7 /* gradient.png */,
+				E5A2C964164D332C00B5B3D7 /* download_green_2.png */,
 				E5A2C93E164C948400B5B3D7 /* download_green.png */,
 				E565FE4C16457096006D34FC /* drop.png */,
 				E5FD0F1116397F3600B618D4 /* button_download.png */,
@@ -251,6 +260,8 @@
 				E591D56B1626D3AA00AFEC92 /* MainMenu.xib */,
 				E539012416449B160095B36C /* DropView.h */,
 				E539012516449B160095B36C /* DropView.m */,
+				E5A2C95D164CA01700B5B3D7 /* SubsTableRow.h */,
+				E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -334,6 +345,8 @@
 				E505D84E163C2AD9001132FB /* icon.icns in Resources */,
 				E565FE4D16457096006D34FC /* drop.png in Resources */,
 				E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */,
+				E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */,
+				E5A2C967164D3A1400B5B3D7 /* gradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +376,7 @@
 				E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */,
 				E5D169C51635810D0002848B /* SubsArrayController.m in Sources */,
 				E539012616449B160095B36C /* DropView.m in Sources */,
+				E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

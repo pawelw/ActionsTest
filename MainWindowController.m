@@ -33,7 +33,9 @@
         [self initPreloader];
         
         // Seting YES as default because window is expanded in xib file when app starts
-        isExpanded = YES; 
+        isExpanded = YES;
+        
+        //[window setFrame:[] display:<#(BOOL)#>]
         
         nameSorters = [NSArray arrayWithObject:
                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
@@ -43,6 +45,32 @@
         [nc addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
     }
     
+    
+    
+    
+    //// DUMMY DATA
+    
+    searchModel = [[SearchModel alloc] init];
+    searchModelCollection = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<10; i++) {
+        
+        [searchModel setMovieName: @"MovieName"];
+        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
+        [searchModel setLanguageName: @"LanguageName"];
+        [searchModel setMovieReleaseName: @"MovieReleaseName"];
+        [searchModel setIdMovie:@"IdMovie"];
+        [searchModel setSubActualCD:@"SubActualCD"];
+        
+        // Using key setter method to activate delegation of data to NSTableView
+        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
+    }
+
+    
+    
+    
+    ///////////
+    
     return self;
 }
 
@@ -50,6 +78,7 @@
 {
     [super windowDidLoad];
     [scrollTableView setHidden:YES];
+    [subtitlesTable setRowHeight:33];
     [self contractWindow];
     
 }
@@ -140,15 +169,18 @@
     selectedSubtitle = [collection objectAtIndex:row];
     
     self.preloadeLabel = @"Downloading subtitles...";
+    self.preloaderHidden = NO;
+    
     [self saveSubtitles];
 }
 
 - (void) saveSubtitles
 {    
-    NSString* fileToSaveTo = [selectedSubtitle movieReleaseName];
     NSString* fileURL = [selectedSubtitle zipDownloadLink];
+    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,[selectedSubtitle movieReleaseName]];
+    
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-    [data writeToFile:[NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,fileToSaveTo] atomically:YES];
+    [data writeToFile:pathWithName atomically:YES];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:selectedFilesURLs];
     self.preloaderHidden = YES;
 }
@@ -240,12 +272,18 @@
     // Make sure that table is shown
     [scrollTableView setHidden:NO];
     
-    float tableWidth = 602;
+    float tableWidth = 552;
     NSRect frame = [self.window frame];
     
     // Check if is not expanded already
     if(!isExpanded) {
         frame.size.width += tableWidth;
+        
+        if((frame.origin.x -= 200) > 10)
+            frame.origin.x -= 200;
+        else
+            frame.origin.x = 10;
+        
         isExpanded = YES;
     }
     
