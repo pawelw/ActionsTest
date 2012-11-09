@@ -33,7 +33,7 @@
         
         //NSLog(@"Fault string: %@", [response faultString]);
     } else {
-        //NSLog(@"Parsed response: %@", [response object]);
+        NSLog(@"Parsed response: %@", [response object]);
     }
         
     NSLog(@"%@", [manager activeConnectionIdentifiers]);

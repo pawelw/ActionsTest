@@ -50,25 +50,21 @@
     
     //// DUMMY DATA
     
-    searchModel = [[SearchModel alloc] init];
-    searchModelCollection = [[NSMutableArray alloc] init];
-    
-    for (int i=0; i<10; i++) {
-        
-        [searchModel setMovieName: @"MovieName"];
-        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
-        [searchModel setLanguageName: @"LanguageName"];
-        [searchModel setMovieReleaseName: @"MovieReleaseName"];
-        [searchModel setIdMovie:@"IdMovie"];
-        [searchModel setSubActualCD:@"SubActualCD"];
-        
-        // Using key setter method to activate delegation of data to NSTableView
-        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
-    }
-
-    
-    
-    
+//    searchModel = [[SearchModel alloc] init];
+//    searchModelCollection = [[NSMutableArray alloc] init];
+//    
+//    for (int i=0; i<10; i++) {
+//        
+//        [searchModel setMovieName: @"MovieName"];
+//        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
+//        [searchModel setLanguageName: @"LanguageName"];
+//        [searchModel setMovieReleaseName: @"MovieReleaseName"];
+//        [searchModel setIdMovie:@"IdMovie"];
+//        [searchModel setSubActualCD:@"SubActualCD"];
+//        
+//        // Using key setter method to activate delegation of data to NSTableView
+//        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
+//    }
     ///////////
     
     return self;
@@ -93,7 +89,12 @@
 -(void) loginNotificationReceived: (id) object
 {    
     DropView *dropView = [object valueForKey:@"object"];
+    
+    movieLocalPath = [dropView.fileURL path];
+    NSLog(@"movieLocalPath: %@", [dropView.fileURL path]);
+    selectedFilesURLs = [[NSArray alloc] initWithObjects:dropView.fileURL, nil];
     [self initLoginCall:dropView.fileURL];
+    
 }
 
 #pragma mark - general class methods
@@ -126,19 +127,19 @@
 
 - (IBAction)onBrowseClicked:(id)sender
 {
-    [self expandWindow];
     selectedFilesURLs = [self openFiles];
     
     if( selectedFilesURLs == nil)
         return;
-    
+    NSLog(@"movieLocalPath: %@", [[selectedFilesURLs lastObject] path]);
+    movieLocalPath = [[selectedFilesURLs lastObject] path];
     [self initLoginCall:[selectedFilesURLs lastObject]];
+    
 }
 
 -(void) initLoginCall: (NSURL *) url
 {    
     hash = [OSHashAlgorithm hashForURL:url];
-    movieLocalPath = [[selectedFilesURLs lastObject] path];
     movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
     
     // Init Proxy
@@ -165,9 +166,6 @@
     NSInteger row = [subtitlesTable rowForView:sender];
     NSLog(@"%@", [NSNumber numberWithInteger:row]);
     
-    NSMutableArray* collection = [subsArrayController arrangedObjects];
-    selectedSubtitle = [collection objectAtIndex:row];
-    
     self.preloadeLabel = @"Downloading subtitles...";
     self.preloaderHidden = NO;
     
@@ -175,7 +173,7 @@
 }
 
 - (void) saveSubtitles
-{    
+{
     NSString* fileURL = [selectedSubtitle zipDownloadLink];
     NSString *pathWithName = [NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,[selectedSubtitle movieReleaseName]];
     
@@ -233,8 +231,10 @@
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
         }
         
+        NSLog(@"%@", [[searchModelCollection objectAtIndex:1] movieName]);
         [self expandWindow];
         [subtitlesTable setEnabled:YES];
+
     }
 }
 
@@ -279,7 +279,7 @@
     if(!isExpanded) {
         frame.size.width += tableWidth;
         
-        if((frame.origin.x -= 200) > 10)
+        if((frame.origin.x -= 200) > 210)
             frame.origin.x -= 200;
         else
             frame.origin.x = 10;

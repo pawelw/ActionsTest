@@ -14,6 +14,7 @@
     BOOL mouseInside;
     NSTrackingArea *trackingArea;
     NSButton* pushButton;
+    NSTimer *timer;
     
     AppDelegate *appDelegate;
 }

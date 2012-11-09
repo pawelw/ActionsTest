@@ -40,16 +40,26 @@
     if (mouseInside != value) {
         mouseInside = value;
         
-        [pushButton setHidden:!value];
+        if(!value)
+            [self hideDownloadButton];
+        else
+            timer = [NSTimer scheduledTimerWithTimeInterval: .15 target: self selector: @selector(showDownloadButton) userInfo: nil repeats: NO];
         [self setNeedsDisplay:YES];
     }
 }
 
-- (BOOL)mouseInside {
+-(void) hideDownloadButton
+{
+    [timer invalidate];
+    [pushButton setHidden:YES];
+}
 
-//    pushButton.target = self;
-//    pushButton.action = @selector(reloadDocument:);
-//    [pushButton performClick:self];
+-(void) showDownloadButton
+{
+    [pushButton setHidden:NO];
+}
+
+- (BOOL)mouseInside {
     return mouseInside;
 }
 

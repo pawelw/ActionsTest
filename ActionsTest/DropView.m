@@ -75,19 +75,9 @@
     NSArray* fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
     if ( fileNames.count < 1 ) return NO;
     for ( NSString* file in fileNames ) {
-        //CBPhoto* newItem = [CBPhoto photoInDefaultContext];
-        //newItem.filePath = file;
-        NSLog(@"file: %@", file);
-        //id url = [NSURL URLWithString:@"http://cocoabook.com/test.png"];
-        fileURL = [NSURL URLWithString:file];
-        
+        fileURL = [NSURL URLFromPasteboard:pasteboard];
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc postNotificationName:@"logIn" object:self];
-    
-        
-        // Send notification to the MainWindowController to call a method initLoginCall:url
-        
-        //hash = [OSHashAlgorithm hashForURL:url];
     }
     NSLog(@"Pasteboard: %@", pasteboard);
 //    if(![self readFromPasteboard:pb]) {
