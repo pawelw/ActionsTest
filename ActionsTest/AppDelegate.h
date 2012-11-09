@@ -16,8 +16,6 @@
     MainWindowController *mainWindowController;
 }
 
-@property (assign) IBOutlet NSWindow *window;
-
 - (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info;
 
 @end

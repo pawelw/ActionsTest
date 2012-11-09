@@ -31,6 +31,7 @@
 		E591D5671626D3A900AFEC92 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E591D5651626D3A900AFEC92 /* Credits.rtf */; };
 		E591D56A1626D3A900AFEC92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5691626D3A900AFEC92 /* AppDelegate.m */; };
 		E591D56D1626D3AA00AFEC92 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E591D56B1626D3AA00AFEC92 /* MainMenu.xib */; };
+		E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C93E164C948400B5B3D7 /* download_green.png */; };
 		E5AC9312162F6E29001F39E0 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC9311162F6E29001F39E0 /* SearchModel.m */; };
 		E5C21E461630BBE8006D125B /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C21E451630BBE8006D125B /* MainWindowController.m */; };
 		E5D169C51635810D0002848B /* SubsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D169C41635810D0002848B /* SubsArrayController.m */; };
@@ -88,6 +89,7 @@
 		E591D5681626D3A900AFEC92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E591D5691626D3A900AFEC92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E591D56C1626D3AA00AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E5A2C93E164C948400B5B3D7 /* download_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_green.png; sourceTree = "<group>"; };
 		E5AC9310162F6E29001F39E0 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
 		E5AC9311162F6E29001F39E0 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
 		E5C21E441630BBE8006D125B /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindowController.h; path = ../MainWindowController.h; sourceTree = "<group>"; };
@@ -206,8 +208,6 @@
 				E591D5681626D3A900AFEC92 /* AppDelegate.h */,
 				E591D5691626D3A900AFEC92 /* AppDelegate.m */,
 				E591D55D1626D3A900AFEC92 /* Supporting Files */,
-				E54702E2162F4DD9000756EF /* Proxy.h */,
-				E54702E3162F4DD9000756EF /* Proxy.m */,
 			);
 			path = ActionsTest;
 			sourceTree = "<group>";
@@ -215,6 +215,7 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E5A2C93E164C948400B5B3D7 /* download_green.png */,
 				E565FE4C16457096006D34FC /* drop.png */,
 				E5FD0F1116397F3600B618D4 /* button_download.png */,
 				E55105531635AA9300492186 /* bg2.png */,
@@ -257,6 +258,8 @@
 		E5EC0AA41630548500FD2D0B /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				E54702E2162F4DD9000756EF /* Proxy.h */,
+				E54702E3162F4DD9000756EF /* Proxy.m */,
 				E5D74ABD1630434900FC56E3 /* OrderedDictionary.h */,
 				E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */,
 				E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */,
@@ -330,6 +333,7 @@
 				E5FD0F1216397F3600B618D4 /* button_download.png in Resources */,
 				E505D84E163C2AD9001132FB /* icon.icns in Resources */,
 				E565FE4D16457096006D34FC /* drop.png in Resources */,
+				E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

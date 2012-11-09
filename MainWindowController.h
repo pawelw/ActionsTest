@@ -17,38 +17,52 @@
 
 @interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
+    // Outlets
+    NSScrollView *scrollTableView;
     NSTableView *subtitlesTable;
-    
-    
     NSButton *downloadButton;
-    // Proxy class is responsible for all Webservices calls
-    Proxy *proxy;
+    
+    // Models
     LoginModel *loginModel;
     SearchModel *searchModel;
     SearchModel *selectedSubtitle;
+    
+    // Cocoa Objects
     NSArray *selectedFilesURLs;
-    VideoHash hash;
     NSMutableArray *searchModelCollection;
     NSString *movieLocalPath;
-    BOOL preloaderHidden;
     NSString *preloaderLabel;
+    
+    // Bool 
+    BOOL preloaderHidden;
+    
+    // Classes
+    Proxy *proxy;
+    VideoHash hash;
     AppDelegate *appDelegate;
-    
-    
 }
+
+@property (unsafe_unretained) IBOutlet NSButton *inlineDownloadButton;
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
-@property(nonatomic, retain) NSMutableArray *searchModelCollection;
-@property(nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
-@property (assign) NSArray *nameSorters;
-@property(nonatomic, retain) LoginModel *loginModel;
-@property(nonatomic, retain) SearchModel *searchModel;
-@property(nonatomic, retain) SearchModel *selectedSubtitle;
-@property (retain) IBOutlet NSArrayController* subsArrayController;
+@property (nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
+@property (nonatomic, retain) IBOutlet NSScrollView *scrollTableView;
+@property (nonatomic, retain) IBOutlet NSArrayController* subsArrayController;
+
+@property (nonatomic, retain) NSMutableArray *searchModelCollection;
+@property (nonatomic, retain) NSArray *nameSorters;
 @property (nonatomic, retain) NSString *preloadeLabel;
+
+@property (nonatomic, retain) LoginModel *loginModel;
+@property (nonatomic, retain) SearchModel *searchModel;
+@property (nonatomic, retain) SearchModel *selectedSubtitle;
+
 @property BOOL preloaderHidden;
+@property BOOL isExpanded;
 
 - (IBAction)onBrowseClicked:(id)sender;
 - (IBAction)onDownloadClicked:(id)sender;
+- (IBAction)onInlineDownloadClicked:(id)sender;
+
 - (void) initLoginCall: (NSURL *) url;
 
 @end

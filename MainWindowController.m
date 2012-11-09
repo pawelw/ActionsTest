@@ -14,13 +14,14 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle;
+@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle, scrollTableView, isExpanded;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
-    
+        
     return self;
 }
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
@@ -31,14 +32,15 @@
         subtitlesTable.delegate = self;
         [self initPreloader];
         
+        // Seting YES as default because window is expanded in xib file when app starts
+        isExpanded = YES; 
+        
         nameSorters = [NSArray arrayWithObject:
                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
         
         // Add notification center observer for drop file view
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
-        //NSLog(@"Registered with notification center");
-    
     }
     
     return self;
@@ -46,8 +48,10 @@
 
 - (void)windowDidLoad
 {
-    NSLog(@"windowDidLoad");
     [super windowDidLoad];
+    [scrollTableView setHidden:YES];
+    [self contractWindow];
+    
 }
 
 -(void) initPreloader {
@@ -57,10 +61,9 @@
 
 #pragma mark - notification center methods
 
--(void) loginNotificationReceived: (id) object {
-    NSLog(@"OBJECT: %@", object);
+-(void) loginNotificationReceived: (id) object
+{    
     DropView *dropView = [object valueForKey:@"object"];
-    NSLog(@"OBJECT: %@", dropView.fileURL);
     [self initLoginCall:dropView.fileURL];
 }
 
@@ -75,7 +78,7 @@
     
     // Set array of file types
     NSArray *fileTypesArray;
-    fileTypesArray = [NSArray arrayWithObjects:@"mov", @"avi", @"mpg", @"mp4", nil];
+    fileTypesArray = [NSArray arrayWithObjects:@"mov", @"avi", @"mpg", @"mpeg", @"mp4", @"wmv", @"rmvb", @"mkv", @"asf", @"divx", nil];
     
     // Enable options in the dialog.
     [openDlg setCanChooseFiles:YES];
@@ -91,7 +94,10 @@
     return nil;
 }
 
-- (IBAction)onBrowseClicked:(id)sender {
+
+- (IBAction)onBrowseClicked:(id)sender
+{
+    [self expandWindow];
     selectedFilesURLs = [self openFiles];
     
     if( selectedFilesURLs == nil)
@@ -100,8 +106,8 @@
     [self initLoginCall:[selectedFilesURLs lastObject]];
 }
 
--(void) initLoginCall: (NSURL *) url {
-    
+-(void) initLoginCall: (NSURL *) url
+{    
     hash = [OSHashAlgorithm hashForURL:url];
     movieLocalPath = [[selectedFilesURLs lastObject] path];
     movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
@@ -116,16 +122,29 @@
 }
 
 
-- (IBAction)onDownloadClicked:(id)sender {
+- (IBAction)onDownloadClicked:(id)sender
+{
     [downloadButton setEnabled:NO];
     self.preloadeLabel = @"Downloading subtitles...";
     
     [self saveSubtitles];
-    
 }
 
-- (void) saveSubtitles {
+- (IBAction)onInlineDownloadClicked:(id)sender
+{
+    // Find out what row it was in and edit that color with the popup
+    NSInteger row = [subtitlesTable rowForView:sender];
+    NSLog(@"%@", [NSNumber numberWithInteger:row]);
     
+    NSMutableArray* collection = [subsArrayController arrangedObjects];
+    selectedSubtitle = [collection objectAtIndex:row];
+    
+    self.preloadeLabel = @"Downloading subtitles...";
+    [self saveSubtitles];
+}
+
+- (void) saveSubtitles
+{    
     NSString* fileToSaveTo = [selectedSubtitle movieReleaseName];
     NSString* fileURL = [selectedSubtitle zipDownloadLink];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
@@ -136,8 +155,8 @@
 
 #pragma mark - proxy protocol methods
 
--(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response {
-    
+-(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response
+{    
     self.preloadeLabel = @"Searching for subtitles...";
     
     if ([[request method] isEqualToString:@"LogIn"]) {
@@ -180,15 +199,15 @@
             
             // Using key setter method to activate delegation of data to NSTableView
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
-            
         }
         
-        //[[self mutableArrayValueForKey:@"searchModelCollection"] addObjectsFromArray:[temp copy]];
+        [self expandWindow];
         [subtitlesTable setEnabled:YES];
     }
 }
 
--(void) didFaultProxyRequest {
+-(void) didFaultProxyRequest
+{
     [appDelegate showAlertSheet:@"The Internet connection appears to be offline!" andInfo:@"You must be connected to the internet in order to serach for subtitles on the server."];
     self.preloaderHidden = YES;
 }
@@ -214,14 +233,41 @@
    // [selectedSubtitle setValue:[collection objectAtIndex:selection]];
 }
 
-//- (void)tableView:(NSTableView *)tableView
-//sortDescriptorsDidChange:(NSArray *)oldDescriptors
-//{
-//    NSLog(@"sorting was clicked");
-//    NSArray *newDescriptors = [tableView sortDescriptors];
-//    [searchModelCollection sortUsingDescriptors:newDescriptors];
-//    [tableView reloadData];
-//}
+#pragma mark - window sizing
 
+-(NSWindow *) expandWindow {
+    
+    // Make sure that table is shown
+    [scrollTableView setHidden:NO];
+    
+    float tableWidth = 602;
+    NSRect frame = [self.window frame];
+    
+    // Check if is not expanded already
+    if(!isExpanded) {
+        frame.size.width += tableWidth;
+        isExpanded = YES;
+    }
+    
+    [self.window setFrame: frame display:YES animate:YES];
+    
+    return self.window;
+}
+
+-(NSWindow *) contractWindow {
+    //[appDelegate expandWindow];
+    float tableWidth = 602;
+    NSRect frame = [self.window frame];
+    
+    // Check if window is expanded
+    if(isExpanded) {
+        frame.size.width -= tableWidth;
+        isExpanded = NO;
+    }
+    
+    [self.window setFrame: frame display:YES animate:NO];
+    
+    return self.window;
+}
 
 @end

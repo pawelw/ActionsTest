@@ -17,9 +17,9 @@
     
     if (self) {
         // Initialization code here.
-        bgColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
-        borderColor = [NSColor colorWithCalibratedWhite:0.3 alpha:1.0];
-        [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, NSFilenamesPboardType,  nil]];
+        bgColor = [NSColor colorWithCalibratedWhite:0.05 alpha:1.0];
+        borderColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+        [self registerForDraggedTypes:[NSArray arrayWithObjects: NSFilenamesPboardType,  nil]];
         //[self registerForDraggedTypes:[NSArray arrayWithObject:NSPasteboardTypeString]];
     }
     
@@ -29,32 +29,22 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    
-
-    
-    
     NSRect bounds = [self bounds];
-    
-
+    NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:8 yRadius:8];
+    [bgColor set];
+    [path fill];
     
     // Draw gradient background if highlighted if (highlighted) {
     if (highlighted) {
-       // NSGradient *gr;
-       // gr = [[NSGradient alloc] initWithStartingColor:[NSColor blackColor] endingColor:bgColor];
-       // [gr drawInRect:bounds relativeCenterPosition:NSZeroPoint];
-        CGFloat insetX = NSWidth (bounds);
-        CGFloat insetY = NSHeight (bounds);
-        NSRect imageRect = NSInsetRect ( bounds, insetX, insetY );
         
         [self.borderColor set];
-        NSBezierPath* imageFrame = [NSBezierPath bezierPathWithRect:imageRect];
-        imageFrame.lineWidth = 4;
-        [imageFrame stroke];
+        path.lineWidth = 4;
+        [path stroke];
         
     } else {
-        //[bgColor set];
-        //[NSBezierPath fillRect:bounds];
+
     }
+
 }
 
 #pragma mark Dragging Destination
@@ -112,35 +102,4 @@
     [self setNeedsDisplay:YES];
 }
 
-//- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender {
-//    NSPasteboard *pboard;
-//    NSDragOperation sourceDragMask;
-//    
-//    sourceDragMask = [sender draggingSourceOperationMask];
-//    pboard = [sender draggingPasteboard];
-//    
-//    NSLog(@"Dragging entered");
-//    
-//    if ( [[pboard types] containsObject:NSColorPboardType] ) {
-//        if (sourceDragMask & NSDragOperationGeneric) {
-//            return NSDragOperationGeneric;
-//        }
-//    }
-//    if ( [[pboard types] containsObject:NSFilenamesPboardType] ) {
-//        if (sourceDragMask & NSDragOperationLink) {
-//            return NSDragOperationLink;
-//        } else if (sourceDragMask & NSDragOperationCopy) {
-//            return NSDragOperationCopy;
-//        }
-//    }
-//    return NSDragOperationNone;
-//}
-//
-//- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
-//    NSPasteboard *pboard;
-//    
-//    pboard = [sender draggingPasteboard];
-//    
-//    return YES;
-//}
 @end

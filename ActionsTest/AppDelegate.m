@@ -11,11 +11,10 @@
 
 @implementation AppDelegate
 
-@synthesize window;
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+
 }
 
 -(void) awakeFromNib {
@@ -25,10 +24,11 @@
      [mainWindowController showWindow:nil];
 }
 
+
 - (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info {
     NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
 //    NSAlert *myAlert = [NSAlert alertWithMessageText:@"huj" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
-    [myAlert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+    [myAlert beginSheetModalForWindow:mainWindowController.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
 
