@@ -28,6 +28,7 @@
     SearchModel *selectedSubtitle;
     
     // Cocoa Objects
+    NSMutableArray *tempArray;
     NSArray *selectedFilesURLs;
     NSMutableArray *searchModelCollection;
     NSString *movieLocalPath;
@@ -47,6 +48,7 @@
 @property (nonatomic, retain) IBOutlet NSScrollView *scrollTableView;
 @property (nonatomic, retain) IBOutlet NSArrayController* subsArrayController;
 
+@property (nonatomic, retain) NSMutableArray *tempArray;
 @property (nonatomic, retain) NSMutableArray *searchModelCollection;
 @property (nonatomic, retain) NSArray *nameSorters;
 @property (nonatomic, retain) NSString *preloadeLabel;

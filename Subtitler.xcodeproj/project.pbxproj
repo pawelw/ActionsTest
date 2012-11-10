@@ -37,7 +37,6 @@
 		E5A2C967164D3A1400B5B3D7 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C966164D3A1400B5B3D7 /* gradient.png */; };
 		E5AC9312162F6E29001F39E0 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC9311162F6E29001F39E0 /* SearchModel.m */; };
 		E5C21E461630BBE8006D125B /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C21E451630BBE8006D125B /* MainWindowController.m */; };
-		E5D169C51635810D0002848B /* SubsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D169C41635810D0002848B /* SubsArrayController.m */; };
 		E5D169D8163590400002848B /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E5D169D7163590400002848B /* bg.png */; };
 		E5D169DA163593880002848B /* button_170x59.png in Resources */ = {isa = PBXBuildFile; fileRef = E5D169D9163593880002848B /* button_170x59.png */; };
 		E5D169DC163595500002848B /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = E5D169DB163595500002848B /* button.png */; };
@@ -101,8 +100,6 @@
 		E5AC9311162F6E29001F39E0 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
 		E5C21E441630BBE8006D125B /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindowController.h; path = ../MainWindowController.h; sourceTree = "<group>"; };
 		E5C21E451630BBE8006D125B /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainWindowController.m; path = ../MainWindowController.m; sourceTree = "<group>"; };
-		E5D169C31635810D0002848B /* SubsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsArrayController.h; sourceTree = "<group>"; };
-		E5D169C41635810D0002848B /* SubsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsArrayController.m; sourceTree = "<group>"; };
 		E5D169D7163590400002848B /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		E5D169D9163593880002848B /* button_170x59.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_170x59.png; sourceTree = "<group>"; };
 		E5D169DB163595500002848B /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
@@ -247,8 +244,6 @@
 			children = (
 				E5C21E441630BBE8006D125B /* MainWindowController.h */,
 				E5C21E451630BBE8006D125B /* MainWindowController.m */,
-				E5D169C31635810D0002848B /* SubsArrayController.h */,
-				E5D169C41635810D0002848B /* SubsArrayController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -374,7 +369,6 @@
 				E54702E4162F4DD9000756EF /* Proxy.m in Sources */,
 				E5AC9312162F6E29001F39E0 /* SearchModel.m in Sources */,
 				E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */,
-				E5D169C51635810D0002848B /* SubsArrayController.m in Sources */,
 				E539012616449B160095B36C /* DropView.m in Sources */,
 				E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */,
 			);

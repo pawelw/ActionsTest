@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle, scrollTableView, isExpanded;
+@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle, scrollTableView, isExpanded, tempArray;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -45,27 +45,22 @@
         [nc addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
     }
     
-    
-    
-    
     //// DUMMY DATA
-    
+//    tempArray = [[NSMutableArray alloc] init];
 //    searchModel = [[SearchModel alloc] init];
 //    searchModelCollection = [[NSMutableArray alloc] init];
 //    
-//    for (int i=0; i<10; i++) {
+//    for (int i=0; i<15; i++) {
 //        
 //        [searchModel setMovieName: @"MovieName"];
 //        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
 //        [searchModel setLanguageName: @"LanguageName"];
-//        [searchModel setMovieReleaseName: @"MovieReleaseName"];
+//        [searchModel setMovieReleaseName: @"MovieReleaseName_xxx"];
 //        [searchModel setIdMovie:@"IdMovie"];
 //        [searchModel setSubActualCD:@"SubActualCD"];
 //        
-//        // Using key setter method to activate delegation of data to NSTableView
 //        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
 //    }
-    ///////////
     
     return self;
 }
@@ -237,7 +232,7 @@
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
         }
         
-        NSLog(@"%@", [[searchModelCollection objectAtIndex:1] movieName]);
+        NSLog(@"%@", [[searchModelCollection objectAtIndex:1] valueForKey:@"movieReleaseName"]);
         [self expandWindow];
         [subtitlesTable setEnabled:YES];
 
@@ -254,18 +249,18 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
 
-    NSInteger selection = subtitlesTable.selectedRow;
-    
-    if(selection < 0) {
-        [downloadButton setEnabled:NO];
-        return;
-    } else {
-        [downloadButton setEnabled:YES];
-    }
-    
-    // Select elements from collections of models
-    NSMutableArray* collection = [subsArrayController arrangedObjects];
-    selectedSubtitle = [collection objectAtIndex:selection];
+//    NSInteger selection = subtitlesTable.selectedRow;
+//    
+//    if(selection < 0) {
+//        [downloadButton setEnabled:NO];
+//        return;
+//    } else {
+//        [downloadButton setEnabled:YES];
+//    }
+//    
+//    // Select elements from collections of models
+//    NSMutableArray* collection = [subsArrayController arrangedObjects];
+//    selectedSubtitle = [collection objectAtIndex:selection];
     
    // [[self valueForKey:@"selectedSubtitle"] setValue:[collection objectAtIndex:selection]];
    // [selectedSubtitle setValue:[collection objectAtIndex:selection]];
