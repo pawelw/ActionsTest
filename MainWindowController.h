@@ -7,13 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Foundation/Foundation.h>
 #import "Proxy.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
 #import "OSHashAlgorithm.h"
 #import "OrderedDictionary.h"
 #import "DropView.h"
+#import "SubsTableRow.h"
+#import "NSData+GZIP.h"
 
 @interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
@@ -32,10 +33,13 @@
     NSArray *selectedFilesURLs;
     NSMutableArray *searchModelCollection;
     NSString *movieLocalPath;
+    NSURL *movieLocalURL;
     NSString *preloaderLabel;
+    NSMutableData * zippedSubsData;
     
     // Bool 
     BOOL preloaderHidden;
+    BOOL isConnected;
     
     // Classes
     Proxy *proxy;
@@ -52,6 +56,7 @@
 @property (nonatomic, retain) NSMutableArray *searchModelCollection;
 @property (nonatomic, retain) NSArray *nameSorters;
 @property (nonatomic, retain) NSString *preloadeLabel;
+@property (nonatomic, retain) NSMutableData *zippedSubsData;
 
 @property (nonatomic, retain) LoginModel *loginModel;
 @property (nonatomic, retain) SearchModel *searchModel;
@@ -59,11 +64,12 @@
 
 @property BOOL preloaderHidden;
 @property BOOL isExpanded;
+@property BOOL isConnected;
 
 - (IBAction)onBrowseClicked:(id)sender;
 //- (IBAction)onDownloadClicked:(id)sender;
 - (IBAction)onInlineDownloadClicked:(id)sender; // this is connected via code not interface builder
 
-- (void) initLoginCall: (NSURL *) url;
+- (void) initLoginCall;
 
 @end

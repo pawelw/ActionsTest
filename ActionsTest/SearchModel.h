@@ -11,6 +11,8 @@
 @interface SearchModel : NSObject <NSCopying> {
 
     NSString *zipDownloadLink;
+    NSString *subDownloadLink;
+    NSString *subFileName;
     NSString *languageName;
     NSString *movieName;
     NSString *movieReleaseName;
@@ -19,6 +21,8 @@
 }
 
 @property (copy) NSString *zipDownloadLink;
+@property (copy) NSString *subDownloadLink;
+@property (copy) NSString *subFileName;
 @property (copy) NSString *languageName;
 @property (copy) NSString *movieName;
 @property (copy) NSString *movieReleaseName;

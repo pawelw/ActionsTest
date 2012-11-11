@@ -14,7 +14,7 @@
 
 @implementation MainWindowController
 
-@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle, scrollTableView, isExpanded, tempArray;
+@synthesize searchModelCollection, loginModel, searchModel, subtitlesTable, downloadButton, subsArrayController, preloaderHidden, preloadeLabel, nameSorters, selectedSubtitle, scrollTableView, isExpanded, tempArray, isConnected, zippedSubsData;
 
 - (id)init {
     self = [super initWithWindowNibName:@"MainWindow"];
@@ -86,9 +86,9 @@
     DropView *dropView = [object valueForKey:@"object"];
     
     movieLocalPath = [dropView.fileURL path];
-    NSLog(@"movieLocalPath: %@", [dropView.fileURL path]);
+    movieLocalURL = dropView.fileURL;
     selectedFilesURLs = [[NSArray alloc] initWithObjects:dropView.fileURL, nil];
-    [self initLoginCall:dropView.fileURL];
+    self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
     
 }
 
@@ -126,24 +126,42 @@
     
     if( selectedFilesURLs == nil)
         return;
-    NSLog(@"movieLocalPath: %@", [[selectedFilesURLs lastObject] path]);
     movieLocalPath = [[selectedFilesURLs lastObject] path];
-    [self initLoginCall:[selectedFilesURLs lastObject]];
+    movieLocalURL = [selectedFilesURLs lastObject];
     
+    self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
 }
 
--(void) initLoginCall: (NSURL *) url
-{    
-    hash = [OSHashAlgorithm hashForURL:url];
-    movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
-    
+-(void) initLoginCall
+{        
     // Init Proxy
     proxy = [[Proxy alloc] init];
     [proxy setDelegate:self];
     [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
     
     // show preloader
+    self.preloadeLabel = @"Connecting with server...";
     self.preloaderHidden = NO;
+}
+
+-(void) initSearchCall: (NSURL *) url
+{
+    hash = [OSHashAlgorithm hashForURL:url];
+    movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
+    NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
+    double byteSizeString = (uint64_t) hash.fileSize;
+    
+    OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
+    [dict setObject:@"" forKey:@"sublanguageid"];
+    [dict setObject:hashString forKey:@"moviehash"];
+    [dict setObject:[NSNumber numberWithDouble:byteSizeString] forKey:@"moviebytesize"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:dict, nil];
+    
+    self.preloadeLabel = @"Searching for subtitles...";
+    self.preloaderHidden = NO;
+    
+    [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
 }
 
 
@@ -164,6 +182,7 @@
     
     self.preloadeLabel = @"Downloading subtitles...";
     self.preloaderHidden = NO;
+    [self.subtitlesTable setEnabled:NO];
     
     // Select elements from collections of models
     NSMutableArray* collection = [subsArrayController arrangedObjects];
@@ -175,21 +194,27 @@
 
 - (void) saveSubtitles
 {
-    NSString* fileURL = [selectedSubtitle zipDownloadLink];
-    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@.zip",movieLocalPath ,[selectedSubtitle movieReleaseName]];
-    
-    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-    [data writeToFile:pathWithName atomically:YES];
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:selectedFilesURLs];
+    NSURL* url = [NSURL URLWithString:[selectedSubtitle subDownloadLink]];
+    [proxy downloadDataFromURL:url];
+}
+
+-(void) fileDownloadFinishedWithData:(NSMutableData *)data
+{
+    NSData *uncompressedData = [data gunzippedData];
     self.preloaderHidden = YES;
+    [self.subtitlesTable setEnabled:YES];   
+    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@",movieLocalPath ,[selectedSubtitle subFileName]];
+    [uncompressedData writeToFile:pathWithName atomically:YES];
+    
+    NSArray *urls = [NSArray arrayWithObjects:[NSURL URLWithString:pathWithName], nil];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
 }
 
 #pragma mark - proxy protocol methods
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response
 {    
-    self.preloadeLabel = @"Searching for subtitles...";
-    
+
     if ([[request method] isEqualToString:@"LogIn"]) {
         
         loginModel = [LoginModel initAsSingleton];
@@ -198,24 +223,25 @@
         [loginModel setStatus:[[response object] objectForKey:@"status"]];
         [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
         
-        NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
-        double byteSizeString = (uint64_t) hash.fileSize;
-        
-        OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
-        [dict setObject:@"" forKey:@"sublanguageid"];
-        [dict setObject:hashString forKey:@"moviehash"];
-        [dict setObject:[NSNumber numberWithDouble:byteSizeString] forKey:@"moviebytesize"];
-        
-        NSArray *arguments = [NSArray arrayWithObjects:dict, nil];
-        
-        [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
+        self.isConnected = YES;
+        [self initSearchCall:movieLocalURL];
         
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
         
         self.preloaderHidden = YES;
+        NSLog(@"Search Finished");
         
         NSDictionary *responseData = [[NSDictionary alloc] init];
         responseData = [[response object] objectForKey:@"data"];
+        
+        // TODO check for empty data
+//        NSLog(@"%@", responseData);
+//        
+//        if ([responseData isEqualTo:@"0"] ) {
+//
+//            return;
+//        }
+        
         searchModel = [[SearchModel alloc] init];
         searchModelCollection = [[NSMutableArray alloc] init];
         
@@ -223,6 +249,8 @@
             
             [searchModel setMovieName: [key valueForKey:@"MovieName"]];
             [searchModel setZipDownloadLink: [key valueForKey:@"ZipDownloadLink"]];
+            [searchModel setSubDownloadLink: [key valueForKey:@"SubDownloadLink"]];
+            [searchModel setSubFileName: [key valueForKey:@"SubFileName"]];
             [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
             [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
             [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
@@ -231,9 +259,8 @@
             // Using key setter method to activate delegation of data to NSTableView
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
         }
-        
-        NSLog(@"%@", [[searchModelCollection objectAtIndex:1] valueForKey:@"movieReleaseName"]);
-        [self expandWindow];
+    
+        if (!self.isExpanded) [self expandWindow];   
         [subtitlesTable setEnabled:YES];
 
     }
