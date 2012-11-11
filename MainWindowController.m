@@ -206,7 +206,7 @@
     NSString *pathWithName = [NSString stringWithFormat:@"%@/%@",movieLocalPath ,[selectedSubtitle subFileName]];
     [uncompressedData writeToFile:pathWithName atomically:YES];
     
-    NSArray *urls = [NSArray arrayWithObjects:[NSURL URLWithString:pathWithName], nil];
+    NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
 }
 
