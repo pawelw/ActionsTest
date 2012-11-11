@@ -89,7 +89,6 @@
     movieLocalURL = dropView.fileURL;
     selectedFilesURLs = [[NSArray alloc] initWithObjects:dropView.fileURL, nil];
     self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
-    
 }
 
 #pragma mark - general class methods
@@ -164,22 +163,11 @@
     [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
 }
 
-
-//- (IBAction)onDownloadClicked:(id)sender
-//{
-//    [downloadButton setEnabled:NO];
-//    self.preloadeLabel = @"Downloading subtitles...";
-//    
-//    [self saveSubtitles];
-//}
-
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
     // Find out what row it was in and edit that color with the popup
     NSInteger row = [subtitlesTable rowForView:sender];
-    NSLog(@"%@", [NSNumber numberWithInteger:row]);
-    
-    
+
     self.preloadeLabel = @"Downloading subtitles...";
     self.preloaderHidden = NO;
     [self.subtitlesTable setEnabled:NO];
@@ -187,7 +175,6 @@
     // Select elements from collections of models
     NSMutableArray* collection = [subsArrayController arrangedObjects];
     selectedSubtitle = [collection objectAtIndex:row];
-    //[[self valueForKey:@"selectedSubtitle"] setValue:[collection objectAtIndex:row]];
     
     [self saveSubtitles];
 }
@@ -229,18 +216,9 @@
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
         
         self.preloaderHidden = YES;
-        NSLog(@"Search Finished");
         
         NSDictionary *responseData = [[NSDictionary alloc] init];
         responseData = [[response object] objectForKey:@"data"];
-        
-        // TODO check for empty data
-//        NSLog(@"%@", responseData);
-//        
-//        if ([responseData isEqualTo:@"0"] ) {
-//
-//            return;
-//        }
         
         searchModel = [[SearchModel alloc] init];
         searchModelCollection = [[NSMutableArray alloc] init];
@@ -274,23 +252,9 @@
 
 #pragma mark - tableView protocol methods
 
-- (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
 
-//    NSInteger selection = subtitlesTable.selectedRow;
-//    
-//    if(selection < 0) {
-//        [downloadButton setEnabled:NO];
-//        return;
-//    } else {
-//        [downloadButton setEnabled:YES];
-//    }
-//    
-//    // Select elements from collections of models
-//    NSMutableArray* collection = [subsArrayController arrangedObjects];
-//    selectedSubtitle = [collection objectAtIndex:selection];
-    
-   // [[self valueForKey:@"selectedSubtitle"] setValue:[collection objectAtIndex:selection]];
-   // [selectedSubtitle setValue:[collection objectAtIndex:selection]];
 }
 
 #pragma mark - window sizing

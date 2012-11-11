@@ -51,12 +51,15 @@
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    NSLog(@"draggingEntered:");
     if ([sender draggingSource] == self) {
         return NSDragOperationNone;
     }
     highlighted = YES;
     [self setNeedsDisplay:YES]; return NSDragOperationCopy;
+    
+    
+    //return [QTMovie canInitWithPasteboard:[sender draggingPasteboard]] ? NSDragOperationCopy : NSDragOperationNone;
+
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender {
@@ -66,6 +69,29 @@
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender {
      NSLog(@"preparing to draging operation:");
+    NSArray *files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    
+    if ([files count] == 1) {
+        NSString *filepath = [files lastObject];
+        if ([[filepath pathExtension] isEqualToString:@"mov"] ||
+            [[filepath pathExtension] isEqualToString:@"avi"] ||
+            [[filepath pathExtension] isEqualToString:@"mpg"] ||
+            [[filepath pathExtension] isEqualToString:@"mpeg"] ||
+            [[filepath pathExtension] isEqualToString:@"mp4"] ||
+            [[filepath pathExtension] isEqualToString:@"wmv"] ||
+            [[filepath pathExtension] isEqualToString:@"rmvb"] ||
+            [[filepath pathExtension] isEqualToString:@"asf"] ||
+            [[filepath pathExtension] isEqualToString:@"divx"] ||
+            [[filepath pathExtension] isEqualToString:@"mkv"])
+        {
+            return YES;
+        } else {
+            highlighted = NO;
+            [self setNeedsDisplay:YES];
+            return NO;
+        }
+    } 
+    
     return YES;
 }
 
