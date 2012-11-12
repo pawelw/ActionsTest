@@ -278,9 +278,10 @@
 												<bytes key="NSRGB">MC45MjUyMjkyNzk5IDAuOTI1MjI5Mjc5OSAwLjkyNTIyOTI3OTkAA</bytes>
 											</object>
 											<double key="NSRowHeight">122</double>
-											<int key="NSTvFlags">-1027604480</int>
+											<int key="NSTvFlags">-499122176</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
+											<int key="NSGridStyleMask">2</int>
 											<int key="NSColumnAutoresizingStyle">4</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -1403,7 +1404,7 @@
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="58830101">
+							<object class="IBNSLayoutConstraint" id="937130564">
 								<reference key="firstItem" ref="792025045"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
@@ -2368,7 +2369,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1986</int>
-						<reference key="object" ref="58830101"/>
+						<reference key="object" ref="937130564"/>
 						<reference key="parent" ref="135834327"/>
 					</object>
 				</array>
@@ -2517,7 +2518,7 @@
 					<reference ref="532175348"/>
 					<reference ref="671423880"/>
 					<reference ref="746371377"/>
-					<reference ref="58830101"/>
+					<reference ref="937130564"/>
 					<reference ref="1047009243"/>
 					<reference ref="488925029"/>
 					<reference ref="75833634"/>

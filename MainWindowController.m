@@ -219,6 +219,16 @@
         
         NSDictionary *responseData = [[NSDictionary alloc] init];
         responseData = [[response object] objectForKey:@"data"];
+        NSLog(@"%@", responseData);
+        
+        NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
+        
+        if ([dataAsString isEqualToString:@"0"]) {
+            [appDelegate showAlertSheet:@"Subtitles not found!" andInfo:@"There is no subtitle file for this movie on the server."];
+            return;
+        } else {
+            dataAsString = nil;
+        }
         
         searchModel = [[SearchModel alloc] init];
         searchModelCollection = [[NSMutableArray alloc] init];
