@@ -18,6 +18,7 @@
     Proxy *proxy;
     NSURL *fileURL;
     NSColor* borderColor;
+    NSNotificationCenter *notificationCenter;
 }
 
 @property(nonatomic, retain) NSURL *fileURL;

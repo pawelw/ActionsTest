@@ -15,6 +15,7 @@
 #import "DropView.h"
 #import "SubsTableRow.h"
 #import "NSData+GZIP.h"
+#import "DisablerView.h"
 
 @interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
@@ -36,21 +37,25 @@
     NSURL *movieLocalURL;
     NSString *preloaderLabel;
     NSMutableData * zippedSubsData;
+    NSNotificationCenter *notificationCenter;
     
     // Bool 
     BOOL preloaderHidden;
     BOOL isConnected;
+    BOOL isExpanded;
     
     // Classes
     Proxy *proxy;
     VideoHash hash;
     AppDelegate *appDelegate;
+    DisablerView *disablerView;
 }
 
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
 @property (nonatomic, retain) IBOutlet NSTableView *subtitlesTable;
 @property (nonatomic, retain) IBOutlet NSScrollView *scrollTableView;
 @property (nonatomic, retain) IBOutlet NSArrayController* subsArrayController;
+@property (nonatomic, retain) IBOutlet NSButton *expandButton;
 
 @property (nonatomic, retain) NSMutableArray *tempArray;
 @property (nonatomic, retain) NSMutableArray *searchModelCollection;
@@ -69,6 +74,7 @@
 - (IBAction)onBrowseClicked:(id)sender;
 //- (IBAction)onDownloadClicked:(id)sender;
 - (IBAction)onInlineDownloadClicked:(id)sender; // this is connected via code not interface builder
+- (IBAction)onExpandButtonClicked:(id)sender;
 
 - (void) initLoginCall;
 

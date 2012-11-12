@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E505D84E163C2AD9001132FB /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E505D84D163C2AD9001132FB /* icon.icns */; };
+		E508899B165163FA004835C3 /* DisablerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E508899A165163FA004835C3 /* DisablerView.m */; };
 		E52CD906162856FE007DD062 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D5591626D3A900AFEC92 /* AppKit.framework */; };
 		E52CD90716285705007DD062 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55A1626D3A900AFEC92 /* CoreData.framework */; };
 		E52CD9081628570A007DD062 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55B1626D3A900AFEC92 /* Foundation.framework */; };
@@ -51,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		E505D84D163C2AD9001132FB /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		E5088999165163FA004835C3 /* DisablerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisablerView.h; sourceTree = "<group>"; };
+		E508899A165163FA004835C3 /* DisablerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisablerView.m; sourceTree = "<group>"; };
 		E53678F216317EFF004E45E2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../MainWindow.xib; sourceTree = "<group>"; };
 		E539012416449B160095B36C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		E539012516449B160095B36C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 				E539012516449B160095B36C /* DropView.m */,
 				E5A2C95D164CA01700B5B3D7 /* SubsTableRow.h */,
 				E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */,
+				E5088999165163FA004835C3 /* DisablerView.h */,
+				E508899A165163FA004835C3 /* DisablerView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -381,6 +386,7 @@
 				E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */,
 				E539012616449B160095B36C /* DropView.m in Sources */,
 				E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */,
+				E508899B165163FA004835C3 /* DisablerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

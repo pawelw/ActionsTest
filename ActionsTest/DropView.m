@@ -20,7 +20,9 @@
         bgColor = [NSColor colorWithCalibratedWhite:0.05 alpha:1.0];
         borderColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
         [self registerForDraggedTypes:[NSArray arrayWithObjects: NSFilenamesPboardType,  nil]];
-        //[self registerForDraggedTypes:[NSArray arrayWithObject:NSPasteboardTypeString]];
+
+        // NT
+        notificationCenter = [NSNotificationCenter defaultCenter];
     }
     
     return self;
@@ -102,8 +104,7 @@
     if ( fileNames.count < 1 ) return NO;
     for ( NSString* file in fileNames ) {
         fileURL = [NSURL URLFromPasteboard:pasteboard];
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc postNotificationName:@"logIn" object:self];
+        [notificationCenter postNotificationName:@"logIn" object:self];
     }
     NSLog(@"Pasteboard: %@", pasteboard);
 //    if(![self readFromPasteboard:pb]) {

@@ -7,6 +7,7 @@
 //
 
 #import "MainWindowController.h"
+#import "DisablerView.h"
 
 @interface MainWindowController ()
 
@@ -41,8 +42,8 @@
                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
         
         // Add notification center observer for drop file view
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
+        notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
     }
     
     //// DUMMY DATA
@@ -68,14 +69,21 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    [scrollTableView setHidden:YES];
     [subtitlesTable setRowHeight:33];
-    [self contractWindow];
+    [self.expandButton setHidden:YES];
+    //[disablerView show];
+    //[
     
+    // Init Disable View
+    NSRect viewFrame = [scrollTableView bounds];
+    disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
+    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
+    
+    [self contractWindowWithAnimation:NO];
 }
 
 -(void) initPreloader {
-    self.preloaderHidden = YES;
+    [self setPreloaderHidden:YES];
     self.preloadeLabel = @"Connecting with server...";
 }
 
@@ -131,6 +139,11 @@
     self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
 }
 
+- (IBAction)onExpandButtonClicked:(id)sender
+{
+    isExpanded ? [self contractWindowWithAnimation:YES] : [self expandWindow];
+}
+
 -(void) initLoginCall
 {        
     // Init Proxy
@@ -165,6 +178,8 @@
 
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
+    [disablerView show];
+    [disablerView.label setHidden:NO];
     // Find out what row it was in and edit that color with the popup
     NSInteger row = [subtitlesTable rowForView:sender];
 
@@ -175,6 +190,11 @@
     // Select elements from collections of models
     NSMutableArray* collection = [subsArrayController arrangedObjects];
     selectedSubtitle = [collection objectAtIndex:row];
+    
+    //[self contractWindowWithAnimation:YES];
+    //[self.expandButton setHidden:NO];
+    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
+    [disablerView show];
     
     [self saveSubtitles];
 }
@@ -187,10 +207,19 @@
 
 -(void) fileDownloadFinishedWithData:(NSMutableData *)data
 {
+    [disablerView hide];
+    [disablerView.label setHidden:YES];
+    [self setPreloaderHidden:YES];
+    [subtitlesTable setEnabled:YES];
+    
+    // Decompress data received from server
     NSData *uncompressedData = [data gunzippedData];
-    self.preloaderHidden = YES;
-    [self.subtitlesTable setEnabled:YES];   
     NSString *pathWithName = [NSString stringWithFormat:@"%@/%@",movieLocalPath ,[selectedSubtitle subFileName]];
+    NSString *ext = [pathWithName pathExtension];
+    NSString *movieLocalName = [[movieLocalURL lastPathComponent] stringByDeletingPathExtension];
+    pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movieLocalPath ,movieLocalName, ext];
+    
+    
     [uncompressedData writeToFile:pathWithName atomically:YES];
     
     NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
@@ -215,11 +244,10 @@
         
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
         
-        self.preloaderHidden = YES;
+        [self setPreloaderHidden:YES];
         
         NSDictionary *responseData = [[NSDictionary alloc] init];
         responseData = [[response object] objectForKey:@"data"];
-        NSLog(@"%@", responseData);
         
         NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
         
@@ -248,7 +276,8 @@
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
         }
     
-        if (!self.isExpanded) [self expandWindow];   
+        if (!self.isExpanded) [self expandWindow];
+       // [disablerView hide];
         [subtitlesTable setEnabled:YES];
 
     }
@@ -257,7 +286,7 @@
 -(void) didFaultProxyRequest
 {
     [appDelegate showAlertSheet:@"The Internet connection appears to be offline!" andInfo:@"You must be connected to the internet in order to serach for subtitles on the server."];
-    self.preloaderHidden = YES;
+    [self setPreloaderHidden:YES];
 }
 
 #pragma mark - tableView protocol methods
@@ -274,12 +303,12 @@
     // Make sure that table is shown
     [scrollTableView setHidden:NO];
     
-    float tableWidth = 552;
+   // float tableWidth = 800;
     NSRect frame = [self.window frame];
     
     // Check if is not expanded already
     if(!isExpanded) {
-        frame.size.width += tableWidth;
+        frame.size.width = 859;
         
         if((frame.origin.x -= 200) > 210)
             frame.origin.x -= 200;
@@ -290,22 +319,27 @@
     }
     
     [self.window setFrame: frame display:YES animate:YES];
+    [disablerView hide];
+    
     
     return self.window;
 }
 
--(NSWindow *) contractWindow {
+-(NSWindow *) contractWindowWithAnimation: (BOOL) useAnimation {
     //[appDelegate expandWindow];
-    float tableWidth = 602;
+    
+    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
+    [disablerView show];
     NSRect frame = [self.window frame];
     
     // Check if window is expanded
     if(isExpanded) {
-        frame.size.width -= tableWidth;
+        frame.size.width = 295;
         isExpanded = NO;
     }
     
-    [self.window setFrame: frame display:YES animate:NO];
+    [self.window setFrame: frame display:YES animate:useAnimation];
+    [scrollTableView setHidden:YES];
     
     return self.window;
 }

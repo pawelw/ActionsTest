@@ -14,6 +14,8 @@
 
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments
 {
+    // Make sure all prev connections are stopped
+    [manager closeConnections];
     NSURL *URL = [NSURL URLWithString: @"http://api.opensubtitles.org/xml-rpc"];
     XMLRPCRequest *request = [[XMLRPCRequest alloc] initWithURL: URL];
     manager = [XMLRPCConnectionManager sharedManager];
@@ -21,7 +23,7 @@
     
     [request setMethod: serviceName withParameters: arguments];
     
-    NSLog(@"Request body: %@", [request body]);
+    //NSLog(@"Request body: %@", [request body]);
     
     [manager spawnConnectionWithXMLRPCRequest: request delegate: self];
     
@@ -35,7 +37,8 @@
     } else {
         NSLog(@"Parsed response: %@", [response object]);
     }
-        
+    
+    
     NSLog(@"%@", [manager activeConnectionIdentifiers]);
     [delegate didFinishProxyRequest:request withResponse:response]; // Custom delegate
 }
@@ -58,12 +61,13 @@
 
 -(void)downloadDataFromURL:(NSURL *)url
 {
+    [urlConnection cancel];
     subtitleFileData = nil;
     subtitleFileData = [[NSMutableData alloc] init];
    // NSURL* fileURL = [NSURL URLWithString:[selectedSubtitle subtitlesLink]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
-    if (!connection) {
+    urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    if (!urlConnection) {
         NSLog(@"Connection failed");
     }
 }
@@ -88,6 +92,8 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    appDelegate = [[AppDelegate alloc] init];
+    [appDelegate showAlertSheet:@"Connection failed!" andInfo:(@"Error - %@", [error localizedDescription])];
     // inform the user
     NSLog(@"Connection failed! Error - %@ %@",
           [error localizedDescription],

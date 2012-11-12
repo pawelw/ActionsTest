@@ -26,6 +26,8 @@
     LoginModel *loginModel;
     XMLRPCConnectionManager *manager;
     NSMutableData *subtitleFileData;
+    AppDelegate *appDelegate;
+    NSURLConnection *urlConnection;
 }
 @property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) NSMutableData *subtitleFileData;

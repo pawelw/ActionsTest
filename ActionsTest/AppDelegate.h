@@ -17,6 +17,7 @@ MainWindowController *mainWindowController;
 }
 
 @property(nonatomic, retain) MainWindowController *mainWindowController;
+@property(nonatomic, retain) NSWindow *window;
 
 - (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info;
 

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
+#import "Proxy.h"
 
 @interface SubsTableRow : NSTableRowView {
 @private
@@ -15,6 +16,7 @@
     NSTrackingArea *trackingArea;
     NSButton* pushButton;
     NSTimer *timer;
+    NSNotificationCenter *notificationCenter;
     
     AppDelegate *appDelegate;
 }

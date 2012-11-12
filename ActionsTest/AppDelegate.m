@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainWindowController.h"
+#import "DisablerView.h"
 
 @implementation AppDelegate
 
@@ -16,7 +17,11 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-
+    
+    self.window = mainWindowController.window;
+//    NSRect viewFrame = [self.window.contentView bounds];
+//    DisablerView *disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
+//    [mainWindowController.scrollTableView addSubview:disablerView];
 }
 
 -(void) awakeFromNib {

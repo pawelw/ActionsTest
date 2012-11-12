@@ -40,10 +40,12 @@
     if (mouseInside != value) {
         mouseInside = value;
         
-        if(!value)
+        if(!value) {
             [self hideDownloadButton];
-        else
+        } else {
             timer = [NSTimer scheduledTimerWithTimeInterval: .15 target: self selector: @selector(showDownloadButton) userInfo: nil repeats: NO];
+        }
+        
         [self setNeedsDisplay:YES];
     }
 }
@@ -52,11 +54,35 @@
 {
     [timer invalidate];
     [pushButton setHidden:YES];
+    [self setNeedsDisplay:YES];
 }
 
 -(void) showDownloadButton
 {
+    NSPoint mouseLocationInWindow = [[self window] convertScreenToBase: [NSEvent mouseLocation]];
+    NSPoint viewLocation = [self convertPoint: mouseLocationInWindow fromView:nil];
+    if( NSPointInRect(viewLocation, [self bounds])) {
+//    NSEvent *event = [[NSEvent alloc] init];
+//    CGPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
+//    CGRect rect = [self bounds];
+//    if ([self mouse:point inRect:rect]) {
+        // Do your thing here
+    } else {
+        self.mouseInside = NO;
+        [self setNeedsDisplay:YES];
+        return;
+    }
     [pushButton setHidden:NO];
+}
+
+-(void) enableDownloadButton
+{
+    [pushButton setEnabled:YES];
+}
+
+-(void) disableDownloadButton
+{
+    [pushButton setEnabled:NO];
 }
 
 - (BOOL)mouseInside {
