@@ -11,7 +11,6 @@
 #import "DisablerView.h"
 #import "MASPreferencesWindowController.h"
 #import "GeneralPreferencesViewController.h"
-#import "AdvancedPreferencesViewController.h"
 
 @implementation AppDelegate
 
@@ -19,12 +18,14 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
-    
+    // Insert code here to initialize your applications
     self.window = mainWindowController.window;
-//    NSRect viewFrame = [self.window.contentView bounds];
-//    DisablerView *disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
-//    [mainWindowController.scrollTableView addSubview:disablerView];
+    
+    NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+    [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:SDUsePreferedLanguageKey];
+    
+    // Register the dictionary of defaults
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
 -(void) awakeFromNib {
