@@ -219,7 +219,6 @@
     NSString *movieLocalName = [[movieLocalURL lastPathComponent] stringByDeletingPathExtension];
     pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movieLocalPath ,movieLocalName, ext];
     
-    
     [uncompressedData writeToFile:pathWithName atomically:YES];
     
     NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
@@ -268,9 +267,14 @@
             [searchModel setSubDownloadLink: [key valueForKey:@"SubDownloadLink"]];
             [searchModel setSubFileName: [key valueForKey:@"SubFileName"]];
             [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
-            [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
             [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
             [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
+            
+            // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
+            if([[key valueForKey:@"MovieReleaseName"] isEqualToString:@""])
+                [searchModel setMovieReleaseName: [key valueForKey:@"MovieName"]];
+            else
+                [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
             
             // Using key setter method to activate delegation of data to NSTableView
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
