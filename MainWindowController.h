@@ -75,6 +75,7 @@
 //- (IBAction)onDownloadClicked:(id)sender;
 - (IBAction)onInlineDownloadClicked:(id)sender; // this is connected via code not interface builder
 - (IBAction)onExpandButtonClicked:(id)sender;
+- (IBAction)showPreferencesPanel:(id)sender;
 
 - (void) initLoginCall;
 

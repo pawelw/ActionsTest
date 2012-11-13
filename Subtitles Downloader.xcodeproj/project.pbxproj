@@ -32,6 +32,13 @@
 		E591D5671626D3A900AFEC92 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E591D5651626D3A900AFEC92 /* Credits.rtf */; };
 		E591D56A1626D3A900AFEC92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5691626D3A900AFEC92 /* AppDelegate.m */; };
 		E591D56D1626D3AA00AFEC92 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E591D56B1626D3AA00AFEC92 /* MainMenu.xib */; };
+		E5999DB516528EF900AE4CE7 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DB016528D6F00AE4CE7 /* GeneralPreferencesViewController.m */; };
+		E5999DB616528EF900AE4CE7 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DB316528D6F00AE4CE7 /* AdvancedPreferencesViewController.m */; };
+		E5999DB716528F4600AE4CE7 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DA91652897800AE4CE7 /* MASPreferencesWindowController.m */; };
+		E5999DB8165290D300AE4CE7 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */; };
+		E5999DB91652912300AE4CE7 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5999DB116528D6F00AE4CE7 /* GeneralPreferencesView.xib */; };
+		E5999DBA1652912300AE4CE7 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5999DB416528D6F00AE4CE7 /* AdvancedPreferencesView.xib */; };
+		E5999DBC1652B50400AE4CE7 /* SubtitlesDownloader in Resources */ = {isa = PBXBuildFile; fileRef = E5999DBB1652B50400AE4CE7 /* SubtitlesDownloader */; };
 		E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C93E164C948400B5B3D7 /* download_green.png */; };
 		E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */; };
 		E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C964164D332C00B5B3D7 /* download_green_2.png */; };
@@ -83,19 +90,30 @@
 		E54702E3162F4DD9000756EF /* Proxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proxy.m; sourceTree = "<group>"; };
 		E55105531635AA9300492186 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
 		E565FE4C16457096006D34FC /* drop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drop.png; sourceTree = "<group>"; };
-		E591D5521626D3A900AFEC92 /* Subtitler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Subtitler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E591D5521626D3A900AFEC92 /* Subtitles Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Subtitles Downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E591D5561626D3A900AFEC92 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E591D5591626D3A900AFEC92 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E591D55A1626D3A900AFEC92 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E591D55B1626D3A900AFEC92 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		E591D55E1626D3A900AFEC92 /* Subtitler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Subtitler-Info.plist"; sourceTree = "<group>"; };
+		E591D55E1626D3A900AFEC92 /* Subtitles Downloader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Subtitles Downloader-Info.plist"; sourceTree = "<group>"; };
 		E591D5601626D3A900AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E591D5621626D3A900AFEC92 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E591D5641626D3A900AFEC92 /* Subtitler-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Subtitler-Prefix.pch"; sourceTree = "<group>"; };
+		E591D5641626D3A900AFEC92 /* Subtitles Downloader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Subtitles Downloader-Prefix.pch"; sourceTree = "<group>"; };
 		E591D5661626D3A900AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		E591D5681626D3A900AFEC92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E591D5691626D3A900AFEC92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E591D56C1626D3AA00AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E5999DA61652897800AE4CE7 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
+		E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
+		E5999DA81652897800AE4CE7 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
+		E5999DA91652897800AE4CE7 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		E5999DAF16528D6F00AE4CE7 /* GeneralPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneralPreferencesViewController.h; sourceTree = "<group>"; };
+		E5999DB016528D6F00AE4CE7 /* GeneralPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeneralPreferencesViewController.m; sourceTree = "<group>"; };
+		E5999DB116528D6F00AE4CE7 /* GeneralPreferencesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferencesView.xib; sourceTree = "<group>"; };
+		E5999DB216528D6F00AE4CE7 /* AdvancedPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdvancedPreferencesViewController.h; sourceTree = "<group>"; };
+		E5999DB316528D6F00AE4CE7 /* AdvancedPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdvancedPreferencesViewController.m; sourceTree = "<group>"; };
+		E5999DB416528D6F00AE4CE7 /* AdvancedPreferencesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedPreferencesView.xib; sourceTree = "<group>"; };
+		E5999DBB1652B50400AE4CE7 /* SubtitlesDownloader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = SubtitlesDownloader; path = ../../SubtitlesDownloader; sourceTree = "<group>"; };
 		E5A2C93E164C948400B5B3D7 /* download_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_green.png; sourceTree = "<group>"; };
 		E5A2C95D164CA01700B5B3D7 /* SubsTableRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsTableRow.h; sourceTree = "<group>"; };
 		E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsTableRow.m; sourceTree = "<group>"; };
@@ -178,8 +196,9 @@
 			children = (
 				E5F2F48D1650302400A83303 /* libz.dylib */,
 				E505D84D163C2AD9001132FB /* icon.icns */,
+				E5999DA51652896800AE4CE7 /* MASPreferences */,
 				E5347BD2162F297000639873 /* XMLRPC */,
-				E591D55C1626D3A900AFEC92 /* ActionsTest */,
+				E591D55C1626D3A900AFEC92 /* SubtitlesDownloader */,
 				E591D5551626D3A900AFEC92 /* Frameworks */,
 				E591D5531626D3A900AFEC92 /* Products */,
 			);
@@ -188,7 +207,7 @@
 		E591D5531626D3A900AFEC92 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E591D5521626D3A900AFEC92 /* Subtitler.app */,
+				E591D5521626D3A900AFEC92 /* Subtitles Downloader.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -212,9 +231,10 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		E591D55C1626D3A900AFEC92 /* ActionsTest */ = {
+		E591D55C1626D3A900AFEC92 /* SubtitlesDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				E5999DAE16528C0300AE4CE7 /* Preferences */,
 				E5EC0AA41630548500FD2D0B /* CustomClasses */,
 				E5AC930E162F6D20001F39E0 /* Views */,
 				E5AC930D162F6CFF001F39E0 /* Controllers */,
@@ -223,6 +243,7 @@
 				E591D5691626D3A900AFEC92 /* AppDelegate.m */,
 				E591D55D1626D3A900AFEC92 /* Supporting Files */,
 			);
+			name = SubtitlesDownloader;
 			path = ActionsTest;
 			sourceTree = "<group>";
 		};
@@ -240,13 +261,39 @@
 				E5D169DB163595500002848B /* button.png */,
 				E5D169D9163593880002848B /* button_170x59.png */,
 				E5D169D7163590400002848B /* bg.png */,
-				E591D55E1626D3A900AFEC92 /* Subtitler-Info.plist */,
+				E591D55E1626D3A900AFEC92 /* Subtitles Downloader-Info.plist */,
 				E591D55F1626D3A900AFEC92 /* InfoPlist.strings */,
 				E591D5621626D3A900AFEC92 /* main.m */,
-				E591D5641626D3A900AFEC92 /* Subtitler-Prefix.pch */,
+				E591D5641626D3A900AFEC92 /* Subtitles Downloader-Prefix.pch */,
+				E5999DBB1652B50400AE4CE7 /* SubtitlesDownloader */,
 				E591D5651626D3A900AFEC92 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E5999DA51652896800AE4CE7 /* MASPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				E5999DA61652897800AE4CE7 /* MASPreferencesViewController.h */,
+				E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */,
+				E5999DA81652897800AE4CE7 /* MASPreferencesWindowController.h */,
+				E5999DA91652897800AE4CE7 /* MASPreferencesWindowController.m */,
+			);
+			name = MASPreferences;
+			path = ActionsTest;
+			sourceTree = "<group>";
+		};
+		E5999DAE16528C0300AE4CE7 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				E5999DAF16528D6F00AE4CE7 /* GeneralPreferencesViewController.h */,
+				E5999DB016528D6F00AE4CE7 /* GeneralPreferencesViewController.m */,
+				E5999DB116528D6F00AE4CE7 /* GeneralPreferencesView.xib */,
+				E5999DB216528D6F00AE4CE7 /* AdvancedPreferencesViewController.h */,
+				E5999DB316528D6F00AE4CE7 /* AdvancedPreferencesViewController.m */,
+				E5999DB416528D6F00AE4CE7 /* AdvancedPreferencesView.xib */,
+			);
+			name = Preferences;
 			sourceTree = "<group>";
 		};
 		E5AC930D162F6CFF001F39E0 /* Controllers */ = {
@@ -291,9 +338,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E591D5511626D3A900AFEC92 /* Subtitler */ = {
+		E591D5511626D3A900AFEC92 /* Subtitles Downloader */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "Subtitler" */;
+			buildConfigurationList = E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "Subtitles Downloader" */;
 			buildPhases = (
 				E591D54E1626D3A900AFEC92 /* Sources */,
 				E591D54F1626D3A900AFEC92 /* Frameworks */,
@@ -303,9 +350,9 @@
 			);
 			dependencies = (
 			);
-			name = Subtitler;
+			name = "Subtitles Downloader";
 			productName = ActionsTest;
-			productReference = E591D5521626D3A900AFEC92 /* Subtitler.app */;
+			productReference = E591D5521626D3A900AFEC92 /* Subtitles Downloader.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -317,7 +364,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Pawel Witkowski";
 			};
-			buildConfigurationList = E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "Subtitler" */;
+			buildConfigurationList = E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "Subtitles Downloader" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -330,7 +377,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E591D5511626D3A900AFEC92 /* Subtitler */,
+				E591D5511626D3A900AFEC92 /* Subtitles Downloader */,
 			);
 		};
 /* End PBXProject section */
@@ -340,6 +387,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5999DB91652912300AE4CE7 /* GeneralPreferencesView.xib in Resources */,
+				E5999DBA1652912300AE4CE7 /* AdvancedPreferencesView.xib in Resources */,
+				E5999DB8165290D300AE4CE7 /* MASPreferencesWindow.xib in Resources */,
 				E591D5611626D3A900AFEC92 /* InfoPlist.strings in Resources */,
 				E591D5671626D3A900AFEC92 /* Credits.rtf in Resources */,
 				E591D56D1626D3AA00AFEC92 /* MainMenu.xib in Resources */,
@@ -356,6 +406,7 @@
 				E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */,
 				E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */,
 				E5A2C967164D3A1400B5B3D7 /* gradient.png in Resources */,
+				E5999DBC1652B50400AE4CE7 /* SubtitlesDownloader in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +417,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5999DB716528F4600AE4CE7 /* MASPreferencesWindowController.m in Sources */,
+				E5999DB516528EF900AE4CE7 /* GeneralPreferencesViewController.m in Sources */,
+				E5999DB616528EF900AE4CE7 /* AdvancedPreferencesViewController.m in Sources */,
 				E5F2F4911650444C00A83303 /* NSData+GZIP.m in Sources */,
 				E5D74AC1163044EE00FC56E3 /* OrderedDictionary.m in Sources */,
 				E54702CB162F45BE000756EF /* NSData+Base64.m in Sources */,
@@ -444,7 +498,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -468,7 +522,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -484,10 +538,10 @@
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/SubDownloader-dfhboerosjnircdrvukjfjacabfb/Build/Products/Release\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ActionsTest/Subtitler-Prefix.pch";
-				INFOPLIST_FILE = "ActionsTest/Subtitler-Info.plist";
+				GCC_PREFIX_HEADER = "ActionsTest/Subtitles Downloader-Prefix.pch";
+				INFOPLIST_FILE = "ActionsTest/Subtitles Downloader-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = Subtitler;
+				PRODUCT_NAME = "Subtitles Downloader";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -503,10 +557,10 @@
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/SubDownloader-dfhboerosjnircdrvukjfjacabfb/Build/Products/Release\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ActionsTest/Subtitler-Prefix.pch";
-				INFOPLIST_FILE = "ActionsTest/Subtitler-Info.plist";
+				GCC_PREFIX_HEADER = "ActionsTest/Subtitles Downloader-Prefix.pch";
+				INFOPLIST_FILE = "ActionsTest/Subtitles Downloader-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = Subtitler;
+				PRODUCT_NAME = "Subtitles Downloader";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -514,7 +568,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "Subtitler" */ = {
+		E591D54C1626D3A900AFEC92 /* Build configuration list for PBXProject "Subtitles Downloader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E591D56E1626D3AA00AFEC92 /* Debug */,
@@ -523,7 +577,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "Subtitler" */ = {
+		E591D5701626D3AA00AFEC92 /* Build configuration list for PBXNativeTarget "Subtitles Downloader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E591D5711626D3AA00AFEC92 /* Debug */,

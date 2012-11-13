@@ -12,13 +12,16 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
 
-
-MainWindowController *mainWindowController;
+    NSWindowController *_preferencesWindowController;
+    MainWindowController *mainWindowController;
 }
 
 @property(nonatomic, retain) MainWindowController *mainWindowController;
 @property(nonatomic, retain) NSWindow *window;
+@property (nonatomic, readonly) NSWindowController *preferencesWindowController;
+@property (nonatomic) NSInteger focusedAdvancedControlIndex;
 
 - (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info;
+- (IBAction)openPreferences:(id)sender;
 
 @end

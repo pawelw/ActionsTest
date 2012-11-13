@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Subtitler.xcodeproj">
+      location = "self:Subtitles Downloader.xcodeproj">
    </FileRef>
 </Workspace>

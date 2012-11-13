@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "374439035.423422"
+         timestampString = "374509707.82537"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "99"
-         endingLineNumber = "99"
+         startingLineNumber = "104"
+         endingLineNumber = "104"
          landmarkName = "-loginNotificationReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "374439035.423422"
+         timestampString = "374509707.82537"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "96"
-         endingLineNumber = "96"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
          landmarkName = "-loginNotificationReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "374450257.140239"
+         timestampString = "374509707.82537"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "281"
-         endingLineNumber = "281"
+         startingLineNumber = "286"
+         endingLineNumber = "286"
          landmarkName = "-didFinishProxyRequest:withResponse:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "374448395.587856"
+         timestampString = "374509707.82537"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "216"
-         endingLineNumber = "216"
+         startingLineNumber = "221"
+         endingLineNumber = "221"
          landmarkName = "-fileDownloadFinishedWithData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,7 +112,33 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "374450257.140239"
+         timestampString = "374509707.82537"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "229"
+         endingLineNumber = "229"
+         landmarkName = "-fileDownloadFinishedWithData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MainWindowController.m"
+         timestampString = "374509707.82537"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
+         landmarkName = "-didFinishProxyRequest:withResponse:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MainWindowController.m"
+         timestampString = "374509707.82537"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "224"
@@ -124,26 +150,39 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "MainWindowController.m"
-         timestampString = "374450257.140239"
+         filePath = "ActionsTest/AppDelegate.m"
+         timestampString = "374509905.757611"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "249"
-         endingLineNumber = "249"
-         landmarkName = "-didFinishProxyRequest:withResponse:"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "-preferencesWindowController"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "MainWindowController.m"
-         timestampString = "374448824.15163"
+         filePath = "ActionsTest/AppDelegate.m"
+         timestampString = "374509976.843087"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "219"
-         endingLineNumber = "219"
-         landmarkName = "-fileDownloadFinishedWithData:"
+         startingLineNumber = "63"
+         endingLineNumber = "63"
+         landmarkName = "-preferencesWindowController"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ActionsTest/AppDelegate.m"
+         timestampString = "374510198.481151"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "65"
+         endingLineNumber = "65"
+         landmarkName = "-preferencesWindowController"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

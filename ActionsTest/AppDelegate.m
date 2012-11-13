@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "MainWindowController.h"
 #import "DisablerView.h"
+#import "MASPreferencesWindowController.h"
+#import "GeneralPreferencesViewController.h"
+#import "AdvancedPreferencesViewController.h"
 
 @implementation AppDelegate
 
@@ -36,6 +39,44 @@
     NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
 //    NSAlert *myAlert = [NSAlert alertWithMessageText:@"huj" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
     [myAlert beginSheetModalForWindow:mainWindowController.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+}
+
+#pragma mark - Preferences 
+
+- (IBAction)openPreferences:(id)sender
+{
+    [self.preferencesWindowController showWindow:nil];
+}
+
+- (NSWindowController *)preferencesWindowController
+{
+    if (_preferencesWindowController == nil)
+    {
+        NSViewController *generalViewController = [[GeneralPreferencesViewController alloc] init];
+        //NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, nil];
+        
+        // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
+        //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
+        
+        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+    }
+    return _preferencesWindowController;
+}
+
+#pragma mark -
+
+NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
+
+- (NSInteger)focusedAdvancedControlIndex
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kFocusedAdvancedControlIndex];
+}
+
+- (void)setFocusedAdvancedControlIndex:(NSInteger)focusedAdvancedControlIndex
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:focusedAdvancedControlIndex forKey:kFocusedAdvancedControlIndex];
 }
 
 

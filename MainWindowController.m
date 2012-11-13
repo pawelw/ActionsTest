@@ -87,6 +87,11 @@
     self.preloadeLabel = @"Connecting with server...";
 }
 
+- (IBAction)showPreferencesPanel:(id)sender
+{
+
+}
+
 #pragma mark - notification center methods
 
 -(void) loginNotificationReceived: (id) object

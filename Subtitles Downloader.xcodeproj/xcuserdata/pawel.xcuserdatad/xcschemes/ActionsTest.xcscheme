@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-               BuildableName = "Subtitler.app"
-               BlueprintName = "Subtitler"
-               ReferencedContainer = "container:Subtitler.xcodeproj">
+               BuildableName = "Subtitles Downloader.app"
+               BlueprintName = "Subtitles Downloader"
+               ReferencedContainer = "container:Subtitles Downloader.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-            BuildableName = "Subtitler.app"
-            BlueprintName = "Subtitler"
-            ReferencedContainer = "container:Subtitler.xcodeproj">
+            BuildableName = "Subtitles Downloader.app"
+            BlueprintName = "Subtitles Downloader"
+            ReferencedContainer = "container:Subtitles Downloader.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-            BuildableName = "Subtitler.app"
-            BlueprintName = "Subtitler"
-            ReferencedContainer = "container:Subtitler.xcodeproj">
+            BuildableName = "Subtitles Downloader.app"
+            BlueprintName = "Subtitles Downloader"
+            ReferencedContainer = "container:Subtitles Downloader.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E591D5511626D3A900AFEC92"
-            BuildableName = "Subtitler.app"
-            BlueprintName = "Subtitler"
-            ReferencedContainer = "container:Subtitler.xcodeproj">
+            BuildableName = "Subtitles Downloader.app"
+            BlueprintName = "Subtitles Downloader"
+            ReferencedContainer = "container:Subtitles Downloader.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
