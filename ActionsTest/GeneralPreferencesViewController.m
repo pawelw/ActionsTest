@@ -3,7 +3,7 @@
 
 @implementation GeneralPreferencesViewController
 
-@synthesize langPreferedCheckbox;
+@synthesize langPreferedCheckbox, languagesDictionary, languagesArray;
 
 //NSString *const SD
 NSString *const SDUsePreferedLanguageKey = @"SDUsePreferedLanguage";
@@ -16,8 +16,14 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
 
 -(void) awakeFromNib
 {
+    // Setting value of checkbox from user defaults database
     [langPreferedCheckbox setState:[GeneralPreferencesViewController usePreferedLanguage]];
     self.comboBoxEnabled = [GeneralPreferencesViewController usePreferedLanguage];
+    
+    // Setting dropdown item from user defaults ( + (NSString *) preferedLanguage )
+    NSArray *langKeysArray = [self.languagesDictionary allKeysForObject:[GeneralPreferencesViewController preferedLanguage]];
+    [self.langPopUpButton selectItemWithTitle:[langKeysArray objectAtIndex:0]];
+
 }
 
 #pragma mark - Actions
@@ -28,6 +34,14 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
     
     // Binding to Eneble language combobox
     self.comboBoxEnabled = state;
+}
+
+- (IBAction)onLanguagesPopUpButtonChanged:(id)sender {
+    
+    NSString *key = [[self.langPopUpButton selectedItem] title];
+    NSString *language = [self.languagesDictionary objectForKey:key];
+    [GeneralPreferencesViewController setPreferedLanguage:language];
+    NSLog(@"language: %@",language);
 }
 
 #pragma mark - Preferences getters and setters
@@ -48,7 +62,7 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
     return language;
 }
 + (void) setPreferedLanguage: (NSString *) language {
-    
+    [[NSUserDefaults standardUserDefaults] setObject:language forKey:SDPreferedLanguageKey];
 }
 //-----------------------------
 
@@ -70,4 +84,117 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
     return NSLocalizedString(@"General", @"Toolbar item name for the General preference pane");
 }
 
+//----------------------------
+
+-(NSArray *) languagesArray
+{
+    NSArray *languages = [NSArray arrayWithObjects:
+                       @"All",
+                       @"Arabic",
+                       @"Armenian",
+                       @"Malay",
+                       @"Albanian",
+                       @"Basque",
+                       @"Bosnian",
+                       @"Bulgarian",
+                       @"Catalan",
+                       @"Chinese",
+                       @"Croatian",
+                       @"Czech",
+                       @"Danish",
+                       @"Dutch",
+                       @"English",
+                       @"Esperanto",
+                       @"Estonian",
+                       @"Finnish",
+                       @"French",
+                       @"Galician",
+                       @"Georgian",
+                       @"German",
+                       @"Greek",
+                       @"Hebrew",
+                       @"Hungarian",
+                       @"Indonesian",
+                       @"Italian",
+                       @"Japanese",
+                       @"Kazakh",
+                       @"Korean",
+                       @"Latvian",
+                       @"Lithuanian",
+                       @"Luxembourgish",
+                       @"Macedonian",
+                       @"Norwegian",
+                       @"Persian",
+                       @"Polish",
+                       @"Portuguese (Portugal)",
+                       @"Portuguese (Brazil)",
+                       @"Romanian",
+                       @"Russian",
+                       @"Serbian",
+                       @"Slovak",
+                       @"Slovenian",
+                       @"Spanish (Spain)",
+                       @"Swedish",
+                       @"Thai",
+                       @"Turkish",
+                       @"Ukrainian",
+                       @"Vietnamese",
+                       nil];
+    
+    NSArray *codes = [NSArray arrayWithObjects:
+                          @"",
+                          @"ara",
+                          @"arm",
+                          @"may",
+                          @"alb",
+                          @"baq",
+                          @"bos",
+                          @"bul",
+                          @"cat",
+                          @"chi",
+                          @"hrv",
+                          @"cze",
+                          @"dan",
+                          @"dut",
+                          @"eng",
+                          @"epo",
+                          @"est",
+                          @"fin",
+                          @"fre",
+                          @"glg",
+                          @"geo",
+                          @"nds",
+                          @"gre",
+                          @"heb",
+                          @"hun",
+                          @"ind",
+                          @"ita",
+                          @"jpn",
+                          @"kaz",
+                          @"kor",
+                          @"lav",
+                          @"lit",
+                          @"ltz",
+                          @"mac",
+                          @"nor",
+                          @"per",
+                          @"pol",
+                          @"por (Portugal)",
+                          @"pob (Brazil)",
+                          @"rum",
+                          @"rus",
+                          @"srp",
+                          @"slo",
+                          @"slv",
+                          @"spa",
+                          @"swe",
+                          @"Thai",
+                          @"tur",
+                          @"ukr",
+                          @"vie",
+                          nil];
+    self.languagesDictionary = [NSDictionary dictionaryWithObjects:codes forKeys:languages];
+
+    return languages;
+}
 @end

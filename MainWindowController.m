@@ -8,6 +8,7 @@
 
 #import "MainWindowController.h"
 #import "DisablerView.h"
+#import "GeneralPreferencesViewController.h"
 
 @interface MainWindowController ()
 
@@ -35,8 +36,6 @@
         
         // Seting YES as default because window is expanded in xib file when app starts
         isExpanded = YES;
-        
-        //[window setFrame:[] display:<#(BOOL)#>]
         
         nameSorters = [NSArray arrayWithObject:
                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
@@ -169,7 +168,13 @@
     double byteSizeString = (uint64_t) hash.fileSize;
     
     OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
-    [dict setObject:@"" forKey:@"sublanguageid"];
+    
+    if ([GeneralPreferencesViewController usePreferedLanguage]) {
+        [dict setObject:[GeneralPreferencesViewController preferedLanguage] forKey:@"sublanguageid"];
+    } else {
+        [dict setObject:@"" forKey:@"sublanguageid"];
+    }
+    
     [dict setObject:hashString forKey:@"moviehash"];
     [dict setObject:[NSNumber numberWithDouble:byteSizeString] forKey:@"moviebytesize"];
     
@@ -256,7 +261,11 @@
         NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
         
         if ([dataAsString isEqualToString:@"0"]) {
-            [appDelegate showAlertSheet:@"Subtitles not found!" andInfo:@"There is no subtitle file for this movie on the server."];
+            if ([GeneralPreferencesViewController usePreferedLanguage]) {
+                [appDelegate showAlertSheet:@"Subtitles not found!" andInfo:@"There is no subtitle file for this movie in your specified language on the server. To change search language go to preferences panel."];
+            } else {
+                [appDelegate showAlertSheet:@"Subtitles not found!" andInfo:@"There is no subtitle file for this movie on the server."];
+            }
             return;
         } else {
             dataAsString = nil;
@@ -288,6 +297,7 @@
         if (!self.isExpanded) [self expandWindow];
        // [disablerView hide];
         [subtitlesTable setEnabled:YES];
+        NSLog(@"SUCESS");
 
     }
 }
