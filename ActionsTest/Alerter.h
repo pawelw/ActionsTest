@@ -7,12 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AppDelegate.h"
 
-@interface Alerter : NSObject
+@interface Alerter : NSObject {
+    AppDelegate *appDelegate;
+}
 
 + (void) showAlertSheet:(NSString *) message andInfo:(NSString *) info;
 + (void) showNotFoundAlert;
 + (void) showNotFoundAlertForLanguage;
 + (void) showNoConnectionAlert;
+- (void) askIfOverwriteFile;
 
 @end

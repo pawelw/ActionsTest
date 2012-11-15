@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Proxy.h"
+#import "ProxyPodnapi.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
 #import "OSHashAlgorithm.h"
@@ -17,7 +18,10 @@
 #import "NSData+GZIP.h"
 #import "DisablerView.h"
 
-@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
+extern NSString *const SDOpenSubtitles;
+extern NSString *const SDPodnapisi;
+
+@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, ProxyPodnapiDelegate, NSTableViewDelegate> {
     
     // Outlets
     NSScrollView *scrollTableView;
@@ -38,6 +42,8 @@
     NSString *preloaderLabel;
     NSMutableData * zippedSubsData;
     NSNotificationCenter *notificationCenter;
+    NSData *uncompressedData;
+    NSString *pathWithName;
     
     // Bool 
     BOOL preloaderHidden;
@@ -46,9 +52,13 @@
     
     // Classes
     Proxy *proxy;
+    ProxyPodnapi *proxyPodnapi;
+    
     VideoHash hash;
     AppDelegate *appDelegate;
     DisablerView *disablerView;
+    
+    
 }
 
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;
@@ -67,15 +77,14 @@
 @property (nonatomic, retain) SearchModel *searchModel;
 @property (nonatomic, retain) SearchModel *selectedSubtitle;
 
+@property (nonatomic, retain) NSString *server;
 @property BOOL preloaderHidden;
 @property BOOL isExpanded;
 @property BOOL isConnected;
 
 - (IBAction)onBrowseClicked:(id)sender;
-//- (IBAction)onDownloadClicked:(id)sender;
 - (IBAction)onInlineDownloadClicked:(id)sender; // this is connected via code not interface builder
 - (IBAction)onExpandButtonClicked:(id)sender;
-
-- (void) initLoginCall;
+-(void) alertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v;
 
 @end

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		E505D84E163C2AD9001132FB /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E505D84D163C2AD9001132FB /* icon.icns */; };
 		E508899B165163FA004835C3 /* DisablerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E508899A165163FA004835C3 /* DisablerView.m */; };
+		E5216FE916555050005F2DB9 /* ProxyPodnapi.m in Sources */ = {isa = PBXBuildFile; fileRef = E5216FE816555050005F2DB9 /* ProxyPodnapi.m */; };
+		E528D29716559A68005788DA /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E528D29616559A68005788DA /* AboutWindow.xib */; };
+		E528D29A16559AA6005788DA /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E528D29916559AA6005788DA /* AboutWindowController.m */; };
+		E528D29C1655A511005788DA /* copyrights.png in Resources */ = {isa = PBXBuildFile; fileRef = E528D29B1655A511005788DA /* copyrights.png */; };
 		E52CD906162856FE007DD062 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D5591626D3A900AFEC92 /* AppKit.framework */; };
 		E52CD90716285705007DD062 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55A1626D3A900AFEC92 /* CoreData.framework */; };
 		E52CD9081628570A007DD062 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55B1626D3A900AFEC92 /* Foundation.framework */; };
@@ -60,6 +64,12 @@
 		E505D84D163C2AD9001132FB /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		E5088999165163FA004835C3 /* DisablerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisablerView.h; sourceTree = "<group>"; };
 		E508899A165163FA004835C3 /* DisablerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisablerView.m; sourceTree = "<group>"; };
+		E5216FE716555050005F2DB9 /* ProxyPodnapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyPodnapi.h; sourceTree = "<group>"; };
+		E5216FE816555050005F2DB9 /* ProxyPodnapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyPodnapi.m; sourceTree = "<group>"; };
+		E528D29616559A68005788DA /* AboutWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
+		E528D29816559AA6005788DA /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
+		E528D29916559AA6005788DA /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
+		E528D29B1655A511005788DA /* copyrights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copyrights.png; sourceTree = "<group>"; };
 		E53678F216317EFF004E45E2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../MainWindow.xib; sourceTree = "<group>"; };
 		E539012416449B160095B36C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		E539012516449B160095B36C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
@@ -151,6 +161,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E528D29416559A08005788DA /* About */ = {
+			isa = PBXGroup;
+			children = (
+				E528D29616559A68005788DA /* AboutWindow.xib */,
+				E528D29816559AA6005788DA /* AboutWindowController.h */,
+				E528D29916559AA6005788DA /* AboutWindowController.m */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
 		E5347BD2162F297000639873 /* XMLRPC */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +252,7 @@
 		E591D55C1626D3A900AFEC92 /* SubtitlesDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				E528D29416559A08005788DA /* About */,
 				E5999DAE16528C0300AE4CE7 /* Preferences */,
 				E5EC0AA41630548500FD2D0B /* CustomClasses */,
 				E5AC930E162F6D20001F39E0 /* Views */,
@@ -248,6 +269,7 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E528D29B1655A511005788DA /* copyrights.png */,
 				E5A2C966164D3A1400B5B3D7 /* gradient.png */,
 				E5A2C964164D332C00B5B3D7 /* download_green_2.png */,
 				E5A2C93E164C948400B5B3D7 /* download_green.png */,
@@ -322,6 +344,8 @@
 				E5F2F4901650330500A83303 /* NSData+GZIP.m */,
 				E54702E2162F4DD9000756EF /* Proxy.h */,
 				E54702E3162F4DD9000756EF /* Proxy.m */,
+				E5216FE716555050005F2DB9 /* ProxyPodnapi.h */,
+				E5216FE816555050005F2DB9 /* ProxyPodnapi.m */,
 				E5D74ABD1630434900FC56E3 /* OrderedDictionary.h */,
 				E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */,
 				E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */,
@@ -403,6 +427,8 @@
 				E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */,
 				E5A2C967164D3A1400B5B3D7 /* gradient.png in Resources */,
 				E5999DBC1652B50400AE4CE7 /* SubtitlesDownloader in Resources */,
+				E528D29716559A68005788DA /* AboutWindow.xib in Resources */,
+				E528D29C1655A511005788DA /* copyrights.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +463,8 @@
 				E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */,
 				E508899B165163FA004835C3 /* DisablerView.m in Sources */,
 				E5CECE5F165464E300D1D3C5 /* Alerter.m in Sources */,
+				E5216FE916555050005F2DB9 /* ProxyPodnapi.m in Sources */,
+				E528D29A16559AA6005788DA /* AboutWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

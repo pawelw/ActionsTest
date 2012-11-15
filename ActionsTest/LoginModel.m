@@ -11,7 +11,7 @@
 @implementation LoginModel
 static LoginModel* _shared = nil;
 
-@synthesize responseTime,status,token;
+@synthesize responseTime,status,token, session;
 
 + (LoginModel *) initAsSingleton
 {

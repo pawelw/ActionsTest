@@ -10,30 +10,46 @@
 #import "Alerter.h"
 #import "MainWindowController.h"
 #import "GeneralPreferencesViewController.h"
-
-NSString *const SDOpenSubtitlesURL = @"http://api.opensubtitles.org/xml-rpc";
-NSString *const SDPodnapisiURL = @"http://ssp.podnapisi.net:8000/RPC2/";
+#import "OrderedDictionary.h"
 
 @implementation Proxy
 
-@synthesize delegate, manager, subtitleFileData;
+@synthesize delegate, subtitleFileData;
 
 -(id) init
 {
     self = [super init];
     if(self)
     {
-        _serverMode = [NSString stringWithString:SDPodnapisiURL];
+        loginModel = [LoginModel initAsSingleton];
     }
     
     return self;
+}
+
+-(void) searchByHash: (NSString *)hash andByteSize: (double) bytes
+{
+    OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
+    
+    if ([GeneralPreferencesViewController usePreferedLanguage]) {
+        [dict setObject:[GeneralPreferencesViewController preferedLanguage] forKey:@"sublanguageid"];
+    } else {
+        [dict setObject:@"" forKey:@"sublanguageid"];
+    }
+    
+    [dict setObject:hash forKey:@"moviehash"];
+    [dict setObject:[NSNumber numberWithDouble:bytes] forKey:@"moviebytesize"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:dict, nil];
+    
+    [self callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
 }
 
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments
 {
     // Use only one connection at a time 
     [manager closeConnections];
-    NSURL *URL = [NSURL URLWithString: _serverMode];
+    NSURL *URL = [NSURL URLWithString: @"http://api.opensubtitles.org/xml-rpc"];
     XMLRPCRequest *request = [[XMLRPCRequest alloc] initWithURL: URL];
     manager = [XMLRPCConnectionManager sharedManager];
     
@@ -44,87 +60,62 @@ NSString *const SDPodnapisiURL = @"http://ssp.podnapisi.net:8000/RPC2/";
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
     
-    ////////////////////////////
-    // OpenSubtitles.org
-    ////////////////////////////
-    if ([_serverMode isEqualToString: SDOpenSubtitlesURL]) {
-        if ([response isFault]) {
-            [delegate didFaultProxyRequest];
-            NSLog(@"Proxy is Fault with response: %@", response);
-        } else if ([[request method] isEqualToString:@"LogIn"]) {
-            
-            // "LogIn" ////////////////
-            LoginModel *loginModel = [LoginModel initAsSingleton];
-            
-            [loginModel setToken:[[response object] objectForKey:@"token"]];
-            [loginModel setStatus:[[response object] objectForKey:@"status"]];
-            [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
-            
-            [delegate didFinishProxyRequest:request withData:loginModel]; // Custom delegate
-            
-        } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
-            
-            // "SearchSubtitles" ////////////////
-            NSDictionary *responseData = [[NSDictionary alloc] init];
-            responseData = [[response object] objectForKey:@"data"];
-            NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
-            
-            if ([dataAsString isEqualToString:@"0"]) {
-                [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
-                dataAsString = nil;
-                return;
-            } else {
-                dataAsString = nil;
-            }
-            
-            SearchModel *searchModel = [[SearchModel alloc] init];
-            NSMutableArray *searchModelCollection = [[NSMutableArray alloc] init];
-            
-            for (NSString* key in responseData) {
-                
-                [searchModel setMovieName: [key valueForKey:@"MovieName"]];
-                [searchModel setZipDownloadLink: [key valueForKey:@"ZipDownloadLink"]];
-                [searchModel setSubDownloadLink: [key valueForKey:@"SubDownloadLink"]];
-                [searchModel setSubFileName: [key valueForKey:@"SubFileName"]];
-                [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
-                [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
-                [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
-                
-                // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
-                if([[key valueForKey:@"MovieReleaseName"] isEqualToString:@""])
-                    [searchModel setMovieReleaseName: [key valueForKey:@"MovieName"]];
-                else
-                    [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
-                
-                // Using key setter method to activate delegation of data to NSTableView
-                [searchModelCollection addObject:[searchModel copy]];
-            }
-            
-            [delegate didFinishProxyRequest:request withData:searchModelCollection]; // Custom delegate
-            
+    if ([response isFault]) {
+        [delegate didFaultProxyRequest];
+        NSLog(@"Proxy is Fault with response: %@", response);
+    } else if ([[request method] isEqualToString:@"LogIn"]) {
+        
+        // "LogIn" ////////////////
+        [loginModel setToken:[[response object] objectForKey:@"token"]];
+        [loginModel setStatus:[[response object] objectForKey:@"status"]];
+        [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
+        
+        [delegate didFinishProxyRequest:request withData:loginModel]; // Custom delegate
+        
+    } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
+        
+        // "SearchSubtitles" ////////////////
+        NSDictionary *responseData = [[NSDictionary alloc] init];
+        responseData = [[response object] objectForKey:@"data"];
+        NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
+        
+        if ([dataAsString isEqualToString:@"0"]) {
+            [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
+            dataAsString = nil;
+            return;
         } else {
-            NSLog(@"Parsed response: %@", [response object]);
-            [delegate didFinishProxyRequest:request withData:response]; // Custom delegate
+            dataAsString = nil;
         }
-    }
-    ////////////////////////////
-    // podnapi.net
-    ////////////////////////////
-    else if ([_serverMode isEqualToString: SDPodnapisiURL]) {
-        if ([response isFault]) {
-            [delegate didFaultProxyRequest];
-            NSLog(@"Proxy is Fault with response: %@", response);
-        } else if ([[request method] isEqualToString:@"initiate"]) {
-            NSLog(@"response: %@", response);
-            LoginModel *loginModel = [LoginModel initAsSingleton];
-            [loginModel setSession:[[response object] objectForKey:@"session"]];
-            [self callWebService:@"authenticate" withArguments:[NSArray arrayWithObjects: loginModel.session, @"", @"", nil]];
-        } else {
-            NSLog(@"Parsed response: %@", [response object]);
+        
+        SearchModel *searchModel = [[SearchModel alloc] init];
+        NSMutableArray *searchModelCollection = [[NSMutableArray alloc] init];
+        
+        for (NSString* key in responseData) {
+            
+            [searchModel setMovieName: [key valueForKey:@"MovieName"]];
+            [searchModel setZipDownloadLink: [key valueForKey:@"ZipDownloadLink"]];
+            [searchModel setSubDownloadLink: [key valueForKey:@"SubDownloadLink"]];
+            [searchModel setSubFileName: [key valueForKey:@"SubFileName"]];
+            [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
+            [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
+            [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
+            
+            // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
+            if([[key valueForKey:@"MovieReleaseName"] isEqualToString:@""])
+                [searchModel setMovieReleaseName: [key valueForKey:@"MovieName"]];
+            else
+                [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
+            
+            // Using key setter method to activate delegation of data to NSTableView
+            [searchModelCollection addObject:[searchModel copy]];
         }
-
+        
+        [delegate didFinishProxyRequest:request withData:searchModelCollection]; // Custom delegate
+        
+    } else {
+        NSLog(@"Parsed response: %@", [response object]);
+        [delegate didFinishProxyRequest:request withData:response]; // Custom delegate
     }
-
 }
 
 - (void)request: (XMLRPCRequest *)request didFailWithError: (NSError *)error {

@@ -11,6 +11,9 @@
 #import "GeneralPreferencesViewController.h"
 #import "Alerter.h"
 
+NSString *const SDOpenSubtitles = @"openSubtitles";
+NSString *const SDPodnapisi = @"podnapisi";
+
 @interface MainWindowController ()
 
 @end
@@ -37,6 +40,7 @@
         
         // Seting YES as default because window is expanded in xib file when app starts
         isExpanded = YES;
+        _server = SDPodnapisi; // Set Main API server
         
         nameSorters = [NSArray arrayWithObject:
                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
@@ -89,23 +93,22 @@
 
 -(void) initPreloader {
     [self setPreloaderHidden:YES];
-    self.preloadeLabel = @"Connecting with server...";
+    [self setPreloadeLabel: @"Connecting with server..."];
 }
 
 -(void) initLoginCall
 {
     // Init Proxy
-    proxy = [[Proxy alloc] init];
-    [proxy setDelegate:self];
-    if([proxy.serverMode isEqualToString:SDOpenSubtitlesURL]) {
-        NSLog(@"Calling openSubtitles.org LogIn method");
+    if([_server isEqualToString:SDOpenSubtitles]) {
+        proxy = [[Proxy alloc] init];
+        [proxy setDelegate:self];
         [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
-    } else {
-        NSLog(@"Calling podnapi.net LogIn method");
-        [proxy callWebService:@"initiate" withArguments:[NSArray arrayWithObjects: @"subtitles downloader", nil]];
+    } else if ([_server isEqualToString:SDPodnapisi]) {
+        proxyPodnapi = [[ProxyPodnapi alloc] init];
+        [proxyPodnapi setDelegate:self];
+        [proxyPodnapi login];
     }
-    
-    
+
     // show preloader
     self.preloadeLabel = @"Connecting with server...";
     self.preloaderHidden = NO;
@@ -116,25 +119,17 @@
     hash = [OSHashAlgorithm hashForURL:url];
     movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
     NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
-    double byteSizeString = (uint64_t) hash.fileSize;
+    double byteSize = (uint64_t) hash.fileSize;
     
-    OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
+    [self setPreloadeLabel: @"Searching for subtitles..."];
+    [self setPreloaderHidden: NO];
     
-    if ([GeneralPreferencesViewController usePreferedLanguage]) {
-        [dict setObject:[GeneralPreferencesViewController preferedLanguage] forKey:@"sublanguageid"];
-    } else {
-        [dict setObject:@"" forKey:@"sublanguageid"];
+    if([_server isEqualToString:SDOpenSubtitles]) {
+        [proxy searchByHash:hashString andByteSize:byteSize];
+    } else if ([_server isEqualToString:SDPodnapisi]) {
+        [proxyPodnapi searchByHash:hashString];
     }
     
-    [dict setObject:hashString forKey:@"moviehash"];
-    [dict setObject:[NSNumber numberWithDouble:byteSizeString] forKey:@"moviebytesize"];
-    
-    NSArray *arguments = [NSArray arrayWithObjects:dict, nil];
-    
-    self.preloadeLabel = @"Searching for subtitles...";
-    self.preloaderHidden = NO;
-    
-    [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
 }
 
 #pragma mark - notification center methods
@@ -209,10 +204,10 @@
     // Select elements from collections of models
     NSMutableArray* collection = [subsArrayController arrangedObjects];
     selectedSubtitle = [collection objectAtIndex:row];
-    [self saveSubtitles];
+    [self downloadSubtitles];
 }
 
-- (void) saveSubtitles
+- (void) downloadSubtitles
 {
     self.preloadeLabel = @"Downloading subtitles...";
     self.preloaderHidden = NO;
@@ -226,7 +221,7 @@
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withData:(id)data
 {    
-    if ([[request method] isEqualToString:@"LogIn"]) {
+    if ([[request method] isEqualToString:@"LogIn"] || [[request method] isEqualToString:@"authenticate"]) {
         
         loginModel = data;
         self.isConnected = YES;
@@ -239,7 +234,7 @@
         
         if ([GeneralPreferencesViewController useQuickMode]){
             selectedSubtitle = [searchModelCollection objectAtIndex:0];
-            [self saveSubtitles];
+            [self downloadSubtitles];
         } else if(!self.isExpanded) {
             [subtitlesTable setEnabled:YES];
             [self expandWindow];
@@ -263,14 +258,32 @@
     [self setPreloaderHidden:YES];
     
     // Decompress data received from server
-    NSData *uncompressedData = [data gunzippedData];
-    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@",movieLocalPath ,[selectedSubtitle subFileName]];
+    uncompressedData = [data gunzippedData];
+    pathWithName = [NSString stringWithFormat:@"%@/%@",movieLocalPath ,[selectedSubtitle subFileName]];
     NSString *ext = [pathWithName pathExtension];
     NSString *movieLocalName = [[movieLocalURL lastPathComponent] stringByDeletingPathExtension];
     pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movieLocalPath ,movieLocalName, ext];
     
-    [uncompressedData writeToFile:pathWithName atomically:YES];
+    //- (BOOL)fileExistsAtPath:(NSString *)path isDirectory:(BOOL *)isDirectory
+    BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:pathWithName];
     
+    if(exist) {
+        NSAlert *myAlert = [NSAlert alertWithMessageText:@"Subtitle file already exist in the folder" defaultButton:@"Yes" alternateButton:@"No" otherButton:nil informativeTextWithFormat:@"Would you like to overwrite old subtitle file with new one?"];
+        [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(alertEnded:code:context:) contextInfo:nil];
+    } else {
+        [self saveDataFile];
+    }
+}
+
+-(void) alertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v
+{
+    if(choice == NSAlertDefaultReturn) {
+        [self saveDataFile];
+    }
+}
+
+-(void) saveDataFile {
+    [uncompressedData writeToFile:pathWithName atomically:YES];
     NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
 }

@@ -32,6 +32,14 @@
     [self showAlertSheet:@"The Internet connection appears to be offline!" andInfo:@"You must be connected to the internet in order to serach for subtitles on the server."];
 }
 
+-(void) askIfOverwriteFile
+{
+    //[self showAlertSheet:@"Subtitle file already exist in the folder" andInfo:@"Would you like to overwrite old subtitle file with new one?"];
+    NSAlert *myAlert = [NSAlert alertWithMessageText:@"Subtitle file already exist in the folder" defaultButton:@"YES" alternateButton:@"NO" otherButton:nil informativeTextWithFormat:@"Would you like to overwrite old subtitle file with new one?"];
+    //    NSAlert *myAlert = [NSAlert alertWithMessageText:@"huj" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
+    [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:appDelegate.mainWindowController didEndSelector:@selector(alertEnded:code:context:) contextInfo:nil];
+}
+
 
 
 @end
