@@ -59,7 +59,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="720691288">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSImageView" id="606613562">
@@ -647,6 +647,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{858, 396}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="606613562"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>

@@ -7,6 +7,8 @@
 //
 
 #import "Proxy.h"
+#import "Alerter.h"
+#import "MainWindowController.h"
 
 @implementation Proxy
 
@@ -14,33 +16,25 @@
 
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments
 {
-    // Make sure all prev connections are stopped
+    
+    // Use only one connection at a time 
     [manager closeConnections];
     NSURL *URL = [NSURL URLWithString: @"http://api.opensubtitles.org/xml-rpc"];
     XMLRPCRequest *request = [[XMLRPCRequest alloc] initWithURL: URL];
     manager = [XMLRPCConnectionManager sharedManager];
     
-    
     [request setMethod: serviceName withParameters: arguments];
     
-    //NSLog(@"Request body: %@", [request body]);
-    
     [manager spawnConnectionWithXMLRPCRequest: request delegate: self];
-    
 }
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
     if ([response isFault]) {
-        //NSLog(@"Fault code: %@", [response faultCode]);
-        
-        //NSLog(@"Fault string: %@", [response faultString]);
+        [delegate didFaultProxyRequest];
     } else {
         NSLog(@"Parsed response: %@", [response object]);
+        [delegate didFinishProxyRequest:request withResponse:response]; // Custom delegate
     }
-    
-    
-    NSLog(@"%@", [manager activeConnectionIdentifiers]);
-    [delegate didFinishProxyRequest:request withResponse:response]; // Custom delegate
 }
 
 - (void)request: (XMLRPCRequest *)request didFailWithError: (NSError *)error {
@@ -59,12 +53,14 @@
 - (void)request: (XMLRPCRequest *)request didCancelAuthenticationChallenge: (NSURLAuthenticationChallenge *)challenge {
 }
 
+//------------------------------------------------------
+
 -(void)downloadDataFromURL:(NSURL *)url
 {
     [urlConnection cancel];
     subtitleFileData = nil;
     subtitleFileData = [[NSMutableData alloc] init];
-   // NSURL* fileURL = [NSURL URLWithString:[selectedSubtitle subtitlesLink]];
+
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
     urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     if (!urlConnection) {
@@ -76,13 +72,12 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    //int length = data.length;
-    //NSLog(@"%i", length);
     [subtitleFileData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSLog(@"%@", subtitleFileData);
     [delegate fileDownloadFinishedWithData:subtitleFileData];
 }
 
@@ -92,8 +87,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    appDelegate = [[AppDelegate alloc] init];
-    [appDelegate showAlertSheet:@"Connection failed!" andInfo:(@"Error - %@", [error localizedDescription])];
+    [Alerter showAlertSheet:@"Connection failed!" andInfo:(@"Error - %@", [error localizedDescription])];
     // inform the user
     NSLog(@"Connection failed! Error - %@ %@",
           [error localizedDescription],

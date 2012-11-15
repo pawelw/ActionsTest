@@ -8,6 +8,7 @@
 //NSString *const SD
 NSString *const SDUsePreferedLanguageKey = @"SDUsePreferedLanguage";
 NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
+NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
 
 - (id)init
 {
@@ -19,6 +20,8 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
     // Setting value of checkbox from user defaults database
     [langPreferedCheckbox setState:[GeneralPreferencesViewController usePreferedLanguage]];
     self.comboBoxEnabled = [GeneralPreferencesViewController usePreferedLanguage];
+    
+    [self.quickModeCheckbox setState:[GeneralPreferencesViewController useQuickMode]];
     
     // Setting dropdown item from user defaults ( + (NSString *) preferedLanguage )
     NSArray *langKeysArray = [self.languagesDictionary allKeysForObject:[GeneralPreferencesViewController preferedLanguage]];
@@ -44,6 +47,11 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
     NSLog(@"language: %@",language);
 }
 
+- (IBAction)onUseQuickModeCheckboxChanged:(id)sender {
+    long state = [self.quickModeCheckbox state];
+    [GeneralPreferencesViewController setUseQuickMode:state];
+}
+
 #pragma mark - Preferences getters and setters
 
 
@@ -63,6 +71,14 @@ NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
 }
 + (void) setPreferedLanguage: (NSString *) language {
     [[NSUserDefaults standardUserDefaults] setObject:language forKey:SDPreferedLanguageKey];
+}
+//-----------------------------
++ (BOOL) useQuickMode {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults boolForKey:SDUseQuickModeKey];
+}
++ (void) setUseQuickMode: (BOOL) mode {
+    [[NSUserDefaults standardUserDefaults] setBool:mode forKey:SDUseQuickModeKey];
 }
 //-----------------------------
 

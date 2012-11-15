@@ -18,7 +18,7 @@
     if (self) {
         // Initialization code here.
         bgColor = [NSColor colorWithCalibratedWhite:0.05 alpha:1.0];
-        borderColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+        borderColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
         [self registerForDraggedTypes:[NSArray arrayWithObjects: NSFilenamesPboardType,  nil]];
 
         // NT
@@ -57,7 +57,7 @@
         return NSDragOperationNone;
     }
     highlighted = YES;
-    [self setNeedsDisplay:YES]; return NSDragOperationCopy;
+    [self setNeedsDisplay:YES]; return NSDragOperationEvery;
     
     
     //return [QTMovie canInitWithPasteboard:[sender draggingPasteboard]] ? NSDragOperationCopy : NSDragOperationNone;
@@ -101,6 +101,7 @@
     NSLog(@"perform drag operation:");
     NSPasteboard *pasteboard = [sender draggingPasteboard];
     NSArray* fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
+    NSLog(@"%@", fileNames);
     if ( fileNames.count < 1 ) return NO;
     for ( NSString* file in fileNames ) {
         fileURL = [NSURL URLFromPasteboard:pasteboard];

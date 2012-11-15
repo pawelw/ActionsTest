@@ -9,6 +9,7 @@
 #import "MainWindowController.h"
 #import "DisablerView.h"
 #import "GeneralPreferencesViewController.h"
+#import "Alerter.h"
 
 @interface MainWindowController ()
 
@@ -44,6 +45,8 @@
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
     }
+    
+    [self showWindow:window];
     
     //// DUMMY DATA
 //    tempArray = [[NSMutableArray alloc] init];
@@ -189,38 +192,39 @@
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
     [disablerView show];
-    [disablerView.label setHidden:NO];
-    // Find out what row it was in and edit that color with the popup
-    NSInteger row = [subtitlesTable rowForView:sender];
-
-    self.preloadeLabel = @"Downloading subtitles...";
-    self.preloaderHidden = NO;
-    [self.subtitlesTable setEnabled:NO];
-    
-    // Select elements from collections of models
-    NSMutableArray* collection = [subsArrayController arrangedObjects];
-    selectedSubtitle = [collection objectAtIndex:row];
-    
+    [disablerView.label setHidden:NO];    
     //[self contractWindowWithAnimation:YES];
     //[self.expandButton setHidden:NO];
     [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
     [disablerView show];
     
+    // Find out what row it was in and edit that color with the popup
+    NSInteger row = [subtitlesTable rowForView:sender];
+    
+    // Select elements from collections of models
+    NSMutableArray* collection = [subsArrayController arrangedObjects];
+    selectedSubtitle = [collection objectAtIndex:row];
     [self saveSubtitles];
 }
 
 - (void) saveSubtitles
 {
+    self.preloadeLabel = @"Downloading subtitles...";
+    self.preloaderHidden = NO;
+    [self.subtitlesTable setEnabled:NO];
+    
     NSURL* url = [NSURL URLWithString:[selectedSubtitle subDownloadLink]];
     [proxy downloadDataFromURL:url];
 }
 
 -(void) fileDownloadFinishedWithData:(NSMutableData *)data
 {
-    [disablerView hide];
-    [disablerView.label setHidden:YES];
+    if (![GeneralPreferencesViewController usePreferedLanguage] && ![GeneralPreferencesViewController useQuickMode]){
+        [disablerView hide];
+        [disablerView.label setHidden:YES];
+        [subtitlesTable setEnabled:YES];
+    }
     [self setPreloaderHidden:YES];
-    [subtitlesTable setEnabled:YES];
     
     // Decompress data received from server
     NSData *uncompressedData = [data gunzippedData];
@@ -262,9 +266,9 @@
         
         if ([dataAsString isEqualToString:@"0"]) {
             if ([GeneralPreferencesViewController usePreferedLanguage]) {
-                [appDelegate showAlertSheet:@"Subtitles not found!" andInfo:@"There is no subtitle file for this movie in your specified language on the server. To change search language go to preferences panel."];
+                [Alerter showNotFoundAlertForLanguage];
             } else {
-                [appDelegate showAlertSheet:@"Subtitles not found!" andInfo:@"There is no subtitle file for this movie on the server."];
+                [Alerter showNotFoundAlert];
             }
             return;
         } else {
@@ -294,17 +298,19 @@
             [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
         }
     
-        if (!self.isExpanded) [self expandWindow];
-       // [disablerView hide];
-        [subtitlesTable setEnabled:YES];
-        NSLog(@"SUCESS");
-
+        if ([GeneralPreferencesViewController usePreferedLanguage] && [GeneralPreferencesViewController useQuickMode]){
+            selectedSubtitle = [searchModelCollection objectAtIndex:0];
+            [self saveSubtitles];
+        } else if(!self.isExpanded) {
+            [self expandWindow];
+            [subtitlesTable setEnabled:YES];
+        }
     }
 }
 
 -(void) didFaultProxyRequest
 {
-    [appDelegate showAlertSheet:@"The Internet connection appears to be offline!" andInfo:@"You must be connected to the internet in order to serach for subtitles on the server."];
+    [Alerter showNoConnectionAlert];
     [self setPreloaderHidden:YES];
 }
 
