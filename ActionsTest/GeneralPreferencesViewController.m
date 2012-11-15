@@ -74,6 +74,9 @@ NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
 }
 //-----------------------------
 + (BOOL) useQuickMode {
+    if (![GeneralPreferencesViewController usePreferedLanguage]) {
+        return NO;
+    }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults boolForKey:SDUseQuickModeKey];
 }

@@ -13,22 +13,21 @@
 #import "LoginModel.h"
 #import "AppDelegate.h"
 #import "NSData+GZIP.h"
+#import "SearchModel.h"
 
 @protocol ProxyDelegate
 @optional
--(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse: (XMLRPCResponse *)response;
+-(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
 -(void) didFaultProxyRequest;
 -(void) fileDownloadFinishedWithData: (NSData *) data;
 @end
 
 @interface Proxy : NSObject <XMLRPCConnectionDelegate> {
     id <ProxyDelegate> delegate;
-    LoginModel *loginModel;
     XMLRPCConnectionManager *manager;
     NSMutableData *subtitleFileData;
     NSURLConnection *urlConnection;
 }
-@property(nonatomic, retain) LoginModel *loginModel;
 @property(nonatomic, retain) NSMutableData *subtitleFileData;
 @property(nonatomic, retain) XMLRPCConnectionManager *manager;
 @property (nonatomic, retain) id <ProxyDelegate> delegate;

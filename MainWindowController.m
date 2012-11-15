@@ -48,6 +48,9 @@
     
     [self showWindow:window];
     
+    // Allocations
+    searchModelCollection = [[NSMutableArray alloc] init];
+    
     //// DUMMY DATA
 //    tempArray = [[NSMutableArray alloc] init];
 //    searchModel = [[SearchModel alloc] init];
@@ -89,9 +92,42 @@
     self.preloadeLabel = @"Connecting with server...";
 }
 
-- (IBAction)showPreferencesPanel:(id)sender
+-(void) initLoginCall
 {
+    // Init Proxy
+    proxy = [[Proxy alloc] init];
+    [proxy setDelegate:self];
+    [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
+    
+    // show preloader
+    self.preloadeLabel = @"Connecting with server...";
+    self.preloaderHidden = NO;
+}
 
+-(void) initSearchCall: (NSURL *) url
+{
+    hash = [OSHashAlgorithm hashForURL:url];
+    movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
+    NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
+    double byteSizeString = (uint64_t) hash.fileSize;
+    
+    OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
+    
+    if ([GeneralPreferencesViewController usePreferedLanguage]) {
+        [dict setObject:[GeneralPreferencesViewController preferedLanguage] forKey:@"sublanguageid"];
+    } else {
+        [dict setObject:@"" forKey:@"sublanguageid"];
+    }
+    
+    [dict setObject:hashString forKey:@"moviehash"];
+    [dict setObject:[NSNumber numberWithDouble:byteSizeString] forKey:@"moviebytesize"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:dict, nil];
+    
+    self.preloadeLabel = @"Searching for subtitles...";
+    self.preloaderHidden = NO;
+    
+    [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
 }
 
 #pragma mark - notification center methods
@@ -106,7 +142,7 @@
     self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
 }
 
-#pragma mark - general class methods
+#pragma mark - Action methods
 
 // Any ole method
 -(NSArray *) openFiles
@@ -151,44 +187,6 @@
     isExpanded ? [self contractWindowWithAnimation:YES] : [self expandWindow];
 }
 
--(void) initLoginCall
-{        
-    // Init Proxy
-    proxy = [[Proxy alloc] init];
-    [proxy setDelegate:self];
-    [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
-    
-    // show preloader
-    self.preloadeLabel = @"Connecting with server...";
-    self.preloaderHidden = NO;
-}
-
--(void) initSearchCall: (NSURL *) url
-{
-    hash = [OSHashAlgorithm hashForURL:url];
-    movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
-    NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
-    double byteSizeString = (uint64_t) hash.fileSize;
-    
-    OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
-    
-    if ([GeneralPreferencesViewController usePreferedLanguage]) {
-        [dict setObject:[GeneralPreferencesViewController preferedLanguage] forKey:@"sublanguageid"];
-    } else {
-        [dict setObject:@"" forKey:@"sublanguageid"];
-    }
-    
-    [dict setObject:hashString forKey:@"moviehash"];
-    [dict setObject:[NSNumber numberWithDouble:byteSizeString] forKey:@"moviebytesize"];
-    
-    NSArray *arguments = [NSArray arrayWithObjects:dict, nil];
-    
-    self.preloadeLabel = @"Searching for subtitles...";
-    self.preloaderHidden = NO;
-    
-    [proxy callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
-}
-
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
     [disablerView show];
@@ -217,9 +215,40 @@
     [proxy downloadDataFromURL:url];
 }
 
+#pragma mark - proxy protocol methods
+
+-(void) didFinishProxyRequest: (XMLRPCRequest *)request withData:(id)data
+{    
+    if ([[request method] isEqualToString:@"LogIn"]) {
+        
+        loginModel = data;
+        self.isConnected = YES;
+        [self initSearchCall:movieLocalURL];
+        
+    } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
+        
+        [self setPreloaderHidden:YES];
+        [[self mutableArrayValueForKey:@"searchModelCollection"] setArray:data];
+        
+        if ([GeneralPreferencesViewController useQuickMode]){
+            selectedSubtitle = [searchModelCollection objectAtIndex:0];
+            [self saveSubtitles];
+        } else if(!self.isExpanded) {
+            [subtitlesTable setEnabled:YES];
+            [self expandWindow];
+        }
+    }
+}
+
+-(void) didFaultProxyRequest
+{
+    [Alerter showNoConnectionAlert];
+    [self setPreloaderHidden:YES];
+}
+
 -(void) fileDownloadFinishedWithData:(NSMutableData *)data
 {
-    if (![GeneralPreferencesViewController usePreferedLanguage] && ![GeneralPreferencesViewController useQuickMode]){
+    if (![GeneralPreferencesViewController useQuickMode]){
         [disablerView hide];
         [disablerView.label setHidden:YES];
         [subtitlesTable setEnabled:YES];
@@ -237,81 +266,6 @@
     
     NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
-}
-
-#pragma mark - proxy protocol methods
-
--(void) didFinishProxyRequest: (XMLRPCRequest *)request withResponse:(XMLRPCResponse *)response
-{    
-
-    if ([[request method] isEqualToString:@"LogIn"]) {
-        
-        loginModel = [LoginModel initAsSingleton];
-        
-        [loginModel setToken:[[response object] objectForKey:@"token"]];
-        [loginModel setStatus:[[response object] objectForKey:@"status"]];
-        [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
-        
-        self.isConnected = YES;
-        [self initSearchCall:movieLocalURL];
-        
-    } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
-        
-        [self setPreloaderHidden:YES];
-        
-        NSDictionary *responseData = [[NSDictionary alloc] init];
-        responseData = [[response object] objectForKey:@"data"];
-        
-        NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
-        
-        if ([dataAsString isEqualToString:@"0"]) {
-            if ([GeneralPreferencesViewController usePreferedLanguage]) {
-                [Alerter showNotFoundAlertForLanguage];
-            } else {
-                [Alerter showNotFoundAlert];
-            }
-            return;
-        } else {
-            dataAsString = nil;
-        }
-        
-        searchModel = [[SearchModel alloc] init];
-        searchModelCollection = [[NSMutableArray alloc] init];
-        
-        for (NSString* key in responseData) {
-            
-            [searchModel setMovieName: [key valueForKey:@"MovieName"]];
-            [searchModel setZipDownloadLink: [key valueForKey:@"ZipDownloadLink"]];
-            [searchModel setSubDownloadLink: [key valueForKey:@"SubDownloadLink"]];
-            [searchModel setSubFileName: [key valueForKey:@"SubFileName"]];
-            [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
-            [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
-            [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
-            
-            // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
-            if([[key valueForKey:@"MovieReleaseName"] isEqualToString:@""])
-                [searchModel setMovieReleaseName: [key valueForKey:@"MovieName"]];
-            else
-                [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
-            
-            // Using key setter method to activate delegation of data to NSTableView
-            [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
-        }
-    
-        if ([GeneralPreferencesViewController usePreferedLanguage] && [GeneralPreferencesViewController useQuickMode]){
-            selectedSubtitle = [searchModelCollection objectAtIndex:0];
-            [self saveSubtitles];
-        } else if(!self.isExpanded) {
-            [self expandWindow];
-            [subtitlesTable setEnabled:YES];
-        }
-    }
-}
-
--(void) didFaultProxyRequest
-{
-    [Alerter showNoConnectionAlert];
-    [self setPreloaderHidden:YES];
 }
 
 #pragma mark - tableView protocol methods
