@@ -14,11 +14,13 @@
     NSString *responseTime;
 	NSString *status;
 	NSString *token;
+    NSString *session;
 }
 
 @property (nonatomic, retain) NSString *responseTime;
 @property (nonatomic, retain) NSString *status;
 @property (nonatomic, retain) NSString *token;
+@property (nonatomic, retain) NSString *session;
 
 +(LoginModel*)initAsSingleton;
 

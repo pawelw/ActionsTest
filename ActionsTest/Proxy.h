@@ -15,6 +15,9 @@
 #import "NSData+GZIP.h"
 #import "SearchModel.h"
 
+extern NSString *const SDOpenSubtitlesURL;
+extern NSString *const SDPodnapisiURL;
+
 @protocol ProxyDelegate
 @optional
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
@@ -31,6 +34,7 @@
 @property(nonatomic, retain) NSMutableData *subtitleFileData;
 @property(nonatomic, retain) XMLRPCConnectionManager *manager;
 @property (nonatomic, retain) id <ProxyDelegate> delegate;
+@property (nonatomic, retain) NSString *serverMode;
 
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments;
 -(void)downloadDataFromURL:(NSURL *)url;

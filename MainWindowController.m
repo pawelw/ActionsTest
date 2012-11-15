@@ -97,7 +97,14 @@
     // Init Proxy
     proxy = [[Proxy alloc] init];
     [proxy setDelegate:self];
-    [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
+    if([proxy.serverMode isEqualToString:SDOpenSubtitlesURL]) {
+        NSLog(@"Calling openSubtitles.org LogIn method");
+        [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
+    } else {
+        NSLog(@"Calling podnapi.net LogIn method");
+        [proxy callWebService:@"initiate" withArguments:[NSArray arrayWithObjects: @"subtitles downloader", nil]];
+    }
+    
     
     // show preloader
     self.preloadeLabel = @"Connecting with server...";
