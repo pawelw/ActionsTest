@@ -8,6 +8,8 @@
 
 #import "DropView.h"
 
+NSImageView *imageView;
+
 @implementation DropView
 @synthesize fileURL, borderColor;
 
@@ -23,6 +25,17 @@
 
         // NT
         notificationCenter = [NSNotificationCenter defaultCenter];
+        
+//        [self setImage:[NSImage imageNamed:@"drop.png"]];
+//        [self setImageAlignment: NSImageAlignCenter];
+        
+        //[self ]
+        // Image
+//        NSRect frame = NSMakeRect(0, 3, 88, 29);
+//        imageView = [[NSImageView alloc] initWithFrame:frame];
+//        [imageView setImage:[NSImage imageNamed:@"drop.png"]];
+//        [self addSubview:imageView];
+        
     }
     
     return self;
@@ -33,8 +46,8 @@
     // Drawing code here.
     NSRect bounds = [self bounds];
     NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:8 yRadius:8];
-    [bgColor set];
-    [path fill];
+//    [bgColor set];
+//    [path fill];
     
     // Draw gradient background if highlighted if (highlighted) {
     if (highlighted) {

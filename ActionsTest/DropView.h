@@ -11,7 +11,7 @@
 #import "Proxy.h"
 #import "MainWindowController.h"
 
-@interface DropView : NSView {
+@interface DropView : NSImageView {
     NSColor *bgColor;
     BOOL highlighted;
     VideoHash hash;

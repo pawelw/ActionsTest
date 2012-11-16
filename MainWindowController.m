@@ -11,8 +11,8 @@
 #import "GeneralPreferencesViewController.h"
 #import "Alerter.h"
 
-NSString *const SDOpenSubtitles = @"openSubtitles";
-NSString *const SDPodnapisi = @"podnapisi";
+NSString *const SDOpenSubtitles = @"opensubtitles.org";
+NSString *const SDPodnapisi = @"podnapisi.net";
 
 @interface MainWindowController ()
 
@@ -34,26 +34,27 @@ NSString *const SDPodnapisi = @"podnapisi";
     
     if (self) {
         // Initialization code here.
+        _server = SDOpenSubtitles; // Set Main API server
+        
         appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         subtitlesTable.delegate = self;
-        [self initPreloader];
-        
         // Seting YES as default because window is expanded in xib file when app starts
         isExpanded = YES;
-        _server = SDPodnapisi; // Set Main API server
-        
         nameSorters = [NSArray arrayWithObject:
-                      [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:NO]];
-        
+                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:YES]];
         // Add notification center observer for drop file view
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
+        
+        // Allocations
+        searchModelCollection = [[NSMutableArray alloc] init];
+        
+        [self initPreloader];
     }
     
     [self showWindow:window];
     
-    // Allocations
-    searchModelCollection = [[NSMutableArray alloc] init];
+
     
     //// DUMMY DATA
 //    tempArray = [[NSMutableArray alloc] init];
@@ -88,16 +89,22 @@ NSString *const SDPodnapisi = @"podnapisi";
     disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
     [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
     
+    [self.window setBackgroundColor:[NSColor blackColor]];
+    
     [self contractWindowWithAnimation:NO];
 }
 
 -(void) initPreloader {
     [self setPreloaderHidden:YES];
-    [self setPreloadeLabel: @"Connecting with server..."];
+    [self setPreloadeLabel: @"Connecting with server ..."];
 }
 
 -(void) initLoginCall
 {
+    // show preloader
+    self.preloadeLabel = @"Connecting with server ...";
+    self.preloaderHidden = NO;
+    
     // Init Proxy
     if([_server isEqualToString:SDOpenSubtitles]) {
         proxy = [[Proxy alloc] init];
@@ -107,11 +114,7 @@ NSString *const SDPodnapisi = @"podnapisi";
         proxyPodnapi = [[ProxyPodnapi alloc] init];
         [proxyPodnapi setDelegate:self];
         [proxyPodnapi login];
-    }
-
-    // show preloader
-    self.preloadeLabel = @"Connecting with server...";
-    self.preloaderHidden = NO;
+    } 
 }
 
 -(void) initSearchCall: (NSURL *) url
@@ -121,14 +124,14 @@ NSString *const SDPodnapisi = @"podnapisi";
     NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
     double byteSize = (uint64_t) hash.fileSize;
     
-    [self setPreloadeLabel: @"Searching for subtitles..."];
+    [self setPreloadeLabel:@"Searching opensubtitles.org ..."];
     [self setPreloaderHidden: NO];
     
     if([_server isEqualToString:SDOpenSubtitles]) {
         [proxy searchByHash:hashString andByteSize:byteSize];
     } else if ([_server isEqualToString:SDPodnapisi]) {
         [proxyPodnapi searchByHash:hashString];
-    }
+    } 
     
 }
 
@@ -209,7 +212,7 @@ NSString *const SDPodnapisi = @"podnapisi";
 
 - (void) downloadSubtitles
 {
-    self.preloadeLabel = @"Downloading subtitles...";
+    self.preloadeLabel = @"Downloading subtitles ...";
     self.preloaderHidden = NO;
     [self.subtitlesTable setEnabled:NO];
     
@@ -220,7 +223,7 @@ NSString *const SDPodnapisi = @"podnapisi";
 #pragma mark - proxy protocol methods
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withData:(id)data
-{    
+{
     if ([[request method] isEqualToString:@"LogIn"] || [[request method] isEqualToString:@"authenticate"]) {
         
         loginModel = data;
@@ -307,7 +310,7 @@ NSString *const SDPodnapisi = @"podnapisi";
     
     // Check if is not expanded already
     if(!isExpanded) {
-        frame.size.width = 859;
+        frame.size.width = 858;
         
         if((frame.origin.x -= 200) > 210)
             frame.origin.x -= 200;
@@ -333,7 +336,7 @@ NSString *const SDPodnapisi = @"podnapisi";
     
     // Check if window is expanded
     if(isExpanded) {
-        frame.size.width = 295;
+        frame.size.width = 299;
         isExpanded = NO;
     }
     
