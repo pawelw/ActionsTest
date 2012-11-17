@@ -9,6 +9,7 @@
 NSString *const SDUsePreferedLanguageKey = @"SDUsePreferedLanguage";
 NSString *const SDPreferedLanguageKey = @"SDPreferedLanguage";
 NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
+NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 
 - (id)init
 {
@@ -21,12 +22,16 @@ NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
     [langPreferedCheckbox setState:[GeneralPreferencesViewController usePreferedLanguage]];
     self.comboBoxEnabled = [GeneralPreferencesViewController usePreferedLanguage];
     
+    // Setting quick mode checkbox value
     [self.quickModeCheckbox setState:[GeneralPreferencesViewController useQuickMode]];
     
     // Setting dropdown item from user defaults ( + (NSString *) preferedLanguage )
     NSArray *langKeysArray = [self.languagesDictionary allKeysForObject:[GeneralPreferencesViewController preferedLanguage]];
     [self.langPopUpButton selectItemWithTitle:[langKeysArray objectAtIndex:0]];
-
+    
+    // Setitng
+    //NSString *path = [
+    [self.directoryTextField setStringValue:[GeneralPreferencesViewController defaultDirectory]];
 }
 
 #pragma mark - Actions
@@ -50,6 +55,16 @@ NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
 - (IBAction)onUseQuickModeCheckboxChanged:(id)sender {
     long state = [self.quickModeCheckbox state];
     [GeneralPreferencesViewController setUseQuickMode:state];
+}
+
+- (IBAction)onDefaultDirectoryPressed:(id)sender {
+    //NSLog(@"%@", [GeneralPreferencesViewController defaultDirectory]);
+    NSArray *urls = [self openFilesPanel];
+    NSLog(@"%@", [urls objectAtIndex:0]);
+    NSString *path = [[urls objectAtIndex:0] path];
+    [self.directoryTextField setStringValue:path ];
+    [GeneralPreferencesViewController setDefaultDirectory:path];
+
 }
 
 #pragma mark - Preferences getters and setters
@@ -84,6 +99,16 @@ NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
     [[NSUserDefaults standardUserDefaults] setBool:mode forKey:SDUseQuickModeKey];
 }
 //-----------------------------
++ (NSString *) defaultDirectory {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString * defaultDirectory = [defaults objectForKey:SDDefaultDirectory];
+    return defaultDirectory;
+}
++ (void) setDefaultDirectory: (NSString *) defaultDirectory {
+    //[self.directoryTextField setStringValue: defaultDirectory];
+    [[NSUserDefaults standardUserDefaults] setObject:defaultDirectory forKey:SDDefaultDirectory];
+}
+//-----------------------------
 
 #pragma mark -
 #pragma mark MASPreferencesViewController
@@ -101,6 +126,22 @@ NSString *const SDUseQuickModeKey = @"SDUseQuickMode";
 - (NSString *)toolbarItemLabel
 {
     return NSLocalizedString(@"General", @"Toolbar item name for the General preference pane");
+}
+
+#pragma mark - Open Panel and default folder
+
+-(NSArray *) openFilesPanel
+{
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    [openDlg setCanChooseFiles:NO];
+    [openDlg setDirectoryURL:[NSURL fileURLWithPath:[GeneralPreferencesViewController defaultDirectory]]];
+    [openDlg setCanChooseDirectories:YES];
+    [openDlg setCanChooseFiles:NO];
+
+    if ( [openDlg runModal] == NSOKButton ) {
+        return [openDlg URLs];
+    }
+    return nil;
 }
 
 //----------------------------

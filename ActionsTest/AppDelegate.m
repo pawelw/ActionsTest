@@ -25,6 +25,9 @@
     NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
     [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:SDUsePreferedLanguageKey];
     
+    NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
+    [defaultValues setObject:[movieDirectory path] forKey:SDDefaultDirectory];
+    
     // Register the dictionary of defaults
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }

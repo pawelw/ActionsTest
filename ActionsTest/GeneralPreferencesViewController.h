@@ -7,6 +7,7 @@
 extern NSString *const SDUseQuickModeKey;
 extern NSString *const SDUsePreferedLanguageKey;
 extern NSString *const SDPreferedLanguageKey;
+extern NSString *const SDDefaultDirectory;
 
 @interface GeneralPreferencesViewController : NSViewController <MASPreferencesViewController> {
     NSButton *langPreferedCheckbox;
@@ -16,12 +17,14 @@ extern NSString *const SDPreferedLanguageKey;
 @property (strong) IBOutlet NSButton *quickModeCheckbox;
 @property (strong) IBOutlet NSButton *langPreferedCheckbox;
 @property (nonatomic) NSMutableArray *languagesArray;
+@property (strong) IBOutlet NSTextField *directoryTextField;
 @property (nonatomic) NSDictionary * languagesDictionary;
 @property (nonatomic) BOOL comboBoxEnabled;
 
 - (IBAction)onPreferedLangCheckboxChanged:(id)sender;
 - (IBAction)onLanguagesPopUpButtonChanged:(id)sender;
 - (IBAction)onUseQuickModeCheckboxChanged:(id)sender;
+- (IBAction)onDefaultDirectoryPressed:(id)sender;
 
 + (BOOL) usePreferedLanguage;
 + (void) setUsePreferedLanguage: (BOOL) prefered;
@@ -29,5 +32,7 @@ extern NSString *const SDPreferedLanguageKey;
 + (void) setPreferedLanguage: (NSString *) language;
 + (BOOL) useQuickMode;
 + (void) setUseQuickMode: (BOOL) mode;
++ (NSString *) defaultDirectory;
++ (void) setDefaultDirectory: (NSString *) defaultDirectory;
 
 @end

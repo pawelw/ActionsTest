@@ -154,7 +154,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 {
     // Create a File Open Dialog class.
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-    NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
+    //NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
     
     // Set array of file types
     NSArray *fileTypesArray;
@@ -162,7 +162,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     
     // Enable options in the dialog.
     [openDlg setCanChooseFiles:YES];
-    [openDlg setDirectoryURL:movieDirectory];
+    [openDlg setDirectoryURL:[NSURL fileURLWithPath:[GeneralPreferencesViewController defaultDirectory]]];
     [openDlg setAllowedFileTypes:fileTypesArray];
     [openDlg setAllowsMultipleSelection:TRUE];
     
