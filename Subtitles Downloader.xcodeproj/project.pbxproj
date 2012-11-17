@@ -38,7 +38,6 @@
 		E5999DB716528F4600AE4CE7 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DA91652897800AE4CE7 /* MASPreferencesWindowController.m */; };
 		E5999DB8165290D300AE4CE7 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */; };
 		E5999DB91652912300AE4CE7 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5999DB116528D6F00AE4CE7 /* GeneralPreferencesView.xib */; };
-		E5999DBC1652B50400AE4CE7 /* SubtitlesDownloader in Resources */ = {isa = PBXBuildFile; fileRef = E5999DBB1652B50400AE4CE7 /* SubtitlesDownloader */; };
 		E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C93E164C948400B5B3D7 /* download_green.png */; };
 		E5A2C95F164CA01700B5B3D7 /* SubsTableRow.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A2C95E164CA01700B5B3D7 /* SubsTableRow.m */; };
 		E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A2C964164D332C00B5B3D7 /* download_green_2.png */; };
@@ -411,7 +410,6 @@
 				E5A2C93F164C948400B5B3D7 /* download_green.png in Resources */,
 				E5A2C965164D332C00B5B3D7 /* download_green_2.png in Resources */,
 				E5A2C967164D3A1400B5B3D7 /* gradient.png in Resources */,
-				E5999DBC1652B50400AE4CE7 /* SubtitlesDownloader in Resources */,
 				E528D29716559A68005788DA /* AboutWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

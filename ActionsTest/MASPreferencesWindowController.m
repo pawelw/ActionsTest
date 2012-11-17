@@ -84,6 +84,12 @@ static NSString *const PreferencesKeyForViewBounds (NSString *identifier)
     return !self.selectedViewController || [self.selectedViewController commitEditing];
 }
 
+- (void)windowWillClose:(NSNotification *)notification {
+    NSLog(@"Closing");
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"preferecncesWillClose" object:self];
+}
+
 - (void)windowDidMove:(NSNotification*)aNotification
 {
     [[NSUserDefaults standardUserDefaults] setObject:NSStringFromPoint(NSMakePoint(NSMinX([self.window frame]), NSMaxY([self.window frame]))) forKey:kMASPreferencesFrameTopLeftKey];

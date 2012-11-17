@@ -45,6 +45,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         // Add notification center observer for drop file view
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
+        [notificationCenter addObserver:self selector:@selector(closingPreferencesReceived:) name:@"preferecncesWillClose" object:nil];
         
         // Allocations
         searchModelCollection = [[NSMutableArray alloc] init];
@@ -147,6 +148,13 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
 }
 
+-(void) closingPreferencesReceived: (id) object
+{
+    if (self.isExpanded && [GeneralPreferencesViewController useQuickMode])
+    {
+        [self contractWindowWithAnimation:YES];
+    }
+}
 #pragma mark - Action methods
 
 - (IBAction)onBrowseClicked:(id)sender
