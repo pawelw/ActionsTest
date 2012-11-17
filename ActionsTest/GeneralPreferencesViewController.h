@@ -12,6 +12,7 @@ extern NSString *const SDDefaultDirectory;
 @interface GeneralPreferencesViewController : NSViewController <MASPreferencesViewController> {
     NSButton *langPreferedCheckbox;
     NSMutableArray *languagesArray;
+    NSArray * selectedFilesURLs;
 }
 @property (strong) IBOutlet NSPopUpButton *langPopUpButton;
 @property (strong) IBOutlet NSButton *quickModeCheckbox;

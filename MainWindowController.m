@@ -149,42 +149,32 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 
 #pragma mark - Action methods
 
-// Any ole method
--(NSArray *) openFiles
+- (IBAction)onBrowseClicked:(id)sender
 {
-    // Create a File Open Dialog class.
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-    //NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
-    
-    // Set array of file types
     NSArray *fileTypesArray;
     fileTypesArray = [NSArray arrayWithObjects:@"mov", @"avi", @"mpg", @"mpeg", @"mp4", @"wmv", @"rmvb", @"mkv", @"asf", @"divx", nil];
-    
-    // Enable options in the dialog.
     [openDlg setCanChooseFiles:YES];
     [openDlg setDirectoryURL:[NSURL fileURLWithPath:[GeneralPreferencesViewController defaultDirectory]]];
     [openDlg setAllowedFileTypes:fileTypesArray];
     [openDlg setAllowsMultipleSelection:TRUE];
-    
-    // Display the dialog box.  If the OK pressed,
-    // process the files.
-    if ( [openDlg runModal] == NSOKButton ) {
-        return [openDlg URLs];
-    }
-    return nil;
-}
-
-
-- (IBAction)onBrowseClicked:(id)sender
-{
-    selectedFilesURLs = [self openFiles];
-    
-    if( selectedFilesURLs == nil)
-        return;
-    movieLocalPath = [[selectedFilesURLs lastObject] path];
-    movieLocalURL = [selectedFilesURLs lastObject];
-    
-    self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
+    [openDlg beginSheetModalForWindow:self.window
+                    completionHandler:^(NSInteger result) {
+                        
+                        if(result == NSOKButton) {
+                            selectedFilesURLs = [openDlg URLs];
+                            if( selectedFilesURLs == nil)
+                                return;
+                            
+                            movieLocalPath = [[selectedFilesURLs lastObject] path];
+                            movieLocalURL = [selectedFilesURLs lastObject];
+                            
+                            self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
+                            NSLog(@"HUJ 1");
+                        } else {
+                            
+                        }
+                    }];
 }
 
 - (IBAction)onExpandButtonClicked:(id)sender

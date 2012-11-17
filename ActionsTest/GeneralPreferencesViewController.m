@@ -59,12 +59,24 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 
 - (IBAction)onDefaultDirectoryPressed:(id)sender {
     //NSLog(@"%@", [GeneralPreferencesViewController defaultDirectory]);
-    NSArray *urls = [self openFilesPanel];
-    NSLog(@"%@", [urls objectAtIndex:0]);
-    NSString *path = [[urls objectAtIndex:0] path];
-    [self.directoryTextField setStringValue:path ];
-    [GeneralPreferencesViewController setDefaultDirectory:path];
-
+    //NSArray *urls; = [self openFilesPanel];
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    [openDlg setDirectoryURL:[NSURL fileURLWithPath:[GeneralPreferencesViewController defaultDirectory]]];
+    [openDlg setCanChooseDirectories:YES];
+    [openDlg setCanChooseFiles:NO];
+    [openDlg beginSheetModalForWindow: self.view.window
+                    completionHandler:^(NSInteger result) {
+                        
+                        if(result == NSOKButton) {
+                           // urls = [openDlg URLs];
+                            selectedFilesURLs = [openDlg URLs];
+                            NSString *path = [[selectedFilesURLs objectAtIndex:0] path];
+                            [self.directoryTextField setStringValue:path ];
+                            [GeneralPreferencesViewController setDefaultDirectory:path];
+                        } else {
+                            
+                        }
+                    }];
 }
 
 #pragma mark - Preferences getters and setters
@@ -126,22 +138,6 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 - (NSString *)toolbarItemLabel
 {
     return NSLocalizedString(@"General", @"Toolbar item name for the General preference pane");
-}
-
-#pragma mark - Open Panel and default folder
-
--(NSArray *) openFilesPanel
-{
-    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-    [openDlg setCanChooseFiles:NO];
-    [openDlg setDirectoryURL:[NSURL fileURLWithPath:[GeneralPreferencesViewController defaultDirectory]]];
-    [openDlg setCanChooseDirectories:YES];
-    [openDlg setCanChooseFiles:NO];
-
-    if ( [openDlg runModal] == NSOKButton ) {
-        return [openDlg URLs];
-    }
-    return nil;
 }
 
 //----------------------------
