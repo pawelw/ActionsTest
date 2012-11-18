@@ -46,6 +46,8 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
         [notificationCenter addObserver:self selector:@selector(closingPreferencesReceived:) name:@"preferecncesWillClose" object:nil];
+        [notificationCenter addObserver:self selector:@selector(hideLoaderReceived:) name:@"hidePreloader" object:nil];
+        
         
         // Allocations
         searchModelCollection = [[NSMutableArray alloc] init];
@@ -70,6 +72,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 //        [searchModel setMovieReleaseName: @"MovieReleaseName_xxx"];
 //        [searchModel setIdMovie:@"IdMovie"];
 //        [searchModel setSubActualCD:@"SubActualCD"];
+//        [searchModel setSubDownloadLink:@"SubDownloadLink"];
 //        
 //        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
 //    }
@@ -155,6 +158,12 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         [self contractWindowWithAnimation:YES];
     }
 }
+
+-(void) hideLoaderReceived: (id) object
+{
+    [self setPreloaderHidden:YES];
+}
+
 #pragma mark - Action methods
 
 - (IBAction)onBrowseClicked:(id)sender
@@ -209,13 +218,19 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 }
 
 - (void) downloadSubtitles
-{
-    self.preloadeLabel = @"Downloading subtitles ...";
-    self.preloaderHidden = NO;
-    [self.subtitlesTable setEnabled:NO];
-    
+{    
     NSURL* url = [NSURL URLWithString:[selectedSubtitle subDownloadLink]];
-    [proxy downloadDataFromURL:url];
+    
+    NSAssert(url && url.scheme && url.host, @"Pawel Witkowski assertion: URL must be valid. You try to download subtitles from the server and you are pasing unvalid URL to the proxy. URL: '%@.'", url);
+    
+    if (url && url.scheme && url.host) {
+        self.preloadeLabel = @"Downloading subtitles ...";
+        self.preloaderHidden = NO;
+        [self.subtitlesTable setEnabled:NO];
+        [proxy downloadDataFromURL:url];
+    } else {
+        [Alerter showSomethingWentWrongAlert];
+    }
 }
 
 #pragma mark - proxy protocol methods
@@ -271,6 +286,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     if(exist) {
         NSAlert *myAlert = [NSAlert alertWithMessageText:@"Subtitle file already exist in the folder" defaultButton:@"Yes" alternateButton:@"No" otherButton:nil informativeTextWithFormat:@"Would you like to overwrite old subtitle file with new one?"];
         [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(alertEnded:code:context:) contextInfo:nil];
+        //[Alerter askIfOverwriteFile];
     } else {
         [self saveDataFile];
     }

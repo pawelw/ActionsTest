@@ -34,6 +34,7 @@
 		E591D5671626D3A900AFEC92 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E591D5651626D3A900AFEC92 /* Credits.rtf */; };
 		E591D56A1626D3A900AFEC92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5691626D3A900AFEC92 /* AppDelegate.m */; };
 		E591D56D1626D3AA00AFEC92 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E591D56B1626D3AA00AFEC92 /* MainMenu.xib */; };
+		E5931A8E165922C60058C622 /* NSAttributedString+Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */; };
 		E593D30D16584520008D9BA8 /* download_green_3.png in Resources */ = {isa = PBXBuildFile; fileRef = E593D30C16584520008D9BA8 /* download_green_3.png */; };
 		E5999DB516528EF900AE4CE7 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DB016528D6F00AE4CE7 /* GeneralPreferencesViewController.m */; };
 		E5999DB716528F4600AE4CE7 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DA91652897800AE4CE7 /* MASPreferencesWindowController.m */; };
@@ -104,6 +105,8 @@
 		E591D5681626D3A900AFEC92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E591D5691626D3A900AFEC92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E591D56C1626D3AA00AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E5931A8C165922C60058C622 /* NSAttributedString+Hyperlink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Hyperlink.h"; sourceTree = "<group>"; };
+		E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Hyperlink.m"; sourceTree = "<group>"; };
 		E593D30C16584520008D9BA8 /* download_green_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_green_3.png; sourceTree = "<group>"; };
 		E5999DA61652897800AE4CE7 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
 		E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
@@ -252,6 +255,7 @@
 		E591D55C1626D3A900AFEC92 /* SubtitlesDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				E5931A87165922420058C622 /* Categories */,
 				E54058DD1656A00D00D02816 /* Proxies */,
 				E528D29416559A08005788DA /* About */,
 				E5999DAE16528C0300AE4CE7 /* Preferences */,
@@ -285,6 +289,17 @@
 				E591D5651626D3A900AFEC92 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E5931A87165922420058C622 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				E5F2F48F1650330500A83303 /* NSData+GZIP.h */,
+				E5F2F4901650330500A83303 /* NSData+GZIP.m */,
+				E5931A8C165922C60058C622 /* NSAttributedString+Hyperlink.h */,
+				E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		E5999DA51652896800AE4CE7 /* MASPreferences */ = {
@@ -336,8 +351,6 @@
 		E5EC0AA41630548500FD2D0B /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
-				E5F2F48F1650330500A83303 /* NSData+GZIP.h */,
-				E5F2F4901650330500A83303 /* NSData+GZIP.m */,
 				E5D74ABD1630434900FC56E3 /* OrderedDictionary.h */,
 				E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */,
 				E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */,
@@ -451,6 +464,7 @@
 				E5CECE5F165464E300D1D3C5 /* Alerter.m in Sources */,
 				E5216FE916555050005F2DB9 /* ProxyPodnapi.m in Sources */,
 				E528D29A16559AA6005788DA /* AboutWindowController.m in Sources */,
+				E5931A8E165922C60058C622 /* NSAttributedString+Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

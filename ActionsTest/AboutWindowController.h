@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface AboutWindowController : NSWindowController
+@property (strong) IBOutlet NSTextField *opensubtitlesTexField;
 
 @end

@@ -17,6 +17,8 @@
 + (void) showNotFoundAlert;
 + (void) showNotFoundAlertForLanguage;
 + (void) showNoConnectionAlert;
++ (void) showSomethingWentWrongAlert;
+
 - (void) askIfOverwriteFile;
 
 @end

@@ -40,18 +40,17 @@
 }
 
 
-- (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info {
-    NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
-//    NSAlert *myAlert = [NSAlert alertWithMessageText:@"huj" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
-    [myAlert beginSheetModalForWindow:mainWindowController.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
-}
+//- (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info {
+//    NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
+////    NSAlert *myAlert = [NSAlert alertWithMessageText:@"huj" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:nil];
+//    [myAlert beginSheetModalForWindow:mainWindowController.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
+//}
 
 - (IBAction)openAbout:(id)sender
 {
     _aboutWindowController = [[AboutWindowController alloc] initWithWindowNibName:@"AboutWindow"];
-    
-    [_aboutWindowController showWindow:nil];
-    [[_aboutWindowController window] makeKeyAndOrderFront:self];
+   // [_aboutWindowController showWindow:nil];
+    [_aboutWindowController.window makeKeyAndOrderFront:nil];
 }
 
 #pragma mark - Preferences 

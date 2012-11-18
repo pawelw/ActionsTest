@@ -59,7 +59,9 @@
 }
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
-        
+    
+    NSLog(@"response: %@", response);
+    
     if ([response isFault]) {
         [delegate didFaultProxyRequest];
         NSLog(@"Proxy is Fault with response: %@", response);
@@ -83,6 +85,9 @@
         if ([dataAsString isEqualToString:@"0"]) {
             [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
             dataAsString = nil;
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hidePreloader" object:self];
+            
             return;
         } else {
             dataAsString = nil;
@@ -106,7 +111,7 @@
             // Check extention manualy from movie full name.
             ///////////
             NSString *ext = [[searchModel subFileName] pathExtension];
-            [searchModel setSubFormat:[key valueForKey:@"SubFormat"]];
+            [searchModel setSubFormat:ext];
             
             
             // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
