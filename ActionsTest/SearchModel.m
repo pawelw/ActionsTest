@@ -9,7 +9,7 @@
 #import "SearchModel.h"
 
 @implementation SearchModel
-@synthesize zipDownloadLink, languageName, movieName, movieReleaseName, idMovie, subActualCD, subDownloadLink, subFileName;
+@synthesize zipDownloadLink, languageName, movieName, movieReleaseName, idMovie, subActualCD, subDownloadLink, subFileName, subFormat;
 
 static SearchModel* _shared = nil;
 
@@ -46,6 +46,7 @@ static SearchModel* _shared = nil;
     another.movieReleaseName = [movieReleaseName copyWithZone: zone];
     another.idMovie = [idMovie copyWithZone: zone];
     another.subActualCD = [subActualCD copyWithZone: zone];
+    another.subFormat = [subFormat copyWithZone: zone];
     
     return another;
 }

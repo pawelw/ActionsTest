@@ -18,6 +18,7 @@
     NSString *movieReleaseName;
     NSString *idMovie;
     NSString *subActualCD;
+    NSString *subFormat;
 }
 
 @property (copy) NSString *zipDownloadLink;
@@ -28,6 +29,7 @@
 @property (copy) NSString *movieReleaseName;
 @property (copy) NSString *idMovie;
 @property (copy) NSString *subActualCD;
+@property (copy) NSString *subFormat;
 
 +(SearchModel *)initAsSingleton;
 -(id)copyWithZone:(NSZone *)zone;

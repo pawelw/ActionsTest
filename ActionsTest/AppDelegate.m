@@ -36,7 +36,7 @@
     if (!mainWindowController) {
         mainWindowController = [[MainWindowController alloc] init];
     }
-     [mainWindowController showWindow:nil];
+     //[mainWindowController showWindow:nil];
 }
 
 

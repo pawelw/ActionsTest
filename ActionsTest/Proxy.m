@@ -59,11 +59,12 @@
 }
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
-    
+        
     if ([response isFault]) {
         [delegate didFaultProxyRequest];
         NSLog(@"Proxy is Fault with response: %@", response);
     } else if ([[request method] isEqualToString:@"LogIn"]) {
+        
         
         // "LogIn" ////////////////
         [loginModel setToken:[[response object] objectForKey:@"token"]];
@@ -99,6 +100,14 @@
             [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
             [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
             [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
+            
+            ///////////
+            //[searchModel setSubFormat:[key valueForKey:@"SubFormat"]];
+            // Check extention manualy from movie full name.
+            ///////////
+            NSString *ext = [[searchModel subFileName] pathExtension];
+            [searchModel setSubFormat:[key valueForKey:@"SubFormat"]];
+            
             
             // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
             if([[key valueForKey:@"MovieReleaseName"] isEqualToString:@""])

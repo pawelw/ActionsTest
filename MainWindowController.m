@@ -53,7 +53,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         [self initPreloader];
     }
     
-    [self showWindow:window];
+    //[self showWindow:window];
     
 
     
@@ -80,19 +80,19 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+
+    [self.window setBackgroundColor:[NSColor blackColor]];
+    [self contractWindowWithAnimation:NO];
+    
     [subtitlesTable setRowHeight:33];
     [self.expandButton setHidden:YES];
-    //[disablerView show];
-    //[
     
     // Init Disable View
     NSRect viewFrame = [scrollTableView bounds];
     disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
     [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
-    
-    [self.window setBackgroundColor:[NSColor blackColor]];
-    
-    [self contractWindowWithAnimation:NO];
+        
+    [self showWindow:nil];
 }
 
 -(void) initPreloader {
@@ -308,7 +308,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     
     // Check if is not expanded already
     if(!isExpanded) {
-        frame.size.width = 858;
+        frame.size.width = 894;
         
         if((frame.origin.x -= 200) > 210)
             frame.origin.x -= 200;

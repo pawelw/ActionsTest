@@ -21,12 +21,15 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        NSRect frame = NSMakeRect((self.bounds.origin.x + self.bounds.size.width + 128), 3, 88, 29);
+        NSRect frame = NSMakeRect((self.bounds.origin.x + self.bounds.size.width + 162), 4, 88, 26);
         
         pushButton = [[NSButton alloc] initWithFrame: frame];
         pushButton.bezelStyle = NSInlineBezelStyle;
-        pushButton.image = [NSImage imageNamed:@"download_green_2"];
+        //pushButton.image = [NSImage imageNamed:@"download_green_3"];
         pushButton.title = @"Download";
+       // [pushButton.cell setTextColor:[NSColor whiteColor]];
+        //[pushButton setBordered:NO];
+        //[pushButton
         pushButton.target = appDelegate.mainWindowController;
         pushButton.action = @selector(onInlineDownloadClicked:);
         [pushButton setHidden:YES];
