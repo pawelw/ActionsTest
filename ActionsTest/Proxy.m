@@ -27,6 +27,10 @@
     return self;
 }
 
+-(void)login {
+    [self callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
+}
+
 -(void) searchByHash: (NSString *)hash andByteSize: (double) bytes
 {
     OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
@@ -49,6 +53,7 @@
 {
     // Use only one connection at a time 
     [manager closeConnections];
+    
     NSURL *URL = [NSURL URLWithString: @"http://api.opensubtitles.org/xml-rpc"];
     XMLRPCRequest *request = [[XMLRPCRequest alloc] initWithURL: URL];
     manager = [XMLRPCConnectionManager sharedManager];

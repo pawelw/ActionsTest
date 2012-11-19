@@ -57,25 +57,24 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     
     //[self showWindow:window];
     
-
+//// DUMMY DATA FOR WORK OFFLINE
+    tempArray = [[NSMutableArray alloc] init];
+    searchModel = [[SearchModel alloc] init];
+    searchModelCollection = [[NSMutableArray alloc] init];
     
-    //// DUMMY DATA
-//    tempArray = [[NSMutableArray alloc] init];
-//    searchModel = [[SearchModel alloc] init];
-//    searchModelCollection = [[NSMutableArray alloc] init];
-//    
-//    for (int i=0; i<15; i++) {
-//        
-//        [searchModel setMovieName: @"MovieName"];
-//        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
-//        [searchModel setLanguageName: @"LanguageName"];
-//        [searchModel setMovieReleaseName: @"MovieReleaseName_xxx"];
-//        [searchModel setIdMovie:@"IdMovie"];
-//        [searchModel setSubActualCD:@"SubActualCD"];
-//        [searchModel setSubDownloadLink:@"SubDownloadLink"];
-//        
-//        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
-//    }
+    for (int i=0; i<15; i++) {
+        
+        [searchModel setMovieName: @"MovieName"];
+        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
+        [searchModel setLanguageName: @"LanguageName"];
+        [searchModel setMovieReleaseName: @"MovieReleaseName_xxx"];
+        [searchModel setIdMovie:@"IdMovie"];
+        [searchModel setSubActualCD:@"SubActualCD"];
+        [searchModel setSubDownloadLink:@"SubDownloadLink"];
+        
+        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
+    }
+/////////////////////////
     
     return self;
 }
@@ -83,18 +82,19 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-
-    [self.window setBackgroundColor:[NSColor blackColor]];
-    [self contractWindowWithAnimation:NO];
-    
-    [subtitlesTable setRowHeight:33];
-    [self.expandButton setHidden:YES];
     
     // Init Disable View
     NSRect viewFrame = [scrollTableView bounds];
     disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
     [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
-        
+
+    [self.window setBackgroundColor:[NSColor blackColor]];
+    //[self contractWindowWithAnimation:NO];
+    [disablerView setHidden:YES]; [disablerView hide];
+    
+    [subtitlesTable setRowHeight:33];
+    [self.expandButton setHidden:YES];
+            
     [self showWindow:nil];
 }
 
@@ -113,7 +113,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     if([_server isEqualToString:SDOpenSubtitles]) {
         proxy = [[Proxy alloc] init];
         [proxy setDelegate:self];
-        [proxy callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
+        [proxy login];
     } else if ([_server isEqualToString:SDPodnapisi]) {
         proxyPodnapi = [[ProxyPodnapi alloc] init];
         [proxyPodnapi setDelegate:self];
@@ -202,11 +202,6 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
     [disablerView show];
-    [disablerView.label setHidden:NO];    
-    //[self contractWindowWithAnimation:YES];
-    //[self.expandButton setHidden:NO];
-    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
-    [disablerView show];
     
     // Find out what row it was in and edit that color with the popup
     NSInteger row = [subtitlesTable rowForView:sender];
@@ -221,7 +216,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 {    
     NSURL* url = [NSURL URLWithString:[selectedSubtitle subDownloadLink]];
     
-    NSAssert(url && url.scheme && url.host, @"Pawel Witkowski assertion: URL must be valid. You try to download subtitles from the server and you are pasing unvalid URL to the proxy. URL: '%@.'", url);
+    //NSAssert(url && url.scheme && url.host, @"Pawel Witkowski assertion: URL must be valid. You try to download subtitles from the server and you are pasing unvalid URL to the proxy. URL: '%@.'", url);
     
     if (url && url.scheme && url.host) {
         self.preloadeLabel = @"Downloading subtitles ...";
@@ -230,6 +225,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         [proxy downloadDataFromURL:url];
     } else {
         [Alerter showSomethingWentWrongAlert];
+         [self contractWindowWithAnimation:YES];
     }
 }
 
@@ -268,7 +264,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 {
     if (![GeneralPreferencesViewController useQuickMode]){
         [disablerView hide];
-        [disablerView.label setHidden:YES];
+        //[disablerView.label setHidden:YES];
         [subtitlesTable setEnabled:YES];
     }
     [self setPreloaderHidden:YES];
@@ -280,19 +276,18 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     NSString *movieLocalName = [[movieLocalURL lastPathComponent] stringByDeletingPathExtension];
     pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movieLocalPath ,movieLocalName, ext];
     
-    //- (BOOL)fileExistsAtPath:(NSString *)path isDirectory:(BOOL *)isDirectory
     BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:pathWithName];
     
     if(exist) {
-        NSAlert *myAlert = [NSAlert alertWithMessageText:@"Subtitle file already exist in the folder" defaultButton:@"Yes" alternateButton:@"No" otherButton:nil informativeTextWithFormat:@"Would you like to overwrite old subtitle file with new one?"];
-        [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(alertEnded:code:context:) contextInfo:nil];
-        //[Alerter askIfOverwriteFile];
+        [Alerter askIfOverwriteFileAndDelegateTo:self withSelector:@selector(overwriteAlertEnded:code:context:)];
     } else {
         [self saveDataFile];
     }
 }
 
--(void) alertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v
+#pragma mark - NSAlert Delegation
+
+-(void) overwriteAlertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v
 {
     if(choice == NSAlertDefaultReturn) {
         [self saveDataFile];
@@ -335,8 +330,9 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     }
     
     [self.window setFrame: frame display:YES animate:YES];
-    [disablerView hide];
     
+    // And at the end when expand copleted hide black diabler view
+    [disablerView hide];
     
     return self.window;
 }
@@ -344,8 +340,9 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 -(NSWindow *) contractWindowWithAnimation: (BOOL) useAnimation {
     //[appDelegate expandWindow];
     
-    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
+    //[scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
     [disablerView show];
+    
     NSRect frame = [self.window frame];
     
     // Check if window is expanded

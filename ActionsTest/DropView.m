@@ -7,6 +7,7 @@
 //
 
 #import "DropView.h"
+#import "Alerter.h"
 
 NSImageView *imageView;
 
@@ -59,7 +60,6 @@ NSImageView *imageView;
     } else {
 
     }
-
 }
 
 #pragma mark Dragging Destination
@@ -89,6 +89,7 @@ NSImageView *imageView;
     if ([files count] == 1) {
         NSString *filepath = [files lastObject];
         if ([[filepath pathExtension] isEqualToString:@"mov"] ||
+            [[filepath pathExtension] isEqualToString:@"MOV"] ||
             [[filepath pathExtension] isEqualToString:@"avi"] ||
             [[filepath pathExtension] isEqualToString:@"mpg"] ||
             [[filepath pathExtension] isEqualToString:@"mpeg"] ||
@@ -105,7 +106,12 @@ NSImageView *imageView;
             [self setNeedsDisplay:YES];
             return NO;
         }
-    } 
+    } else {
+        highlighted = NO;
+        [self setNeedsDisplay:YES];
+        [Alerter showNoMultipleSupportAlert];
+        return NO;
+    }
     
     return YES;
 }
@@ -116,6 +122,11 @@ NSImageView *imageView;
     NSArray* fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
     NSLog(@"%@", fileNames);
     if ( fileNames.count < 1 ) return NO;
+    
+    if (fileNames.count > 1) {
+        
+    }
+    
     for ( NSString* file in fileNames ) {
         fileURL = [NSURL URLFromPasteboard:pasteboard];
         [notificationCenter postNotificationName:@"logIn" object:self];

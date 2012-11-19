@@ -86,8 +86,7 @@ static NSString *const PreferencesKeyForViewBounds (NSString *identifier)
 
 - (void)windowWillClose:(NSNotification *)notification {
 
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:@"preferecncesWillClose" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"preferecncesWillClose" object:self];
 }
 
 - (void)windowDidMove:(NSNotification*)aNotification

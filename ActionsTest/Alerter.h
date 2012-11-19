@@ -18,7 +18,8 @@
 + (void) showNotFoundAlertForLanguage;
 + (void) showNoConnectionAlert;
 + (void) showSomethingWentWrongAlert;
++ (void) showNoMultipleSupportAlert;
 
-- (void) askIfOverwriteFile;
++ (void) askIfOverwriteFileAndDelegateTo:(id)sender withSelector:(SEL)selector;
 
 @end

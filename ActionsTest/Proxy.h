@@ -31,9 +31,11 @@
 //@property(nonatomic, retain) XMLRPCConnectionManager *manager;
 @property (nonatomic, retain) id <ProxyDelegate> delegate;
 
--(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments;
--(void)downloadDataFromURL:(NSURL *)url;
+-(void) login;
 -(void) searchByHash: (NSString *)hash andByteSize: (double) bytes;
+-(void) callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments;
+-(void) downloadDataFromURL:(NSURL *)url;
+
 
 
 @end

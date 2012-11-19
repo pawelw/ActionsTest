@@ -17,16 +17,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        NSRect frameRect = NSMakeRect(175,100,600,140);
-        NSFont* font = [NSFont fontWithName:@"Avenir Next" size:28.0];
-        label = [[NSTextField alloc] initWithFrame:frameRect];
-        [label setTextColor:[NSColor colorWithCalibratedWhite:.5 alpha:1.0]];
-        [label setBordered:NO];
-        [label setStringValue:@"Downloading..."];
-        [label setFont:font];
-        [label setBackgroundColor:[NSColor colorWithCalibratedWhite:0 alpha:0.0]];
-        [label setHidden:YES];
-        [self addSubview:label];
+//        NSRect frameRect = NSMakeRect(175,100,600,140);
+//        NSFont* font = [NSFont fontWithName:@"Avenir Next" size:28.0];
+//        label = [[NSTextField alloc] initWithFrame:frameRect];
+//        [label setTextColor:[NSColor colorWithCalibratedWhite:.5 alpha:1.0]];
+//        [label setBordered:NO];
+//        [label setStringValue:@"Downloading..."];
+//        [label setFont:font];
+//        [label setBackgroundColor:[NSColor colorWithCalibratedWhite:0 alpha:0.0]];
+//        [label setHidden:NO];
+//        [self addSubview:label];
     }
     
     return self;
@@ -43,9 +43,10 @@
 
 -(void) show
 {
+    [self setHidden:NO];
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.3];
-    [[self animator] setAlphaValue:1.0];
+    [[self animator] setAlphaValue:1];
     [NSAnimationContext endGrouping];
 }
 
@@ -58,7 +59,7 @@
     } completionHandler:^{
         // This block will be invoked when all of the animations
         // started above have completed or been cancelled.
-        [self removeFromSuperview];
+        [self setHidden:YES];
     }];
 }
 

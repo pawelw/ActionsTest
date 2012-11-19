@@ -16,7 +16,6 @@
     NSRange range = NSMakeRange(0, [attrString length]);
  	
     NSFont* font = [NSFont fontWithName:@"Avenir Next" size:11.0];
-    NSColor *grey =[NSColor colorWithCalibratedWhite:1 alpha:1];
     
     [attrString beginEditing];
     [attrString addAttribute:NSLinkAttributeName value:[aURL absoluteString] range:range];
