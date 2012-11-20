@@ -34,7 +34,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     
     if (self) {
         // Initialization code here.
-        _server = SDOpenSubtitles; // Set Main API server
+        _server = SDPodnapisi; // Set Main API server
         
         appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         subtitlesTable.delegate = self;
@@ -58,22 +58,22 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     //[self showWindow:window];
     
 //// DUMMY DATA FOR WORK OFFLINE
-    tempArray = [[NSMutableArray alloc] init];
-    searchModel = [[SearchModel alloc] init];
-    searchModelCollection = [[NSMutableArray alloc] init];
-    
-    for (int i=0; i<15; i++) {
-        
-        [searchModel setMovieName: @"MovieName"];
-        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
-        [searchModel setLanguageName: @"LanguageName"];
-        [searchModel setMovieReleaseName: @"MovieReleaseName_xxx"];
-        [searchModel setIdMovie:@"IdMovie"];
-        [searchModel setSubActualCD:@"SubActualCD"];
-        [searchModel setSubDownloadLink:@"SubDownloadLink"];
-        
-        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
-    }
+//    tempArray = [[NSMutableArray alloc] init];
+//    searchModel = [[SearchModel alloc] init];
+//    searchModelCollection = [[NSMutableArray alloc] init];
+//    
+//    for (int i=0; i<15; i++) {
+//        
+//        [searchModel setMovieName: @"MovieName"];
+//        [searchModel setZipDownloadLink: @"ZipDownloadLink"];
+//        [searchModel setLanguageName: @"LanguageName"];
+//        [searchModel setMovieReleaseName: @"MovieReleaseName_xxx"];
+//        [searchModel setIdMovie:@"IdMovie"];
+//        [searchModel setSubActualCD:@"SubActualCD"];
+//        [searchModel setSubDownloadLink:@"SubDownloadLink"];
+//        
+//        [[self mutableArrayValueForKey:@"searchModelCollection"] addObject:[searchModel copy]];
+//    }
 /////////////////////////
     
     return self;
@@ -84,13 +84,13 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     [super windowDidLoad];
     
     // Init Disable View
-    NSRect viewFrame = [scrollTableView bounds];
-    disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
-    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
+//    NSRect viewFrame = [scrollTableView bounds];
+//    disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
+//    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
 
     [self.window setBackgroundColor:[NSColor blackColor]];
-    //[self contractWindowWithAnimation:NO];
-    [disablerView setHidden:YES]; [disablerView hide];
+    [self contractWindowWithAnimation:NO];
+    //[disablerView setHidden:YES]; [disablerView hide];
     
     [subtitlesTable setRowHeight:33];
     [self.expandButton setHidden:YES];
@@ -115,9 +115,9 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         [proxy setDelegate:self];
         [proxy login];
     } else if ([_server isEqualToString:SDPodnapisi]) {
-        proxyPodnapi = [[ProxyPodnapi alloc] init];
-        [proxyPodnapi setDelegate:self];
-        [proxyPodnapi login];
+        proxyPodnapisiXML = [[ProxyPodnapisiXML alloc] init];
+        [proxyPodnapisiXML setDelegate:self];
+        [proxyPodnapisiXML login];
     } 
 }
 
@@ -134,7 +134,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     if([_server isEqualToString:SDOpenSubtitles]) {
         [proxy searchByHash:hashString andByteSize:byteSize];
     } else if ([_server isEqualToString:SDPodnapisi]) {
-        [proxyPodnapi searchByHash:hashString];
+        [proxyPodnapisiXML searchWithMovieName: [movieLocalPath lastPathComponent]];
     } 
     
 }
@@ -201,7 +201,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 
 - (IBAction)onInlineDownloadClicked:(id)sender
 {
-    [disablerView show];
+    //[disablerView show];
     
     // Find out what row it was in and edit that color with the popup
     NSInteger row = [subtitlesTable rowForView:sender];
@@ -233,6 +233,15 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withData:(id)data
 {
+    
+    if ([request method] == NULL) {
+        loginModel = data;
+        self.isConnected = YES;
+        [self initSearchCall:movieLocalURL];
+        
+        return;
+    }
+    
     if ([[request method] isEqualToString:@"LogIn"] || [[request method] isEqualToString:@"authenticate"]) {
         
         loginModel = data;
@@ -260,10 +269,17 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     [self setPreloaderHidden:YES];
 }
 
+-(void) connectionTimedOut
+{
+    //[disablerView hide];
+    //[disablerView.label setHidden:YES];
+    [subtitlesTable setEnabled:YES];
+}
+
 -(void) fileDownloadFinishedWithData:(NSMutableData *)data
 {
     if (![GeneralPreferencesViewController useQuickMode]){
-        [disablerView hide];
+        //[disablerView hide];
         //[disablerView.label setHidden:YES];
         [subtitlesTable setEnabled:YES];
     }
@@ -332,7 +348,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     [self.window setFrame: frame display:YES animate:YES];
     
     // And at the end when expand copleted hide black diabler view
-    [disablerView hide];
+    //[disablerView hide];
     
     return self.window;
 }
@@ -341,7 +357,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     //[appDelegate expandWindow];
     
     //[scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
-    [disablerView show];
+    //[disablerView show];
     
     NSRect frame = [self.window frame];
     

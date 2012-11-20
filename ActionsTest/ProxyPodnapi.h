@@ -22,7 +22,7 @@
 -(void) fileDownloadFinishedWithData: (NSData *) data;
 @end
 
-@interface ProxyPodnapi : NSObject <XMLRPCConnectionDelegate> {
+@interface ProxyPodnapi : NSObject <XMLRPCConnectionDelegate, NSXMLParserDelegate> {
     id <ProxyPodnapiDelegate> delegate;
     XMLRPCConnectionManager *manager;
     NSMutableData *subtitleFileData;

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Proxy.h"
-#import "ProxyPodnapi.h"
+#import "ProxyPodnapisiXML.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
 #import "OSHashAlgorithm.h"
@@ -21,7 +21,7 @@
 extern NSString *const SDOpenSubtitles;
 extern NSString *const SDPodnapisi;
 
-@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, ProxyPodnapiDelegate, NSTableViewDelegate> {
+@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, ProxyPodnapisiXMLDelegate, NSTableViewDelegate> {
     
     // Outlets
     NSScrollView *scrollTableView;
@@ -52,7 +52,7 @@ extern NSString *const SDPodnapisi;
     
     // Classes
     Proxy *proxy;
-    ProxyPodnapi *proxyPodnapi;
+    ProxyPodnapisiXML *proxyPodnapisiXML;
     
     VideoHash hash;
     AppDelegate *appDelegate;
@@ -85,6 +85,6 @@ extern NSString *const SDPodnapisi;
 - (IBAction)onBrowseClicked:(id)sender;
 - (IBAction)onInlineDownloadClicked:(id)sender; // this is connected via code not interface builder
 - (IBAction)onExpandButtonClicked:(id)sender;
--(void) alertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v;
+//-(void) alertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v;
 
 @end

@@ -193,6 +193,7 @@
     NSLog(@"Connection failed! Error - %@ %@",
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+    [delegate connectionTimedOut];
 }
 
 

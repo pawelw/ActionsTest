@@ -30,12 +30,15 @@
         pushButton.alternateImage = [NSImage imageNamed:@"download_button_on"];
         [pushButton setImagePosition:NSImageOnly];
         pushButton.title = @"";
-        //[pushButton.cell setTextColor:[NSColor whiteColor]];
+        
         [pushButton setBordered:NO];
         pushButton.target = appDelegate.mainWindowController;
         pushButton.action = @selector(onInlineDownloadClicked:);
         [pushButton setHidden:YES];
         [self addSubview:pushButton];
+        
+        notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self selector:@selector(disableDownloadButton:) name:@"disableDownloadButtonxxx" object:nil];
     }
     
     return self;
@@ -85,7 +88,7 @@
     [pushButton setEnabled:YES];
 }
 
--(void) disableDownloadButton
+-(void) disableDownloadButton: (id) object
 {
     [pushButton setEnabled:NO];
 }

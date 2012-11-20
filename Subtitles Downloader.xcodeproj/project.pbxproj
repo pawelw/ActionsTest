@@ -19,6 +19,8 @@
 		E52DFDBF165A53C6002A7AAF /* browse_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E52DFDBD165A53C6002A7AAF /* browse_button.png */; };
 		E52DFDC2165A5722002A7AAF /* download_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E52DFDC1165A5722002A7AAF /* download_button.png */; };
 		E52DFDC4165A5A37002A7AAF /* DownloadButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E52DFDC3165A5A37002A7AAF /* DownloadButton.xib */; };
+		E52DFDCF165AAFC6002A7AAF /* SubtitlesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DFDCE165AAFC6002A7AAF /* SubtitlesTableView.m */; };
+		E52DFDD2165AB074002A7AAF /* NSView+Apperance.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */; };
 		E53678F316317EFF004E45E2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53678F216317EFF004E45E2 /* MainWindow.xib */; };
 		E539012616449B160095B36C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = E539012516449B160095B36C /* DropView.m */; };
 		E54702CB162F45BE000756EF /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702B7162F45AE000756EF /* NSData+Base64.m */; };
@@ -52,6 +54,7 @@
 		E5D169E316359FEF0002848B /* 325.gif in Resources */ = {isa = PBXBuildFile; fileRef = E5D169E216359FEF0002848B /* 325.gif */; };
 		E5D74AC1163044EE00FC56E3 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */; };
 		E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */; };
+		E5F15F04165AEB1600EBCAC2 /* ProxyPodnapisiXML.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */; };
 		E5F2F48E1650302400A83303 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F2F48D1650302400A83303 /* libz.dylib */; };
 		E5F2F4911650444C00A83303 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F2F4901650330500A83303 /* NSData+GZIP.m */; };
 /* End PBXBuildFile section */
@@ -69,6 +72,10 @@
 		E52DFDBD165A53C6002A7AAF /* browse_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = browse_button.png; sourceTree = "<group>"; };
 		E52DFDC1165A5722002A7AAF /* download_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_button.png; sourceTree = "<group>"; };
 		E52DFDC3165A5A37002A7AAF /* DownloadButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadButton.xib; sourceTree = "<group>"; };
+		E52DFDCD165AAFC6002A7AAF /* SubtitlesTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubtitlesTableView.h; sourceTree = "<group>"; };
+		E52DFDCE165AAFC6002A7AAF /* SubtitlesTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitlesTableView.m; sourceTree = "<group>"; };
+		E52DFDD0165AB074002A7AAF /* NSView+Apperance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Apperance.h"; sourceTree = "<group>"; };
+		E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Apperance.m"; sourceTree = "<group>"; };
 		E53678F216317EFF004E45E2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../MainWindow.xib; sourceTree = "<group>"; };
 		E539012416449B160095B36C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		E539012516449B160095B36C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
@@ -134,6 +141,8 @@
 		E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSHashAlgorithm.h; sourceTree = "<group>"; };
 		E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSHashAlgorithm.m; sourceTree = "<group>"; };
+		E5F15F02165AEB1600EBCAC2 /* ProxyPodnapisiXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyPodnapisiXML.h; sourceTree = "<group>"; };
+		E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyPodnapisiXML.m; sourceTree = "<group>"; };
 		E5F2F48D1650302400A83303 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E5F2F48F1650330500A83303 /* NSData+GZIP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+GZIP.h"; sourceTree = "<group>"; };
 		E5F2F4901650330500A83303 /* NSData+GZIP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+GZIP.m"; sourceTree = "<group>"; };
@@ -198,6 +207,8 @@
 				E54702E3162F4DD9000756EF /* Proxy.m */,
 				E5216FE716555050005F2DB9 /* ProxyPodnapi.h */,
 				E5216FE816555050005F2DB9 /* ProxyPodnapi.m */,
+				E5F15F02165AEB1600EBCAC2 /* ProxyPodnapisiXML.h */,
+				E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */,
 			);
 			name = Proxies;
 			sourceTree = "<group>";
@@ -298,6 +309,8 @@
 				E5F2F4901650330500A83303 /* NSData+GZIP.m */,
 				E5931A8C165922C60058C622 /* NSAttributedString+Hyperlink.h */,
 				E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */,
+				E52DFDD0165AB074002A7AAF /* NSView+Apperance.h */,
+				E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -345,6 +358,8 @@
 				E5088999165163FA004835C3 /* DisablerView.h */,
 				E508899A165163FA004835C3 /* DisablerView.m */,
 				E52DFDC3165A5A37002A7AAF /* DownloadButton.xib */,
+				E52DFDCD165AAFC6002A7AAF /* SubtitlesTableView.h */,
+				E52DFDCE165AAFC6002A7AAF /* SubtitlesTableView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -467,6 +482,9 @@
 				E5216FE916555050005F2DB9 /* ProxyPodnapi.m in Sources */,
 				E528D29A16559AA6005788DA /* AboutWindowController.m in Sources */,
 				E5931A8E165922C60058C622 /* NSAttributedString+Hyperlink.m in Sources */,
+				E52DFDCF165AAFC6002A7AAF /* SubtitlesTableView.m in Sources */,
+				E52DFDD2165AB074002A7AAF /* NSView+Apperance.m in Sources */,
+				E5F15F04165AEB1600EBCAC2 /* ProxyPodnapisiXML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,7 +46,7 @@
     [self setHidden:NO];
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.3];
-    [[self animator] setAlphaValue:1];
+    [[self animator] setAlphaValue:0.8];
     [NSAnimationContext endGrouping];
 }
 

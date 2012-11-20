@@ -2101,7 +2101,7 @@
 								<float key="scoringTypeFloat">22</float>
 								<int key="contentType">2</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="683465722">
+							<object class="IBNSLayoutConstraint" id="999190925">
 								<reference key="firstItem" ref="135834327"/>
 								<int key="firstAttribute">4</int>
 								<int key="relation">0</int>
@@ -2133,7 +2133,7 @@
 								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="3390803">
+							<object class="IBNSLayoutConstraint" id="546490359">
 								<reference key="firstItem" ref="821499610"/>
 								<int key="firstAttribute">9</int>
 								<int key="relation">0</int>
@@ -2737,7 +2737,7 @@
 						<reference key="object" ref="821499610"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="521196187"/>
-							<object class="IBNSLayoutConstraint" id="307024199">
+							<object class="IBNSLayoutConstraint" id="400556256">
 								<reference key="firstItem" ref="821499610"/>
 								<int key="firstAttribute">8</int>
 								<int key="relation">0</int>
@@ -2753,7 +2753,7 @@
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">1</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="446084653">
+							<object class="IBNSLayoutConstraint" id="1041403645">
 								<reference key="firstItem" ref="821499610"/>
 								<int key="firstAttribute">7</int>
 								<int key="relation">0</int>
@@ -2804,17 +2804,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2916</int>
-						<reference key="object" ref="446084653"/>
+						<reference key="object" ref="1041403645"/>
 						<reference key="parent" ref="821499610"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2917</int>
-						<reference key="object" ref="307024199"/>
+						<reference key="object" ref="400556256"/>
 						<reference key="parent" ref="821499610"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2923</int>
-						<reference key="object" ref="3390803"/>
+						<reference key="object" ref="546490359"/>
 						<reference key="parent" ref="135834327"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2824,7 +2824,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2925</int>
-						<reference key="object" ref="683465722"/>
+						<reference key="object" ref="999190925"/>
 						<reference key="parent" ref="135834327"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2887,6 +2887,7 @@
 				<string key="1640.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1648.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="19.CustomClassName">SubtitlesTableView</string>
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="19.ibExternalAutomaticallyCalculatesRowSizeFromViewHeight"/>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3022,8 +3023,8 @@
 				</array>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="5.IBNSViewMetadataConstraints">
-					<reference ref="446084653"/>
-					<reference ref="307024199"/>
+					<reference ref="1041403645"/>
+					<reference ref="400556256"/>
 				</array>
 				<boolean value="NO" key="5.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3037,9 +3038,9 @@
 					<reference ref="182601697"/>
 					<reference ref="117733893"/>
 					<reference ref="99090341"/>
-					<reference ref="3390803"/>
+					<reference ref="546490359"/>
 					<reference ref="532175348"/>
-					<reference ref="683465722"/>
+					<reference ref="999190925"/>
 					<reference ref="765275024"/>
 					<reference ref="385747028"/>
 					<reference ref="487909935"/>
@@ -3196,6 +3197,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/SubsTableRow.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SubtitlesTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SubtitlesTableView.h</string>
 					</object>
 				</object>
 			</array>

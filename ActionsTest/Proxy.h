@@ -18,6 +18,7 @@
 -(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
 -(void) didFaultProxyRequest;
 -(void) fileDownloadFinishedWithData: (NSData *) data;
+-(void) connectionTimedOut;
 @end
 
 @interface Proxy : NSObject <XMLRPCConnectionDelegate> {
