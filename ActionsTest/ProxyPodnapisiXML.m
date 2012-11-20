@@ -20,6 +20,7 @@
     {
         loginModel = [LoginModel initAsSingleton];
         respondData = [[NSMutableData alloc] init];
+        searchModelCollection = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -62,15 +63,7 @@
 {
     //[delegate fileDownloadFinishedWithData:subtitleFileData];
     
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:respondData];
-    [parser setDelegate:self];
-    
-    BOOL success = [parser parse];
-    
-    if(!success){
-        NSError *outError = [parser parserError];
-        NSLog(@"Parser error: %@", outError);
-    }
+    [self parse];
     
 }
 
@@ -87,27 +80,61 @@
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
 }
 
+
+// Parsing ////////////////////////////////////////
+///////////////////////////////////////////////////
+
+-(void) parse
+{
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:respondData];
+    [parser setDelegate:self];
+    
+    BOOL success = [parser parse];
+    
+    if(!success){
+        NSError *outError = [parser parserError];
+        NSLog(@"Parser error: %@", outError);
+    }
+}
+
 #pragma mark - NSParser protocol methods
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    if([elementName isEqual:@"result"]) {
-        currentFields = [NSMutableArray new];
+    if([elementName isEqual:@"subtitle"]) {
+        currentFields = [NSMutableDictionary new];
     }
     
-    if([elementName isEqual:@"subtitle"]) {
-        [currentFields setObject:attributeDict forKey:@"subtitle"];
-        
-    }
+//    if([elementName isEqual:@"subtitle"]) {
+//        [currentFields setObject:attributeDict forKey:@"id"];
+//        NSLog(@"%@", elementName);
+//        
+//    }
     
     NSLog(@"%@", attributeDict);
 }
 
 -(void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-    if([elementName isEqual:@"release"]) {
-        SearchModel *searchM = [[SearchModel alloc] init];
+    if([elementName isEqual:@"subtitle"]) {
+        SearchModel *searchModel = [[SearchModel alloc] init];
+        [searchModel setMovieReleaseName:[currentFields objectForKey:@"release"]];
+        
+        [searchModelCollection addObject:searchModel];
+        
+    } else if(currentFields && currentString) {
+        NSString *trimmed = [currentString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [currentFields setObject:trimmed forKey:elementName];
     }
+    
+    currentString = nil;
+    NSLog(@"%@", searchModelCollection);
+}
+
+-(void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    currentString = [[NSMutableString alloc] init];
+    [currentString appendString:string];
 }
 
 @end

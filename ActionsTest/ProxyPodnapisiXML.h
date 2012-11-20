@@ -21,11 +21,12 @@
 @interface ProxyPodnapisiXML : NSObject <NSXMLParserDelegate> {
     
     LoginModel *loginModel;
-    SearchModel *searchModel;
+    NSMutableArray *searchModelCollection;
     NSMutableData *respondData;
     
     //XMLParser
     NSMutableDictionary *currentFields;
+    NSMutableString *currentString;
     
 }
 
