@@ -13,8 +13,9 @@
 
 @protocol ProxyPodnapisiXMLDelegate 
 @optional
--(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
--(void) didFaultProxyRequest;
+//-(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
+//-(void) didFaultProxyRequest;
+-(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data;
 -(void) fileDownloadFinishedWithData: (NSData *) data;
 @end
 

@@ -28,19 +28,13 @@
 
 -(void) login
 {
-    //NSError *error = nil;
-    XMLRPCRequest *request = [[XMLRPCRequest alloc] init];
-    //[request setMethod:@"PodnapisiEmptyLogin"];
-    [delegate didFinishProxyRequest:request withData:loginModel];
+    [delegate didFinishProxyRequestWithIdentifier:@"Login" withData:loginModel];
 }
 
 - (void) searchWithMovieName: (NSString *) movieName
 {
-   // NSString *st = [NSString stringWithFormat:@"http://podnapisi.net/en/ppodnapisi/search?sK=%@&sXML=1", movieName];
-    NSString *st = [NSString stringWithFormat:@"http://podnapisi.net/en/ppodnapisi/search?sK=AmericanBeauty&sXML=1"];
-    NSLog(st);
-    NSString *st2 = [NSString stringWithFormat:@"http://apple.com"];
-    NSURL *url = [NSURL URLWithString:st];
+    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://podnapisi.net/en/ppodnapisi/search?sK=AmericanBeauty&sXML=1"]];
+    NSURL *url = [NSURL URLWithString:@"file://localhost/users/pawel/sites/xcode/ActionsTest/podnapisi_offline_xml.xml"];
     
     NSURLRequest *request =[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
    // NSURLResponse *response = nil;
@@ -110,17 +104,25 @@
 //        NSLog(@"%@", elementName);
 //        
 //    }
-    
-    NSLog(@"%@", attributeDict);
 }
 
 -(void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     if([elementName isEqual:@"subtitle"]) {
         SearchModel *searchModel = [[SearchModel alloc] init];
-        [searchModel setMovieReleaseName:[currentFields objectForKey:@"release"]];
+        
+        [searchModel setIndex:[currentFields objectForKey:@"id"]];
+        [searchModel setMovieName:[currentFields objectForKey:@"title"]];
+        [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
+        [searchModel setSubFormat:[currentFields objectForKey:@"format"]];
+        
+        if([[currentFields objectForKey:@"release"] isEqual: @""])
+            [searchModel setMovieReleaseName: [currentFields objectForKey:@"title"]];
+        else
+            [searchModel setMovieReleaseName:[currentFields objectForKey:@"release"]];
         
         [searchModelCollection addObject:searchModel];
+        NSLog(@"%@", searchModel.index);
         
     } else if(currentFields && currentString) {
         NSString *trimmed = [currentString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -128,13 +130,17 @@
     }
     
     currentString = nil;
-    NSLog(@"%@", searchModelCollection);
 }
 
 -(void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     currentString = [[NSMutableString alloc] init];
     [currentString appendString:string];
+}
+
+-(void) parserDidEndDocument:(NSXMLParser *)parser {
+    
+    [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection];
 }
 
 @end

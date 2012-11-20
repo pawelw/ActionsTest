@@ -10,6 +10,7 @@
 
 @interface SearchModel : NSObject <NSCopying> {
 
+    NSString *index;
     NSString *zipDownloadLink;
     NSString *subDownloadLink;
     NSString *subFileName;
@@ -21,6 +22,7 @@
     NSString *subFormat;
 }
 
+@property (copy) NSString *index;
 @property (copy) NSString *zipDownloadLink;
 @property (copy) NSString *subDownloadLink;
 @property (copy) NSString *subFileName;

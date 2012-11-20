@@ -34,7 +34,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     
     if (self) {
         // Initialization code here.
-        _server = SDPodnapisi; // Set Main API server
+        _server = SDOpenSubtitles; // Set Main API server
         
         appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         subtitlesTable.delegate = self;
@@ -231,30 +231,30 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 
 #pragma mark - proxy protocol methods
 
--(void) didFinishProxyRequest: (XMLRPCRequest *)request withData:(id)data
+-(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data
 {
-    
-    if ([request method] == NULL) {
-        loginModel = data;
-        self.isConnected = YES;
-        [self initSearchCall:movieLocalURL];
-        
-        return;
-    }
-    
-    if ([[request method] isEqualToString:@"LogIn"] || [[request method] isEqualToString:@"authenticate"]) {
+    if ([identifier isEqualToString:@"Login"]) {
         
         loginModel = data;
         self.isConnected = YES;
         [self initSearchCall:movieLocalURL];
         
-    } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
+    } else if ([identifier isEqualToString:@"Search"]) {
         
         [self setPreloaderHidden:YES];
         [[self mutableArrayValueForKey:@"searchModelCollection"] setArray:data];
         
         if ([GeneralPreferencesViewController useQuickMode]){
             selectedSubtitle = [searchModelCollection objectAtIndex:0];
+            
+// NEED TESTING ( if in quick mode try to use a movie with the same movie release )
+//            for (SearchModel* key in searchModelCollection) {
+//                if ([[key movieReleaseName] isEqualToString:[pathWithName lastPathComponent]])
+//                {
+//                    selectedSubtitle = key;
+//                }
+//            }
+            
             [self downloadSubtitles];
         } else if(!self.isExpanded) {
             [subtitlesTable setEnabled:YES];

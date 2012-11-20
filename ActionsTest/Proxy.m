@@ -78,7 +78,7 @@
         [loginModel setStatus:[[response object] objectForKey:@"status"]];
         [loginModel setResponseTime:[[response object] objectForKey:@"seconds"]];
         
-        [delegate didFinishProxyRequest:request withData:loginModel]; // Custom delegate
+        [delegate didFinishProxyRequestWithIdentifier:@"Login" withData:loginModel];// Custom delegate
         
     } else if ([[request method] isEqualToString:@"SearchSubtitles"]) {
         
@@ -129,11 +129,11 @@
             [searchModelCollection addObject:[searchModel copy]];
         }
         
-        [delegate didFinishProxyRequest:request withData:searchModelCollection]; // Custom delegate
+        [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection]; // Custom delegate
         
     } else {
         NSLog(@"Parsed response: %@", [response object]);
-        [delegate didFinishProxyRequest:request withData:response]; // Custom delegate
+        [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:response];
     }
 }
 

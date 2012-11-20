@@ -39,7 +39,7 @@
 
 +(void) showSomethingWentWrongAlert
 {
-    [self showAlertSheet:@"Something went wrong while trying to download subtitles." andInfo:@"There is something wrong with downloaded data from the server. Please make sure that you have active internet connection and try to search again!"];
+    [self showAlertSheet:@"Something went wrong while trying to download subtitles." andInfo:@"There is something wrong with data downloaded from server. Please make sure that you have active internet connection and then try to search again!"];
 }
 
 +(void) showNoMultipleSupportAlert

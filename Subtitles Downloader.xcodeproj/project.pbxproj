@@ -41,7 +41,6 @@
 		E591D56A1626D3A900AFEC92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5691626D3A900AFEC92 /* AppDelegate.m */; };
 		E591D56D1626D3AA00AFEC92 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E591D56B1626D3AA00AFEC92 /* MainMenu.xib */; };
 		E5931A8E165922C60058C622 /* NSAttributedString+Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */; };
-		E593D30D16584520008D9BA8 /* download_green_3.png in Resources */ = {isa = PBXBuildFile; fileRef = E593D30C16584520008D9BA8 /* download_green_3.png */; };
 		E5999DB516528EF900AE4CE7 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DB016528D6F00AE4CE7 /* GeneralPreferencesViewController.m */; };
 		E5999DB716528F4600AE4CE7 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5999DA91652897800AE4CE7 /* MASPreferencesWindowController.m */; };
 		E5999DB8165290D300AE4CE7 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */; };
@@ -119,7 +118,6 @@
 		E591D56C1626D3AA00AFEC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E5931A8C165922C60058C622 /* NSAttributedString+Hyperlink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Hyperlink.h"; sourceTree = "<group>"; };
 		E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Hyperlink.m"; sourceTree = "<group>"; };
-		E593D30C16584520008D9BA8 /* download_green_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_green_3.png; sourceTree = "<group>"; };
 		E5999DA61652897800AE4CE7 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
 		E5999DA71652897800AE4CE7 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
 		E5999DA81652897800AE4CE7 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
@@ -286,7 +284,6 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E593D30C16584520008D9BA8 /* download_green_3.png */,
 				E52DFDBC165A53C6002A7AAF /* browse_button_on.png */,
 				E52DFDC1165A5722002A7AAF /* download_button.png */,
 				E52DFDBD165A53C6002A7AAF /* browse_button.png */,
@@ -440,7 +437,6 @@
 				E505D84E163C2AD9001132FB /* icon.icns in Resources */,
 				E565FE4D16457096006D34FC /* drop.png in Resources */,
 				E528D29716559A68005788DA /* AboutWindow.xib in Resources */,
-				E593D30D16584520008D9BA8 /* download_green_3.png in Resources */,
 				E52DFDBE165A53C6002A7AAF /* browse_button_on.png in Resources */,
 				E52DFDBF165A53C6002A7AAF /* browse_button.png in Resources */,
 				E52DFDC2165A5722002A7AAF /* download_button.png in Resources */,

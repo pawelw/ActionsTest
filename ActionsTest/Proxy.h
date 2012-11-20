@@ -15,7 +15,7 @@
 
 @protocol ProxyDelegate
 @optional
--(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
+-(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data;
 -(void) didFaultProxyRequest;
 -(void) fileDownloadFinishedWithData: (NSData *) data;
 -(void) connectionTimedOut;
