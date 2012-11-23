@@ -12,6 +12,7 @@
 #import "XMLRPCResponse.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
+#import "MovieModel.h"
 
 @protocol ProxyDelegate
 @optional
@@ -33,9 +34,10 @@
 @property (nonatomic, retain) id <ProxyDelegate> delegate;
 
 -(void) login;
--(void) searchByHash: (NSString *)hash andByteSize: (double) bytes;
+-(void) searchForSubtitlesWithMovie: (MovieModel *)movie;
+//-(void) searchByHash: (NSString *)hash andByteSize: (double) bytes;
 -(void) callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments;
--(void) downloadDataFromURL:(NSURL *)url;
+-(void) downloadSubtitle:(SearchModel *)subtitle;
 
 
 

@@ -31,6 +31,10 @@
     [self callWebService:@"LogIn" withArguments:[NSArray arrayWithObjects: @"", @"", @"en", @"subtitler", nil]];
 }
 
+-(void)searchForSubtitlesWithMovie: (MovieModel *)movie {
+    [self searchByHash:movie.hash andByteSize:movie.bytes];
+}
+
 -(void) searchByHash: (NSString *)hash andByteSize: (double) bytes
 {
     OrderedDictionary *dict = [[OrderedDictionary alloc] initWithCapacity:4];
@@ -156,12 +160,14 @@
 
 //------------------------------------------------------
 
--(void)downloadDataFromURL:(NSURL *)url
+-(void) downloadSubtitle:(SearchModel *)subtitle
 {
     [urlConnection cancel];
     subtitleFileData = nil;
     subtitleFileData = [[NSMutableData alloc] init];
-
+    
+    NSURL *url = [NSURL URLWithString: [subtitle subDownloadLink]];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
     urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     if (!urlConnection) {
@@ -178,8 +184,8 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"%@", subtitleFileData);
-    [delegate fileDownloadFinishedWithData:subtitleFileData];
+    NSData *uncompressedData = [subtitleFileData gunzippedData];
+    [delegate fileDownloadFinishedWithData:uncompressedData];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {

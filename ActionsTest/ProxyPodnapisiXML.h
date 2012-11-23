@@ -10,11 +10,10 @@
 #import "XMLRPCRequest.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
+#import "MovieModel.h"
 
 @protocol ProxyPodnapisiXMLDelegate 
 @optional
-//-(void) didFinishProxyRequest: (XMLRPCRequest *)request withData: (id)data;
-//-(void) didFaultProxyRequest;
 -(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data;
 -(void) fileDownloadFinishedWithData: (NSData *) data;
 @end
@@ -34,6 +33,7 @@
 @property (nonatomic, retain) id <ProxyPodnapisiXMLDelegate> delegate;
 
 - (void) login;
-- (void) searchWithMovieName: (NSString *) movieName;
+- (void) searchForSubtitlesWithMovie: (MovieModel *)movie;
+-(void) downloadSubtitle:(SearchModel *)subtitle;
 
 @end

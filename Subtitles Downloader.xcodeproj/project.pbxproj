@@ -12,6 +12,10 @@
 		E5216FE916555050005F2DB9 /* ProxyPodnapi.m in Sources */ = {isa = PBXBuildFile; fileRef = E5216FE816555050005F2DB9 /* ProxyPodnapi.m */; };
 		E528D29716559A68005788DA /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E528D29616559A68005788DA /* AboutWindow.xib */; };
 		E528D29A16559AA6005788DA /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E528D29916559AA6005788DA /* AboutWindowController.m */; };
+		E52A28C7165E888F001AD28D /* ProxySubDB.m in Sources */ = {isa = PBXBuildFile; fileRef = E52A28C6165E888F001AD28D /* ProxySubDB.m */; };
+		E52A28CB165E9442001AD28D /* NSString+SHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = E52A28CA165E9442001AD28D /* NSString+SHA256.m */; };
+		E52A28CE165E960B001AD28D /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = E52A28CD165E960B001AD28D /* NSString+MD5.m */; };
+		E52A28D6165EC4BC001AD28D /* SubDBHashAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = E52A28D5165EC4BC001AD28D /* SubDBHashAlgorithm.m */; };
 		E52CD906162856FE007DD062 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D5591626D3A900AFEC92 /* AppKit.framework */; };
 		E52CD90716285705007DD062 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55A1626D3A900AFEC92 /* CoreData.framework */; };
 		E52CD9081628570A007DD062 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E591D55B1626D3A900AFEC92 /* Foundation.framework */; };
@@ -51,6 +55,7 @@
 		E5CECE5F165464E300D1D3C5 /* Alerter.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CECE5E165464E300D1D3C5 /* Alerter.m */; };
 		E5D169D8163590400002848B /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E5D169D7163590400002848B /* bg.png */; };
 		E5D169E316359FEF0002848B /* 325.gif in Resources */ = {isa = PBXBuildFile; fileRef = E5D169E216359FEF0002848B /* 325.gif */; };
+		E5D69775165C362900376187 /* MovieModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D69774165C362900376187 /* MovieModel.m */; };
 		E5D74AC1163044EE00FC56E3 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */; };
 		E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */; };
 		E5F15F04165AEB1600EBCAC2 /* ProxyPodnapisiXML.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */; };
@@ -67,6 +72,14 @@
 		E528D29616559A68005788DA /* AboutWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
 		E528D29816559AA6005788DA /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
 		E528D29916559AA6005788DA /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
+		E52A28C5165E888F001AD28D /* ProxySubDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxySubDB.h; sourceTree = "<group>"; };
+		E52A28C6165E888F001AD28D /* ProxySubDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxySubDB.m; sourceTree = "<group>"; };
+		E52A28C9165E9442001AD28D /* NSString+SHA256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA256.h"; sourceTree = "<group>"; };
+		E52A28CA165E9442001AD28D /* NSString+SHA256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SHA256.m"; sourceTree = "<group>"; };
+		E52A28CC165E960B001AD28D /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		E52A28CD165E960B001AD28D /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		E52A28D4165EC4BC001AD28D /* SubDBHashAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubDBHashAlgorithm.h; sourceTree = "<group>"; };
+		E52A28D5165EC4BC001AD28D /* SubDBHashAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubDBHashAlgorithm.m; sourceTree = "<group>"; };
 		E52DFDBC165A53C6002A7AAF /* browse_button_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = browse_button_on.png; sourceTree = "<group>"; };
 		E52DFDBD165A53C6002A7AAF /* browse_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = browse_button.png; sourceTree = "<group>"; };
 		E52DFDC1165A5722002A7AAF /* download_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download_button.png; sourceTree = "<group>"; };
@@ -135,6 +148,8 @@
 		E5CECE5E165464E300D1D3C5 /* Alerter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alerter.m; sourceTree = "<group>"; };
 		E5D169D7163590400002848B /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		E5D169E216359FEF0002848B /* 325.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 325.gif; sourceTree = "<group>"; };
+		E5D69773165C362900376187 /* MovieModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieModel.h; sourceTree = "<group>"; };
+		E5D69774165C362900376187 /* MovieModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieModel.m; sourceTree = "<group>"; };
 		E5D74ABD1630434900FC56E3 /* OrderedDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSHashAlgorithm.h; sourceTree = "<group>"; };
@@ -207,6 +222,8 @@
 				E5216FE816555050005F2DB9 /* ProxyPodnapi.m */,
 				E5F15F02165AEB1600EBCAC2 /* ProxyPodnapisiXML.h */,
 				E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */,
+				E52A28C5165E888F001AD28D /* ProxySubDB.h */,
+				E52A28C6165E888F001AD28D /* ProxySubDB.m */,
 			);
 			name = Proxies;
 			sourceTree = "<group>";
@@ -218,6 +235,8 @@
 				E54702E0162F4A27000756EF /* LoginModel.m */,
 				E5AC9310162F6E29001F39E0 /* SearchModel.h */,
 				E5AC9311162F6E29001F39E0 /* SearchModel.m */,
+				E5D69773165C362900376187 /* MovieModel.h */,
+				E5D69774165C362900376187 /* MovieModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -308,6 +327,10 @@
 				E5931A8D165922C60058C622 /* NSAttributedString+Hyperlink.m */,
 				E52DFDD0165AB074002A7AAF /* NSView+Apperance.h */,
 				E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */,
+				E52A28C9165E9442001AD28D /* NSString+SHA256.h */,
+				E52A28CA165E9442001AD28D /* NSString+SHA256.m */,
+				E52A28CC165E960B001AD28D /* NSString+MD5.h */,
+				E52A28CD165E960B001AD28D /* NSString+MD5.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -370,6 +393,8 @@
 				E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */,
 				E5CECE5D165464E300D1D3C5 /* Alerter.h */,
 				E5CECE5E165464E300D1D3C5 /* Alerter.m */,
+				E52A28D4165EC4BC001AD28D /* SubDBHashAlgorithm.h */,
+				E52A28D5165EC4BC001AD28D /* SubDBHashAlgorithm.m */,
 			);
 			name = CustomClasses;
 			sourceTree = "<group>";
@@ -481,6 +506,11 @@
 				E52DFDCF165AAFC6002A7AAF /* SubtitlesTableView.m in Sources */,
 				E52DFDD2165AB074002A7AAF /* NSView+Apperance.m in Sources */,
 				E5F15F04165AEB1600EBCAC2 /* ProxyPodnapisiXML.m in Sources */,
+				E5D69775165C362900376187 /* MovieModel.m in Sources */,
+				E52A28C7165E888F001AD28D /* ProxySubDB.m in Sources */,
+				E52A28CB165E9442001AD28D /* NSString+SHA256.m in Sources */,
+				E52A28CE165E960B001AD28D /* NSString+MD5.m in Sources */,
+				E52A28D6165EC4BC001AD28D /* SubDBHashAlgorithm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

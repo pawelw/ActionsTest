@@ -26,17 +26,6 @@ NSImageView *imageView;
 
         // NT
         notificationCenter = [NSNotificationCenter defaultCenter];
-        
-//        [self setImage:[NSImage imageNamed:@"drop.png"]];
-//        [self setImageAlignment: NSImageAlignCenter];
-        
-        //[self ]
-        // Image
-//        NSRect frame = NSMakeRect(0, 3, 88, 29);
-//        imageView = [[NSImageView alloc] initWithFrame:frame];
-//        [imageView setImage:[NSImage imageNamed:@"drop.png"]];
-//        [self addSubview:imageView];
-        
     }
     
     return self;
@@ -47,8 +36,6 @@ NSImageView *imageView;
     // Drawing code here.
     NSRect bounds = [self bounds];
     NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:8 yRadius:8];
-//    [bgColor set];
-//    [path fill];
     
     // Draw gradient background if highlighted if (highlighted) {
     if (highlighted) {
@@ -56,9 +43,6 @@ NSImageView *imageView;
         [self.borderColor set];
         path.lineWidth = 4;
         [path stroke];
-        
-    } else {
-
     }
 }
 
@@ -72,22 +56,23 @@ NSImageView *imageView;
     highlighted = YES;
     [self setNeedsDisplay:YES]; return NSDragOperationEvery;
     
-    
-    //return [QTMovie canInitWithPasteboard:[sender draggingPasteboard]] ? NSDragOperationCopy : NSDragOperationNone;
-
+    return NSDragOperationCopy;
 }
 
-- (void)draggingExited:(id <NSDraggingInfo>)sender {
-    NSLog(@"draggingExited:"); highlighted = NO;
+- (void)draggingExited:(id <NSDraggingInfo>)sender
+{
+    highlighted = NO;
     [self setNeedsDisplay:YES];
 }
 
-- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender {
-     NSLog(@"preparing to draging operation:");
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
+{
     NSArray *files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
     
     if ([files count] == 1) {
+        
         NSString *filepath = [files lastObject];
+        
         if ([[filepath pathExtension] isEqualToString:@"mov"] ||
             [[filepath pathExtension] isEqualToString:@"MOV"] ||
             [[filepath pathExtension] isEqualToString:@"avi"] ||
@@ -102,11 +87,13 @@ NSImageView *imageView;
         {
             return YES;
         } else {
+            // If file is not a movie
             highlighted = NO;
             [self setNeedsDisplay:YES];
             return NO;
         }
     } else {
+        // If there is multiple files dragged in to view
         highlighted = NO;
         [self setNeedsDisplay:YES];
         [Alerter showNoMultipleSupportAlert];
@@ -116,31 +103,24 @@ NSImageView *imageView;
     return YES;
 }
 
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
-    NSLog(@"perform drag operation:");
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
     NSPasteboard *pasteboard = [sender draggingPasteboard];
     NSArray* fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
-    NSLog(@"%@", fileNames);
+
     if ( fileNames.count < 1 ) return NO;
-    
-    if (fileNames.count > 1) {
-        
-    }
     
     for ( NSString* file in fileNames ) {
         fileURL = [NSURL URLFromPasteboard:pasteboard];
         [notificationCenter postNotificationName:@"logIn" object:self];
     }
-    NSLog(@"Pasteboard: %@", pasteboard);
-//    if(![self readFromPasteboard:pb]) {
-//        NSLog(@"Error: Could not read from dragging pasteboard");
-//        return NO;
-//    }
+
     return YES;
 }
 
-- (void)concludeDragOperation:(id <NSDraggingInfo>)sender {
-    NSLog(@"concludeDragOperation:"); highlighted = NO;
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender
+{
+    highlighted = NO;
     [self setNeedsDisplay:YES];
 }
 

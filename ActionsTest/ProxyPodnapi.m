@@ -10,32 +10,61 @@
 #import "Alerter.h"
 #import "MainWindowController.h"
 #import "GeneralPreferencesViewController.h"
+#import "NSString+MD5.h"
+#import "NSString+SHA256.h"
 
 @implementation ProxyPodnapi
 
 @synthesize delegate, manager, subtitleFileData;
 
--(id) init
+-(id)init
 {
     self = [super init];
     if(self)
     {
         loginModel = [LoginModel initAsSingleton];
+        respondData = [[NSMutableData alloc] init];
+        searchModelCollection = [[NSMutableArray alloc] init];
     }
     
     return self;
 }
 
--(void) login
+-(void)login
 {
      [self callWebService:@"initiate" withArguments:[NSArray arrayWithObjects: @"subtitles downloader", nil]];
 }
 
+- (void)searchForSubtitlesWithMovie: (MovieModel *)movie
+{
+    NSString *formatedName = [movie.name stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://podnapisi.net/en/ppodnapisi/search?sK=%@&sXML=1", formatedName]];
+    
+    NSURLRequest *request =[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    if (!connection) {
+        NSLog(@"Connection failed");
+    }
+}
+
 -(void)searchByHash: (NSString *)hash
 {
-    NSArray *hashesCollection = [NSArray arrayWithObjects:hash, nil];
-    [self callWebService:@"search" withArguments:[NSArray arrayWithObjects: loginModel.session, hashesCollection, nil]];
+    NSArray *hashesArray = [NSArray arrayWithObjects:hash, nil];
+    NSMutableDictionary *hashesDictionary = [NSMutableDictionary new];
+    [hashesDictionary setObject:hashesArray forKey:@"hash"];
+    [self callWebService:@"search" withArguments:[NSArray arrayWithObjects: loginModel.session, hashesArray, nil]];
 }
+
+-(void)downloadSubtitle: (SearchModel *)subtitle
+{
+    NSArray * subtitleIdArray = [NSArray arrayWithObjects:subtitle.index, nil];
+    [self callWebService:@"download" withArguments:[NSArray arrayWithObjects: loginModel.session, subtitleIdArray, nil]];
+}
+
+
+#pragma mark - Request
+
 
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments
 {
@@ -52,21 +81,34 @@
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
     
+    NSLog(@"%@",response.object);
+    
     if ([response isFault]) {
+        
         [delegate didFaultProxyRequest];
-        NSLog(@"Proxy is Fault with response: %@", response);
         
     } else if ([[request method] isEqualToString:@"initiate"]) {
-        NSLog(@"initiate response: %@", response);
+
         [loginModel setSession:[[response object] objectForKey:@"session"]];
-        [self callWebService:@"authenticate" withArguments:[NSArray arrayWithObjects: loginModel.session, @"", @"", nil]];
+        [loginModel setPassword:@"stratocaster1!"];
+        [loginModel setNonce:[[response object] objectForKey:@"nonce"]];
+        
+        NSString *md5Pass = [loginModel.password MD5String];
+        NSString *combined = [NSString stringWithFormat:@"%@%@", md5Pass, loginModel.nonce];
+        NSString *pass = [NSString sha256:combined];
+        
+        //NSString *pass = [NSString stringWithFormat:@"%i", codedPassword];
+        NSLog(@"COMBINED: %@", combined);
+        NSLog(@"PASS: %@", pass);
+        [self callWebService:@"authenticate" withArguments:[NSArray arrayWithObjects: loginModel.session, @"subtitlesdownloader", pass, nil]];
         
     } else if ([[request method] isEqualToString:@"authenticate"]) {
-        //[self callWebService:@"search" withArguments:[NSArray arrayWithObjects: loginModel.session, @"", @"", nil]];
-        NSLog(@"authenticate response: %@", response);
-        [delegate didFinishProxyRequest:request withData:loginModel];
+        [delegate didFinishProxyRequestWithIdentifier:@"Login" withData:loginModel];// Custom delegate
+
     } else if ([[request method] isEqualToString:@"search"]) {
-        NSLog(@"search response: %@", response);
+
+        NSLog(@"Search done only to keep session valid for download");
+    } else if ([[request method] isEqualToString:@"download"]) {
         
     } else {
         NSLog(@"Parsed response: %@", [response object]);
@@ -90,36 +132,25 @@
 - (void)request: (XMLRPCRequest *)request didCancelAuthenticationChallenge: (NSURLAuthenticationChallenge *)challenge {
 }
 
-//------------------------------------------------------
 
--(void)downloadDataFromURL:(NSURL *)url
-{
-    [urlConnection cancel];
-    subtitleFileData = nil;
-    subtitleFileData = [[NSMutableData alloc] init];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-    urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
-    if (!urlConnection) {
-        NSLog(@"Connection failed");
-    }
-}
 
 #pragma mark - NSURL protocol methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    [subtitleFileData appendData:data];
+    [respondData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"%@", subtitleFileData);
-    [delegate fileDownloadFinishedWithData:subtitleFileData];
+    //[delegate fileDownloadFinishedWithData:subtitleFileData];
+    
+    [self parse];
+    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    [subtitleFileData setLength:0];
+    [respondData setLength:0];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -130,6 +161,72 @@
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
 }
+
+
+// Parsing ////////////////////////////////////////
+///////////////////////////////////////////////////
+
+-(void) parse
+{
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:respondData];
+    [parser setDelegate:self];
+    
+    BOOL success = [parser parse];
+    
+    if(!success){
+        NSError *outError = [parser parserError];
+        NSLog(@"Parser error: %@", outError);
+    }
+}
+
+#pragma mark - NSParser protocol methods
+
+-(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+{
+    if([elementName isEqual:@"subtitle"]) {
+        currentFields = [NSMutableDictionary new];
+    }
+}
+
+-(void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
+    if([elementName isEqual:@"subtitle"]) {
+        SearchModel *searchModel = [[SearchModel alloc] init];
+        
+        [searchModel setIndex:[currentFields objectForKey:@"id"]];
+        [searchModel setMovieName:[currentFields objectForKey:@"title"]];
+        [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
+        [searchModel setSubFormat:[currentFields objectForKey:@"format"]];
+        
+        // Setting dummy url for validation - Temporary Hack
+        [searchModel setSubDownloadLink:@"http://podnapisi.net"];
+        
+        if([[currentFields objectForKey:@"release"] isEqual: @""])
+            [searchModel setMovieReleaseName: [currentFields objectForKey:@"title"]];
+        else
+            [searchModel setMovieReleaseName:[currentFields objectForKey:@"release"]];
+        
+        [searchModelCollection addObject:searchModel];
+        
+    } else if(currentFields && currentString) {
+        NSString *trimmed = [currentString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [currentFields setObject:trimmed forKey:elementName];
+    }
+    
+    currentString = nil;
+}
+
+-(void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    currentString = [[NSMutableString alloc] init];
+    [currentString appendString:string];
+}
+
+-(void) parserDidEndDocument:(NSXMLParser *)parser {
+    
+    [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection];
+}
+
 
 
 @end

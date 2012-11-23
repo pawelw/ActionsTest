@@ -31,15 +31,13 @@
     [delegate didFinishProxyRequestWithIdentifier:@"Login" withData:loginModel];
 }
 
-- (void) searchWithMovieName: (NSString *) movieName
+- (void) searchForSubtitlesWithMovie: (MovieModel *)movie
 {
-    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://podnapisi.net/en/ppodnapisi/search?sK=AmericanBeauty&sXML=1"]];
-    NSURL *url = [NSURL URLWithString:@"file://localhost/users/pawel/sites/xcode/ActionsTest/podnapisi_offline_xml.xml"];
+    NSString *formatedName = [movie.name stringByReplacingOccurrencesOfString:@"" withString:@"%20"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://podnapisi.net/en/ppodnapisi/search?sK=%@&sXML=1", formatedName]];
     
     NSURLRequest *request =[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
-   // NSURLResponse *response = nil;
-    
-    //NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:error];
+
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     if (!connection) {
         NSLog(@"Connection failed");
@@ -116,6 +114,9 @@
         [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
         [searchModel setSubFormat:[currentFields objectForKey:@"format"]];
         
+        // Setting dummy url for validation - Temporary Hack
+        [searchModel setSubDownloadLink:@"http://podnapisi.net"];
+        
         if([[currentFields objectForKey:@"release"] isEqual: @""])
             [searchModel setMovieReleaseName: [currentFields objectForKey:@"title"]];
         else
@@ -141,6 +142,11 @@
 -(void) parserDidEndDocument:(NSXMLParser *)parser {
     
     [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection];
+}
+
+-(void) downloadSubtitle:(SearchModel *)subtitle
+{
+    
 }
 
 @end

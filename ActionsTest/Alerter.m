@@ -13,7 +13,7 @@
 
 + (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info {
     NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
-
+    
     [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 

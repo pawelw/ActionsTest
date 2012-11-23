@@ -31,6 +31,7 @@ extern NSString *const SDDefaultDirectory;
 + (void) setUsePreferedLanguage: (BOOL) prefered;
 + (NSString *) preferedLanguage;
 + (void) setPreferedLanguage: (NSString *) language;
+- (NSString *) preferedLanguageFullName;
 + (BOOL) useQuickMode;
 + (void) setUseQuickMode: (BOOL) mode;
 + (NSString *) defaultDirectory;

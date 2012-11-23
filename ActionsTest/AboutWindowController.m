@@ -13,10 +13,9 @@
 
 - (id) initWithWindowNibName:(NSString *)windowNibName
 {
-    if ((self = [super initWithWindowNibName:@"AboutWindow"]))
+    if ((self = [super initWithWindowNibName:windowNibName]))
     {
         // Init code here
-        [self.window setBackgroundColor:[NSColor whiteColor]];
         
        // NSURL* url = [NSURL URLWithString:@"http://www.opensubtitles.org"];
         //[NSApp openURL:url];
@@ -32,6 +31,10 @@
         [self.opensubtitlesTexField setAttributedStringValue: string];
     }
     return self;
+}
+
+-(void) windowDidLoad {
+    //[self.window makeKeyAndOrderFront:nil];
 }
 
 

@@ -11,8 +11,9 @@
 #import "GeneralPreferencesViewController.h"
 #import "Alerter.h"
 
-NSString *const SDOpenSubtitles = @"opensubtitles.org";
-NSString *const SDPodnapisi = @"podnapisi.net";
+NSString *const SDOpenSubtitles = @"opensubtitles";
+NSString *const SDPodnapisi = @"podnapisi";
+NSString *const SDSubDB = @"subDB";
 
 @interface MainWindowController ()
 
@@ -33,29 +34,40 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     self = [super initWithWindow:window];
     
     if (self) {
-        // Initialization code here.
-        _server = SDOpenSubtitles; // Set Main API server
         
+        // CONFIGURATION //////////////////////
+        _server     = SDSubDB; // Set Main API server
+        isExpanded  = YES;
         appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
+        
+        // ALLOCATIONS ////////////////////////
+        searchModelCollection = [NSMutableArray new];
+        movie = [MovieModel new];
+        
+        // PROXY //////////////////////////////
+        if([_server isEqualToString:SDOpenSubtitles]) {
+            proxy = [[Proxy alloc] init];
+        } else if ([_server isEqualToString:SDPodnapisi]) {
+            proxy = [[ProxyPodnapi alloc] init];
+        } else if ([_server isEqualToString:SDSubDB]) {
+            proxy = [[ProxySubDB alloc] init];
+        }
+        
+        // DELEGATIONS /////////////////////////
+        [proxy setDelegate:self];
         subtitlesTable.delegate = self;
-        // Seting YES as default because window is expanded in xib file when app starts
-        isExpanded = YES;
-        nameSorters = [NSArray arrayWithObject:
-                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:YES]];
-        // Add notification center observer for drop file view
+      
+        // NOTIFICATIONS //////////////////////
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
         [notificationCenter addObserver:self selector:@selector(closingPreferencesReceived:) name:@"preferecncesWillClose" object:nil];
         [notificationCenter addObserver:self selector:@selector(hideLoaderReceived:) name:@"hidePreloader" object:nil];
         
-        
-        // Allocations
-        searchModelCollection = [[NSMutableArray alloc] init];
-        
+//        nameSorters = [NSArray arrayWithObject:
+//                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:YES]];
+
         [self initPreloader];
     }
-    
-    //[self showWindow:window];
     
 //// DUMMY DATA FOR WORK OFFLINE
 //    tempArray = [[NSMutableArray alloc] init];
@@ -83,14 +95,14 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 {
     [super windowDidLoad];
     
-    // Init Disable View
+      // Init Disable View
 //    NSRect viewFrame = [scrollTableView bounds];
 //    disablerView = [[DisablerView alloc] initWithFrame:viewFrame];
 //    [scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
+//    [disablerView setHidden:YES]; [disablerView hide];
 
     [self.window setBackgroundColor:[NSColor blackColor]];
     [self contractWindowWithAnimation:NO];
-    //[disablerView setHidden:YES]; [disablerView hide];
     
     [subtitlesTable setRowHeight:33];
     [self.expandButton setHidden:YES];
@@ -99,8 +111,8 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 }
 
 -(void) initPreloader {
-    [self setPreloaderHidden:YES];
-    [self setPreloadeLabel: @"Connecting with server ..."];
+    self.preloadeLabel = @"Connecting with server ...";
+    self.preloaderHidden = YES;
 }
 
 -(void) initLoginCall
@@ -109,34 +121,22 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     self.preloadeLabel = @"Connecting with server ...";
     self.preloaderHidden = NO;
     
-    // Init Proxy
-    if([_server isEqualToString:SDOpenSubtitles]) {
-        proxy = [[Proxy alloc] init];
-        [proxy setDelegate:self];
-        [proxy login];
-    } else if ([_server isEqualToString:SDPodnapisi]) {
-        proxyPodnapisiXML = [[ProxyPodnapisiXML alloc] init];
-        [proxyPodnapisiXML setDelegate:self];
-        [proxyPodnapisiXML login];
-    } 
+    [proxy login];
 }
 
--(void) initSearchCall: (NSURL *) url
+-(void) initSearchCall
 {
-    hash = [OSHashAlgorithm hashForURL:url];
-    movieLocalPath = [movieLocalPath stringByDeletingLastPathComponent];
+    hash = [OSHashAlgorithm hashForURL:movie.url];
     NSString *hashString = [OSHashAlgorithm stringForHash:hash.fileHash];
     double byteSize = (uint64_t) hash.fileSize;
     
-    [self setPreloadeLabel:@"Searching opensubtitles.org ..."];
-    [self setPreloaderHidden: NO];
+    movie.hash = hashString;
+    movie.bytes = byteSize;
     
-    if([_server isEqualToString:SDOpenSubtitles]) {
-        [proxy searchByHash:hashString andByteSize:byteSize];
-    } else if ([_server isEqualToString:SDPodnapisi]) {
-        [proxyPodnapisiXML searchWithMovieName: [movieLocalPath lastPathComponent]];
-    } 
+    self.preloadeLabel = @"Searching opensubtitles.org ...";
+    self.preloaderHidden = NO;
     
+    [proxy searchForSubtitlesWithMovie:movie];
 }
 
 #pragma mark - notification center methods
@@ -145,10 +145,11 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 {    
     DropView *dropView = [object valueForKey:@"object"];
     
-    movieLocalPath = [dropView.fileURL path];
-    movieLocalURL = dropView.fileURL;
+    movie.path = [dropView.fileURL path];
+    movie.url = dropView.fileURL;
+    
     selectedFilesURLs = [[NSArray alloc] initWithObjects:dropView.fileURL, nil];
-    self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
+    self.isConnected ? [self initSearchCall] : [self initLoginCall];
 }
 
 -(void) closingPreferencesReceived: (id) object
@@ -183,11 +184,14 @@ NSString *const SDPodnapisi = @"podnapisi.net";
                             if( selectedFilesURLs == nil)
                                 return;
                             
-                            movieLocalPath = [[selectedFilesURLs lastObject] path];
-                            movieLocalURL = [selectedFilesURLs lastObject];
+                            NSLog(@"%@", [selectedFilesURLs lastObject]);
                             
-                            self.isConnected ? [self initSearchCall:movieLocalURL] : [self initLoginCall];
-                            NSLog(@"HUJ 1");
+                            movie.path = [[[selectedFilesURLs lastObject] path] stringByDeletingLastPathComponent];
+                            movie.pathWithFileName = [[selectedFilesURLs lastObject] path];
+                            movie.name = [movie.path lastPathComponent];
+                            movie.url = [selectedFilesURLs lastObject];
+                            
+                            self.isConnected ? [self initSearchCall] : [self initLoginCall];
                         } else {
                             
                         }
@@ -222,7 +226,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         self.preloadeLabel = @"Downloading subtitles ...";
         self.preloaderHidden = NO;
         [self.subtitlesTable setEnabled:NO];
-        [proxy downloadDataFromURL:url];
+        [proxy downloadSubtitle:selectedSubtitle];
     } else {
         [Alerter showSomethingWentWrongAlert];
          [self contractWindowWithAnimation:YES];
@@ -237,9 +241,12 @@ NSString *const SDPodnapisi = @"podnapisi.net";
         
         loginModel = data;
         self.isConnected = YES;
-        [self initSearchCall:movieLocalURL];
+        [self initSearchCall];
         
     } else if ([identifier isEqualToString:@"Search"]) {
+        
+        
+        NSLog(@"%@", data);
         
         [self setPreloaderHidden:YES];
         [[self mutableArrayValueForKey:@"searchModelCollection"] setArray:data];
@@ -285,12 +292,11 @@ NSString *const SDPodnapisi = @"podnapisi.net";
     }
     [self setPreloaderHidden:YES];
     
-    // Decompress data received from server
-    uncompressedData = [data gunzippedData];
-    pathWithName = [NSString stringWithFormat:@"%@/%@",movieLocalPath ,[selectedSubtitle subFileName]];
-    NSString *ext = [pathWithName pathExtension];
-    NSString *movieLocalName = [[movieLocalURL lastPathComponent] stringByDeletingPathExtension];
-    pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movieLocalPath ,movieLocalName, ext];
+    readyToSaveData = data;
+    
+    //pathWithName = [NSString stringWithFormat:@"%@/%@",movie.path ,[selectedSubtitle subFileName]];
+    NSString *movieLocalName = [[movie.url lastPathComponent] stringByDeletingPathExtension];
+    pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movie.path ,movieLocalName, selectedSubtitle.subFormat];
     
     BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:pathWithName];
     
@@ -311,7 +317,7 @@ NSString *const SDPodnapisi = @"podnapisi.net";
 }
 
 -(void) saveDataFile {
-    [uncompressedData writeToFile:pathWithName atomically:YES];
+    [readyToSaveData writeToFile:pathWithName atomically:YES];
     NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
 }

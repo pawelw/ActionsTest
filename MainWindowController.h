@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Proxy.h"
-#import "ProxyPodnapisiXML.h"
+#import "ProxySubDB.h"
+#import "ProxyPodnapi.h"
 #import "LoginModel.h"
 #import "SearchModel.h"
+#import "MovieModel.h"
 #import "OSHashAlgorithm.h"
 #import "OrderedDictionary.h"
 #import "DropView.h"
@@ -20,8 +22,9 @@
 
 extern NSString *const SDOpenSubtitles;
 extern NSString *const SDPodnapisi;
+extern NSString *const SubDB;
 
-@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, ProxyPodnapisiXMLDelegate, NSTableViewDelegate> {
+@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, ProxySubDBDelegate, ProxyPodnapiDelegate, NSTableViewDelegate> {
     
     // Outlets
     NSScrollView *scrollTableView;
@@ -32,18 +35,18 @@ extern NSString *const SDPodnapisi;
     LoginModel *loginModel;
     SearchModel *searchModel;
     SearchModel *selectedSubtitle;
+    MovieModel *movie;
+    
     
     // Cocoa Objects
     NSMutableArray *tempArray;
     NSArray *selectedFilesURLs;
     NSMutableArray *searchModelCollection;
-    NSString *movieLocalPath;
-    NSURL *movieLocalURL;
     NSString *preloaderLabel;
     NSMutableData * zippedSubsData;
     NSNotificationCenter *notificationCenter;
-    NSData *uncompressedData;
     NSString *pathWithName;
+    NSData *readyToSaveData;
     
     // Bool 
     BOOL preloaderHidden;
@@ -51,8 +54,7 @@ extern NSString *const SDPodnapisi;
     BOOL isExpanded;
     
     // Classes
-    Proxy *proxy;
-    ProxyPodnapisiXML *proxyPodnapisiXML;
+    id proxy;
     
     VideoHash hash;
     AppDelegate *appDelegate;

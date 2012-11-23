@@ -49,7 +49,6 @@
 - (IBAction)openAbout:(id)sender
 {
     _aboutWindowController = [[AboutWindowController alloc] initWithWindowNibName:@"AboutWindow"];
-   // [_aboutWindowController showWindow:nil];
     [_aboutWindowController.window makeKeyAndOrderFront:nil];
 }
 
