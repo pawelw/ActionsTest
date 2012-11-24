@@ -90,6 +90,13 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [[NSUserDefaults standardUserDefaults] setInteger:focusedAdvancedControlIndex forKey:kFocusedAdvancedControlIndex];
 }
 
+- (void) setServer:(NSString * )s {
+    mainWindowController.server = s;
+}
+- (NSString *) server{
+    return mainWindowController.server;
+}
+
 
 
 @end

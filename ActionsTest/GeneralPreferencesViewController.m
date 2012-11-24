@@ -145,7 +145,6 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 -(NSArray *) languagesArray
 {
     NSArray *languages = [NSArray arrayWithObjects:
-                       @"All",
                        @"Arabic",
                        @"Armenian",
                        @"Malay",
@@ -198,7 +197,6 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
                        nil];
     
     NSArray *codes = [NSArray arrayWithObjects:
-                          @"",
                           @"ara",
                           @"arm",
                           @"may",

@@ -16,24 +16,20 @@
 #import "AppDelegate.h"
 #import "NSData+GZIP.h"
 #import "SearchModel.h"
-
-@protocol ProxyPodnapiDelegate
-@optional
--(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data;
--(void) didFaultProxyRequest;
--(void) fileDownloadFinishedWithData: (NSData *) data;
-@end
+#import "ProxyDelegate.h"
 
 @interface ProxyPodnapi : NSObject <XMLRPCConnectionDelegate, NSXMLParserDelegate> {
-    id <ProxyPodnapiDelegate> delegate;
+    id <ProxyDelegate> delegate;
     XMLRPCConnectionManager *manager;
     
     NSMutableData *subtitleFileData;
     NSURLConnection *urlConnection;
     NSMutableArray *searchModelCollection;
     NSMutableData *respondData;
+    NSString *connectionID;
     
     LoginModel *loginModel;
+    SearchModel *selectedSubtitle;
 
     //XMLParser
     NSMutableDictionary *currentFields;
@@ -41,13 +37,14 @@
 }
 @property(nonatomic, retain) NSMutableData *subtitleFileData;
 @property(nonatomic, retain) XMLRPCConnectionManager *manager;
-@property (nonatomic, retain) id <ProxyPodnapiDelegate> delegate;
+@property (nonatomic, retain) id <ProxyDelegate> delegate;
 @property (nonatomic, retain) NSString *serverMode;
 
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments;
 -(void)login;
 -(void)searchForSubtitlesWithMovie: (MovieModel *)movie;
 -(void) downloadSubtitle:(SearchModel *)subtitle;
+-(void) disconnect;
 
 
 @end

@@ -23,8 +23,9 @@
 extern NSString *const SDOpenSubtitles;
 extern NSString *const SDPodnapisi;
 extern NSString *const SubDB;
+extern NSString *serverType;
 
-@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, ProxySubDBDelegate, ProxyPodnapiDelegate, NSTableViewDelegate> {
+@interface MainWindowController : NSWindowController <NSApplicationDelegate, ProxyDelegate, NSTableViewDelegate> {
     
     // Outlets
     NSScrollView *scrollTableView;
@@ -55,12 +56,11 @@ extern NSString *const SubDB;
     
     // Classes
     id proxy;
+    Proxy *proxyOpensubtitles;
+    ProxyPodnapi *proxyPodnapi;
     
     VideoHash hash;
-    AppDelegate *appDelegate;
     DisablerView *disablerView;
-    
-    
 }
 
 @property (nonatomic, retain) IBOutlet NSButton *downloadButton;

@@ -13,14 +13,9 @@
 #import "LoginModel.h"
 #import "SearchModel.h"
 #import "MovieModel.h"
+#import "ProxyDelegate.h"
+#import "AppDelegate.h"
 
-@protocol ProxyDelegate
-@optional
--(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data;
--(void) didFaultProxyRequest;
--(void) fileDownloadFinishedWithData: (NSData *) data;
--(void) connectionTimedOut;
-@end
 
 @interface Proxy : NSObject <XMLRPCConnectionDelegate> {
     id <ProxyDelegate> delegate;
@@ -28,6 +23,8 @@
     NSMutableData *subtitleFileData;
     NSURLConnection *urlConnection;
     LoginModel *loginModel;
+    
+    AppDelegate *appDelegate;
 }
 @property(nonatomic, retain) NSMutableData *subtitleFileData;
 //@property(nonatomic, retain) XMLRPCConnectionManager *manager;
@@ -38,6 +35,7 @@
 //-(void) searchByHash: (NSString *)hash andByteSize: (double) bytes;
 -(void) callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments;
 -(void) downloadSubtitle:(SearchModel *)subtitle;
+-(void) disconnect;
 
 
 

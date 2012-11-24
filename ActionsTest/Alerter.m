@@ -12,9 +12,11 @@
 @implementation Alerter
 
 + (void)showAlertSheet:(NSString *) message andInfo:(NSString *) info {
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     NSAlert *myAlert = [NSAlert alertWithMessageText:message defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:info];
     
-    [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+    [myAlert beginSheetModalForWindow:[appDelegate window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
 
 + (void) showNotFoundAlert
@@ -49,8 +51,16 @@
 
 +(void) askIfOverwriteFileAndDelegateTo:(id)sender withSelector:(SEL)selector
 {
+    AppDelegate *appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     NSAlert *myAlert = [NSAlert alertWithMessageText:@"Subtitle file already exist!" defaultButton:@"Yes" alternateButton:@"No" otherButton:nil informativeTextWithFormat:@"Would you like to overwrite old subtitle file with new one?"];
-    [myAlert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:sender didEndSelector:selector contextInfo:nil];
+    [myAlert beginSheetModalForWindow:[appDelegate window] modalDelegate:sender didEndSelector:selector contextInfo:nil];
+}
+
++(void) showdidntMatchSubtitles:(id)sender withSelector:(SEL)selector
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
+    NSAlert *myAlert = [NSAlert alertWithMessageText:@"Hmmm, We couldn't match video file with subtitles!" defaultButton:@"OK" alternateButton:@"Concel" otherButton:nil informativeTextWithFormat:@"We show you list of available subtitles now. Please choose subtitle for download by yourself."];
+    [myAlert beginSheetModalForWindow:[appDelegate window] modalDelegate:sender didEndSelector:selector contextInfo:nil];
 }
 
 

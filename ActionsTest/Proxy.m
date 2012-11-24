@@ -22,6 +22,7 @@
     if(self)
     {
         loginModel = [LoginModel initAsSingleton];
+        appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     }
     
     return self;
@@ -53,6 +54,12 @@
     [self callWebService:@"SearchSubtitles" withArguments:[NSArray arrayWithObjects:[loginModel token], arguments, nil]];
 }
 
+-(void) disconnect
+{
+    [manager closeConnections];
+    [urlConnection cancel];
+}
+
 -(void)callWebService:(NSString *)serviceName withArguments: (NSArray *)arguments
 {
     // Use only one connection at a time 
@@ -69,11 +76,8 @@
 
 - (void)request: (XMLRPCRequest *)request didReceiveResponse: (XMLRPCResponse *)response {
     
-    NSLog(@"response: %@", response);
-    
     if ([response isFault]) {
         [delegate didFaultProxyRequest];
-        NSLog(@"Proxy is Fault with response: %@", response);
     } else if ([[request method] isEqualToString:@"LogIn"]) {
         
         
@@ -92,14 +96,9 @@
         NSString *dataAsString = [NSString stringWithFormat:@"%@", responseData];
         
         if ([dataAsString isEqualToString:@"0"]) {
-            [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
+            [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:NO];
             dataAsString = nil;
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hidePreloader" object:self];
-            
             return;
-        } else {
-            dataAsString = nil;
         }
         
         SearchModel *searchModel = [[SearchModel alloc] init];
@@ -136,7 +135,6 @@
         [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection]; // Custom delegate
         
     } else {
-        NSLog(@"Parsed response: %@", [response object]);
         [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:response];
     }
 }

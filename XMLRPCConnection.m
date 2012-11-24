@@ -89,11 +89,11 @@ static NSOperationQueue *parsingQueue;
 #endif
         
         if (myConnection) {
-            NSLog(@"The connection, %@, has been established!", myIdentifier);
+            //NSLog(@"The connection, %@, has been established!", myIdentifier);
 
             [self performSelector: @selector(requestTimedOut) withObject: nil afterDelay: [myRequest timeoutInterval]];
         } else {
-            NSLog(@"The connection, %@, could not be established!", myIdentifier);
+            //NSLog(@"The connection, %@, could not be established!", myIdentifier);
 #if ! __has_feature(objc_arc)
             [self release];
 #endif

@@ -116,6 +116,7 @@
 		E54702E2162F4DD9000756EF /* Proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proxy.h; sourceTree = "<group>"; };
 		E54702E3162F4DD9000756EF /* Proxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proxy.m; sourceTree = "<group>"; };
 		E565FE4C16457096006D34FC /* drop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drop.png; sourceTree = "<group>"; };
+		E57676EB1660653800AD37F1 /* ProxyDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProxyDelegate.h; sourceTree = "<group>"; };
 		E591D5521626D3A900AFEC92 /* Subtitles Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Subtitles Downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E591D5561626D3A900AFEC92 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E591D5591626D3A900AFEC92 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -241,6 +242,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		E57676EC1660654800AD37F1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E57676EB1660653800AD37F1 /* ProxyDelegate.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		E591D5471626D3A900AFEC92 = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +293,7 @@
 		E591D55C1626D3A900AFEC92 /* SubtitlesDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				E57676EC1660654800AD37F1 /* Protocols */,
 				E5931A87165922420058C622 /* Categories */,
 				E54058DD1656A00D00D02816 /* Proxies */,
 				E528D29416559A08005788DA /* About */,

@@ -11,12 +11,7 @@
 #import "SearchModel.h"
 #import "LoginModel.h"
 #import "MovieModel.h"
-
-@protocol ProxySubDBDelegate
-@optional
--(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data;
--(void) fileDownloadFinishedWithData: (NSData *) data;
-@end
+#import "ProxyDelegate.h"
 
 @interface ProxySubDB : NSObject <NSXMLParserDelegate> {
     
@@ -31,7 +26,7 @@
     
 }
 
-@property (nonatomic, retain) id <ProxySubDBDelegate> delegate;
+@property (nonatomic, retain) id <ProxyDelegate> delegate;
 
 - (void)login;
 - (void)searchForSubtitlesWithMovie: (MovieModel *)movie;

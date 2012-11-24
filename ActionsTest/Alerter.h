@@ -21,5 +21,6 @@
 + (void) showNoMultipleSupportAlert;
 
 + (void) askIfOverwriteFileAndDelegateTo:(id)sender withSelector:(SEL)selector;
++ (void) showdidntMatchSubtitles:(id)sender withSelector:(SEL)selector;
 
 @end

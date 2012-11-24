@@ -11,8 +11,8 @@
 #import "GeneralPreferencesViewController.h"
 #import "Alerter.h"
 
-NSString *const SDOpenSubtitles = @"opensubtitles";
-NSString *const SDPodnapisi = @"podnapisi";
+NSString *const SDOpenSubtitles = @"opensubtitles.org";
+NSString *const SDPodnapisi = @"podnapisi.net";
 NSString *const SDSubDB = @"subDB";
 
 @interface MainWindowController ()
@@ -36,22 +36,15 @@ NSString *const SDSubDB = @"subDB";
     if (self) {
         
         // CONFIGURATION //////////////////////
-        _server     = SDSubDB; // Set Main API server
+        _server     = SDOpenSubtitles; // Set Main API server
         isExpanded  = YES;
-        appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
+        //appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         
         // ALLOCATIONS ////////////////////////
         searchModelCollection = [NSMutableArray new];
         movie = [MovieModel new];
         
-        // PROXY //////////////////////////////
-        if([_server isEqualToString:SDOpenSubtitles]) {
-            proxy = [[Proxy alloc] init];
-        } else if ([_server isEqualToString:SDPodnapisi]) {
-            proxy = [[ProxyPodnapi alloc] init];
-        } else if ([_server isEqualToString:SDSubDB]) {
-            proxy = [[ProxySubDB alloc] init];
-        }
+        proxy = [self setProxyType];
         
         // DELEGATIONS /////////////////////////
         [proxy setDelegate:self];
@@ -59,9 +52,11 @@ NSString *const SDSubDB = @"subDB";
       
         // NOTIFICATIONS //////////////////////
         notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver:self selector:@selector(loginNotificationReceived:) name:@"logIn" object:nil];
+        [notificationCenter addObserver:self selector:@selector(dropNotificationReceived:) name:@"logIn" object:nil];
         [notificationCenter addObserver:self selector:@selector(closingPreferencesReceived:) name:@"preferecncesWillClose" object:nil];
-        [notificationCenter addObserver:self selector:@selector(hideLoaderReceived:) name:@"hidePreloader" object:nil];
+       // [notificationCenter addObserver:self selector:@selector(hideLoaderReceived:) name:@"hidePreloader" object:nil];
+
+       // [notificationCenter addObserver:self selector:@selector(restart:) name:@"restart" object:nil];
         
 //        nameSorters = [NSArray arrayWithObject:
 //                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:YES]];
@@ -110,6 +105,16 @@ NSString *const SDSubDB = @"subDB";
     [self showWindow:nil];
 }
 
+-(id) setProxyType {
+
+    if([_server isEqual:SDOpenSubtitles]) {
+        return [Proxy new];
+    } else if ([_server isEqualTo:SDPodnapisi]) {
+        return [ProxyPodnapi new];
+    }
+    return [Proxy new];
+}
+
 -(void) initPreloader {
     self.preloadeLabel = @"Connecting with server ...";
     self.preloaderHidden = YES;
@@ -121,6 +126,7 @@ NSString *const SDSubDB = @"subDB";
     self.preloadeLabel = @"Connecting with server ...";
     self.preloaderHidden = NO;
     
+    //proxy = [self setProxyType];
     [proxy login];
 }
 
@@ -133,7 +139,8 @@ NSString *const SDSubDB = @"subDB";
     movie.hash = hashString;
     movie.bytes = byteSize;
     
-    self.preloadeLabel = @"Searching opensubtitles.org ...";
+    NSString *serverName = [NSString stringWithFormat:@"Searching %@ ...", _server];
+    self.preloadeLabel = serverName;
     self.preloaderHidden = NO;
     
     [proxy searchForSubtitlesWithMovie:movie];
@@ -141,12 +148,22 @@ NSString *const SDSubDB = @"subDB";
 
 #pragma mark - notification center methods
 
--(void) loginNotificationReceived: (id) object
-{    
+-(void) restart: (id) object {
+    proxy = [self setProxyType];
+    [proxy setDelegate: self];
+    [self initLoginCall];
+}
+
+-(void) dropNotificationReceived: (id) object
+{
+    [self finishConnections];
+    
     DropView *dropView = [object valueForKey:@"object"];
     
-    movie.path = [dropView.fileURL path];
+    movie.path = [[dropView.fileURL path] stringByDeletingLastPathComponent];
     movie.url = dropView.fileURL;
+    movie.pathWithFileName = [movie.url path];
+    movie.name = [movie.pathWithFileName lastPathComponent];
     
     selectedFilesURLs = [[NSArray alloc] initWithObjects:dropView.fileURL, nil];
     self.isConnected ? [self initSearchCall] : [self initLoginCall];
@@ -165,10 +182,25 @@ NSString *const SDSubDB = @"subDB";
     [self setPreloaderHidden:YES];
 }
 
+-(void) finishConnections
+{
+    [proxy disconnect];
+    self.isConnected = NO;
+    _server = SDOpenSubtitles;
+    [self setProxyType];
+    
+    // Set it again manualy ( BUG: setProxyType return ProxyPodnapi everytmime after nothing found )
+    proxy = [[Proxy alloc] init];
+    [proxy setDelegate:self];
+}
+
+
 #pragma mark - Action methods
 
 - (IBAction)onBrowseClicked:(id)sender
 {
+    [self finishConnections];
+    
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     NSArray *fileTypesArray;
     fileTypesArray = [NSArray arrayWithObjects:@"mov", @"avi", @"mpg", @"mpeg", @"mp4", @"wmv", @"rmvb", @"mkv", @"asf", @"divx", nil];
@@ -183,12 +215,10 @@ NSString *const SDSubDB = @"subDB";
                             selectedFilesURLs = [openDlg URLs];
                             if( selectedFilesURLs == nil)
                                 return;
-                            
-                            NSLog(@"%@", [selectedFilesURLs lastObject]);
-                            
+
                             movie.path = [[[selectedFilesURLs lastObject] path] stringByDeletingLastPathComponent];
                             movie.pathWithFileName = [[selectedFilesURLs lastObject] path];
-                            movie.name = [movie.path lastPathComponent];
+                            movie.name = [movie.pathWithFileName lastPathComponent];
                             movie.url = [selectedFilesURLs lastObject];
                             
                             self.isConnected ? [self initSearchCall] : [self initLoginCall];
@@ -245,27 +275,46 @@ NSString *const SDSubDB = @"subDB";
         
     } else if ([identifier isEqualToString:@"Search"]) {
         
-        
-        NSLog(@"%@", data);
-        
+        if (!data) {
+            NSLog(@"Nothing found");
+            [self setPreloaderHidden:YES];
+            if ([_server isEqual:SDOpenSubtitles]) {
+                _server = SDPodnapisi;
+                [self restart:nil];
+            } else if ([_server isEqual:SDPodnapisi]) {
+                [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
+                [self finishConnections];
+            }
+            return;
+        }
+
         [self setPreloaderHidden:YES];
         [[self mutableArrayValueForKey:@"searchModelCollection"] setArray:data];
         
-        if ([GeneralPreferencesViewController useQuickMode]){
+        if ([GeneralPreferencesViewController useQuickMode] && [_server isEqual:SDOpenSubtitles]){
             selectedSubtitle = [searchModelCollection objectAtIndex:0];
             
 // NEED TESTING ( if in quick mode try to use a movie with the same movie release )
-//            for (SearchModel* key in searchModelCollection) {
-//                if ([[key movieReleaseName] isEqualToString:[pathWithName lastPathComponent]])
-//                {
-//                    selectedSubtitle = key;
-//                }
-//            }
+            for (SearchModel* key in searchModelCollection) {
+                if ([[key movieReleaseName] isEqualToString:[pathWithName lastPathComponent]])
+                {
+                    selectedSubtitle = key;
+                }
+            }
             
             [self downloadSubtitles];
         } else if(!self.isExpanded) {
             [subtitlesTable setEnabled:YES];
-            [self expandWindow];
+            
+            if ([_server isEqual:SDPodnapisi]) {
+                [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
+            } else {
+                [self expandWindow];
+            }
+        } else if(self.isExpanded){
+            if ([_server isEqual:SDPodnapisi]) {
+                [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
+            }
         }
     }
 }
@@ -316,10 +365,21 @@ NSString *const SDSubDB = @"subDB";
     }
 }
 
+-(void) didntMatchAlertEnded:(NSAlert *)alert code:(NSInteger)choice context:(void *)v
+{
+//    _server = SDPodnapisi;
+    if(choice == NSAlertDefaultReturn) {
+      [self expandWindow];
+    } else {
+        [self finishConnections];
+    }
+}
+
 -(void) saveDataFile {
     [readyToSaveData writeToFile:pathWithName atomically:YES];
     NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+    [self finishConnections];
 }
 
 #pragma mark - tableView protocol methods
@@ -360,7 +420,6 @@ NSString *const SDSubDB = @"subDB";
 }
 
 -(NSWindow *) contractWindowWithAnimation: (BOOL) useAnimation {
-    //[appDelegate expandWindow];
     
     //[scrollTableView addSubview:disablerView positioned:NSWindowAbove relativeTo:subtitlesTable];
     //[disablerView show];

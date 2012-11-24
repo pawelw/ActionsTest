@@ -154,7 +154,7 @@
         return nil;
     }
     
-    NSLog(@"Request: %@", self.body);
+    //NSLog(@"Request: %@", self.body);
     [myRequest setHTTPMethod: @"POST"];
     
     if (![myRequest valueForHTTPHeaderField: @"Content-Type"]) {

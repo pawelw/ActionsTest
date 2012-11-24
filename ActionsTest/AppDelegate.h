@@ -21,6 +21,7 @@
 @property(nonatomic, retain) NSWindow *window;
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (nonatomic, readonly) NSWindowController *aboutWindowController;
+@property (nonatomic, retain) NSString *server;
 
 @property (nonatomic) NSInteger focusedAdvancedControlIndex;
 

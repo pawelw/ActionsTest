@@ -49,11 +49,7 @@
 - (void)searchForSubtitlesWithMovie: (MovieModel *)movie
 {
     movieModel = movie;
-    
-    if ([GeneralPreferencesViewController usePreferedLanguage]) {
-        connectionID = @"download";
-        [self downloadSubtitle:nil];
-    }
+        
     connectionID = @"search";
     
     NSString *subDBhash = [SubDBHashAlgorithm generateHashFromPath:movieModel.pathWithFileName];
@@ -70,38 +66,40 @@
 -(void)downloadSubtitle: (SearchModel *)subtitle
 {
     // TODO check if subtitle == nil;
-    
+    connectionID = @"download";
     
     NSString *languageForDownload;
-    
-   // NSLog(@"%@", [GeneralPreferencesViewController preferedLanguage]);
-    
+
     if ([GeneralPreferencesViewController usePreferedLanguage]) {
-        //NSString *key = [NSString stringWithFormat:[GeneralPreferencesViewController ]]
-        //GeneralPreferencesViewController *generals = [GeneralPreferencesViewController new];
-        NSString *key = [NSString stringWithFormat: @"%@", [[[self languagesDictionary] allKeysForObject:[GeneralPreferencesViewController preferedLanguage]] objectAtIndex:0]];
-        NSLog(@"movieModel.pathWithFileName: %@", movieModel.pathWithFileName);
+        NSString *object = [[self languagesDictionary] objectForKey:[GeneralPreferencesViewController preferedLanguage]];
+        NSLog(@"[languages allKeys]: %@", [languages allKeys]);
         
-        
-        
-        // TODO check if lang exist
-//        if ([[[self languagesDictionary] allKeys] containsObject:key]) {
-//            
-//        }
-        languageForDownload = [[languages allKeysForObject:key] objectAtIndex:0];
+        for(id key in languages){
+            if(![key isEqualToString:object]){
+                NSLog(@"Found");
+                break;
+                return;
+            } 
+        }
+        if ([[languages allKeys] containsObject:object] == nil) {
+            [Alerter showNotFoundAlertForLanguage];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hidePreloader" object:self];
+            return;
+        }
+
+        languageForDownload = [[languages allKeysForObject:object] objectAtIndex:0];
         
     } else {
         languageForDownload = [[languages allKeysForObject:subtitle.languageName] objectAtIndex:0];
     }
     
-    connectionID = @"download";
-    
     NSString *subDBhash = [SubDBHashAlgorithm generateHashFromPath:movieModel.pathWithFileName];
-    
-    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.thesubdb.com/?action=download&hash=%@&language=%@", subDBhash, languageForDownload ]];
     NSMutableURLRequest *request =[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    if (!connection) {
+        NSLog(@"Connection failed");
+    }
 }
 
 #pragma mark - 
@@ -313,7 +311,7 @@
                       @"ukr",
                       @"vie",
                       nil];
-    NSMutableDictionary *languagesDictionary = [NSDictionary dictionaryWithObjects:codes forKeys:languagesArray];
+    NSMutableDictionary *languagesDictionary = [NSDictionary dictionaryWithObjects:languagesArray forKeys:codes];
     
     return languagesDictionary;
 }
