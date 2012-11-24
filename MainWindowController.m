@@ -10,6 +10,9 @@
 #import "DisablerView.h"
 #import "GeneralPreferencesViewController.h"
 #import "Alerter.h"
+#import "ZipFile.h"
+#import "ZipReadStream.h"
+#import "FileInZipInfo.h"
 
 NSString *const SDOpenSubtitles = @"opensubtitles.org";
 NSString *const SDPodnapisi = @"podnapisi.net";
@@ -255,7 +258,6 @@ NSString *const SDSubDB = @"subDB";
     if (url && url.scheme && url.host) {
         self.preloadeLabel = @"Downloading subtitles ...";
         self.preloaderHidden = NO;
-        [self.subtitlesTable setEnabled:NO];
         [proxy downloadSubtitle:selectedSubtitle];
     } else {
         [Alerter showSomethingWentWrongAlert];
@@ -304,7 +306,6 @@ NSString *const SDSubDB = @"subDB";
             
             [self downloadSubtitles];
         } else if(!self.isExpanded) {
-            [subtitlesTable setEnabled:YES];
             
             if ([_server isEqual:SDPodnapisi]) {
                 [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
@@ -329,7 +330,7 @@ NSString *const SDSubDB = @"subDB";
 {
     //[disablerView hide];
     //[disablerView.label setHidden:YES];
-    [subtitlesTable setEnabled:YES];
+    //[subtitlesTable setEnabled:YES];
 }
 
 -(void) fileDownloadFinishedWithData:(NSMutableData *)data
@@ -377,9 +378,59 @@ NSString *const SDSubDB = @"subDB";
 
 -(void) saveDataFile {
     [readyToSaveData writeToFile:pathWithName atomically:YES];
-    NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
-    [self finishConnections];
+    
+    NSString *ext = [NSString new];
+    ext = [pathWithName pathExtension];
+    
+    if(![ext isEqual:@"zip"]) {
+        NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+        [self finishConnections];
+        
+        return;
+    }
+    
+    
+    //Unzip
+   // NSString *zipPath = [[movie.pathWithFileName]
+    ZipFile *unzipFile= [[ZipFile alloc] initWithFileName:pathWithName mode:ZipFileModeUnzip];
+    NSMutableData *unzippedData;
+    
+    NSArray *infos= [unzipFile listFileInZipInfos];
+    for (FileInZipInfo *zipInfo in infos) {
+        
+        // Locate the file in the zip
+        [unzipFile locateFileInZip:zipInfo.name];
+        
+        // Expand the file in memory
+        ZipReadStream *read= [unzipFile readCurrentFileInZip];
+        unzippedData = [[NSMutableData alloc] initWithLength:zipInfo.length];
+        
+        int bytesRead= [read readDataWithBuffer:unzippedData];
+        [read finishedReading];
+        
+        NSLog(@"Data: %@", unzippedData);
+        ext = [zipInfo.name pathExtension];
+        NSString * subtitleName = [NSString stringWithFormat:@"%@.%@",[pathWithName stringByDeletingPathExtension], ext];
+        [unzippedData writeToFile:subtitleName atomically:YES];
+        
+        // Write unzipped file to disc
+        NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:subtitleName], nil];
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+        
+        // Remove old zip when finished
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    BOOL fileExists = [fileManager fileExistsAtPath:pathWithName];
+    if (fileExists)
+    {
+        BOOL success = [fileManager removeItemAtPath:pathWithName error:&error];
+        if (!success) NSLog(@"Error: %@", [error localizedDescription]);
+    }
+    
+    [unzipFile close];
 }
 
 #pragma mark - tableView protocol methods

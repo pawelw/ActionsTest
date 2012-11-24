@@ -46,7 +46,7 @@
 
 +(void) showNoMultipleSupportAlert
 {
-    [self showAlertSheet:@"Sorry, no multiple search support yet!" andInfo:@"We will add this option for free with next update."];
+    [self showAlertSheet:@"Sorry, no multiple search support yet!" andInfo:@"No multiple search support."];
 }
 
 +(void) askIfOverwriteFileAndDelegateTo:(id)sender withSelector:(SEL)selector
