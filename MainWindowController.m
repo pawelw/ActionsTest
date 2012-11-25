@@ -39,7 +39,7 @@ NSString *const SDSubDB = @"subDB";
     if (self) {
         
         // CONFIGURATION //////////////////////
-        _server     = SDOpenSubtitles; // Set Main API server
+        _server     = SDPodnapisi; // Set Main API server
         isExpanded  = YES;
         //appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         
@@ -189,11 +189,11 @@ NSString *const SDSubDB = @"subDB";
 {
     [proxy disconnect];
     self.isConnected = NO;
-    _server = SDOpenSubtitles;
+    _server = SDPodnapisi;
     [self setProxyType];
     
     // Set it again manualy ( BUG: setProxyType return ProxyPodnapi everytmime after nothing found )
-    proxy = [[Proxy alloc] init];
+    //proxy = [[Proxy alloc] init];
     [proxy setDelegate:self];
 }
 
@@ -372,7 +372,7 @@ NSString *const SDSubDB = @"subDB";
     if(choice == NSAlertDefaultReturn) {
       [self expandWindow];
     } else {
-        [self finishConnections];
+        //[self finishConnections];
     }
 }
 
@@ -383,18 +383,20 @@ NSString *const SDSubDB = @"subDB";
     ext = [pathWithName pathExtension];
     
     if(![ext isEqual:@"zip"]) {
+        // remove zip if exist
+        [self removeFileAtPath:[NSString stringWithFormat:@"%@.zip",[pathWithName stringByDeletingPathExtension]]];
+        // SHow files in finder
         NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
         [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
-        [self finishConnections];
         
         return;
     }
     
-    
-    //Unzip
-   // NSString *zipPath = [[movie.pathWithFileName]
+    //If file is zipped need to do steps:  1.unpack saved file - 2.save unpacked files - 3.remove zip file
     ZipFile *unzipFile= [[ZipFile alloc] initWithFileName:pathWithName mode:ZipFileModeUnzip];
-    NSMutableData *unzippedData;
+    NSMutableData *unzippedData = nil;
+    
+    NSString *zipFilePath = [[NSString alloc] initWithString:pathWithName]; //pathWithName;
     
     NSArray *infos= [unzipFile listFileInZipInfos];
     for (FileInZipInfo *zipInfo in infos) {
@@ -404,33 +406,46 @@ NSString *const SDSubDB = @"subDB";
         
         // Expand the file in memory
         ZipReadStream *read= [unzipFile readCurrentFileInZip];
+        [unzippedData setLength:0]; unzippedData = nil;
         unzippedData = [[NSMutableData alloc] initWithLength:zipInfo.length];
         
-        int bytesRead= [read readDataWithBuffer:unzippedData];
+        int bytesRead = [read readDataWithBuffer:unzippedData];
         [read finishedReading];
         
-        NSLog(@"Data: %@", unzippedData);
         ext = [zipInfo.name pathExtension];
-        NSString * subtitleName = [NSString stringWithFormat:@"%@.%@",[pathWithName stringByDeletingPathExtension], ext];
-        [unzippedData writeToFile:subtitleName atomically:YES];
+        pathWithName = [NSString stringWithFormat:@"%@.%@",[pathWithName stringByDeletingPathExtension], ext];
         
         // Write unzipped file to disc
-        NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:subtitleName], nil];
-        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+//        NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:subtitleName], nil];
+//        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+        BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:pathWithName];
         
-        // Remove old zip when finished
-    }
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    BOOL fileExists = [fileManager fileExistsAtPath:pathWithName];
-    if (fileExists)
-    {
-        BOOL success = [fileManager removeItemAtPath:pathWithName error:&error];
-        if (!success) NSLog(@"Error: %@", [error localizedDescription]);
+        readyToSaveData = unzippedData;
+        if(exist) {
+            [Alerter askIfOverwriteFileAndDelegateTo:self withSelector:@selector(overwriteAlertEnded:code:context:)];
+        } else {
+            // Data is unpacked so run this function again
+            [self saveDataFile];
+            
+        }
     }
     
     [unzipFile close];
+    [self removeFileAtPath:[NSString stringWithFormat:@"%@.zip",[pathWithName stringByDeletingPathExtension]]];
+}
+
+-(BOOL) removeFileAtPath: (NSString *)path {
+    // Remove old zip when finished
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    BOOL fileExists = [fileManager fileExistsAtPath:path];
+    if (fileExists)
+    {
+        BOOL success = [fileManager removeItemAtPath:path error:&error];
+        if (!success) NSLog(@"Error: %@", [error localizedDescription]);
+    }
+    
+    return fileExists;
 }
 
 #pragma mark - tableView protocol methods

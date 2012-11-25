@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        NSRect frame = NSMakeRect((self.bounds.origin.x + self.bounds.size.width + 162), 1, 90, 33);
+        NSRect frame = NSMakeRect((self.bounds.origin.x + self.bounds.size.width + 145), 1, 90, 33);
         
         pushButton = [[NSButton alloc] initWithFrame: frame];
         pushButton.bezelStyle = NSInlineBezelStyle;

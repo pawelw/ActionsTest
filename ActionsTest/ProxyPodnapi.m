@@ -244,7 +244,7 @@
         [searchModel setIndex:[currentFields objectForKey:@"id"]];
         [searchModel setMovieName:[currentFields objectForKey:@"title"]];
         [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
-        [searchModel setSubFormat:[currentFields objectForKey:@"format"]];
+        
         
         // Setting dummy url for validation - Temporary Hack
         [searchModel setSubDownloadLink:@"http://www.podnapisi.net"];
@@ -253,6 +253,15 @@
             [searchModel setMovieReleaseName: [currentFields objectForKey:@"title"]];
         else
             [searchModel setMovieReleaseName:[currentFields objectForKey:@"release"]];
+        
+        if([[currentFields objectForKey:@"format"] isEqual:@"SubRip"])
+            [searchModel setSubFormat:@"srt"];
+        else if([[currentFields objectForKey:@"format"] isEqual:@"MicroDVD"])
+            [searchModel setSubFormat:@"sub"];
+        else if([[currentFields objectForKey:@"format"] isEqual:@"TMPlayer"])
+            [searchModel setSubFormat:@"txt"];
+        else
+            [searchModel setSubFormat:[currentFields objectForKey:@"format"]];
         
         [searchModelCollection addObject:searchModel];
         
