@@ -147,6 +147,32 @@ NSString *const SDSubDB = @"subDB";
     [proxy searchForSubtitlesWithMovie:movie];
 }
 
+- (void) downloadSubtitles
+{
+    NSURL* url = [NSURL URLWithString:[selectedSubtitle subDownloadLink]];
+    
+    //NSAssert(url && url.scheme && url.host, @"Pawel Witkowski assertion: URL must be valid. You try to download subtitles from the server and you are pasing unvalid URL to the proxy. URL: '%@.'", url);
+    
+    if ([selectedSubtitle.server isEqual:SDOpenSubtitles]) {
+        _server = SDOpenSubtitles;
+        proxy = [Proxy new];
+    } else if ([selectedSubtitle.server isEqual:SDPodnapisi]){
+        _server = SDPodnapisi;
+        proxy = [ProxyPodnapi new];
+    }
+    
+    [proxy setDelegate:self];
+    
+    if (url && url.scheme && url.host) {
+        self.preloadeLabel = @"Downloading subtitles ...";
+        self.preloaderHidden = NO;
+        [proxy downloadSubtitle:selectedSubtitle];
+    } else {
+        [Alerter showSomethingWentWrongAlert];
+        [self contractWindowWithAnimation:YES];
+    }
+}
+
 #pragma mark - notification center methods
 
 -(void) restart: (id) object {
@@ -185,6 +211,7 @@ NSString *const SDSubDB = @"subDB";
 
 -(void) finishConnections
 {
+    [[self mutableArrayValueForKey:@"searchModelCollection"] removeAllObjects];
     [proxy disconnect];
     self.isConnected = NO;
     _server = SDOpenSubtitles;
@@ -247,22 +274,6 @@ NSString *const SDSubDB = @"subDB";
     [self downloadSubtitles];
 }
 
-- (void) downloadSubtitles
-{    
-    NSURL* url = [NSURL URLWithString:[selectedSubtitle subDownloadLink]];
-    
-    //NSAssert(url && url.scheme && url.host, @"Pawel Witkowski assertion: URL must be valid. You try to download subtitles from the server and you are pasing unvalid URL to the proxy. URL: '%@.'", url);
-    
-    if (url && url.scheme && url.host) {
-        self.preloadeLabel = @"Downloading subtitles ...";
-        self.preloaderHidden = NO;
-        [proxy downloadSubtitle:selectedSubtitle];
-    } else {
-        [Alerter showSomethingWentWrongAlert];
-         [self contractWindowWithAnimation:YES];
-    }
-}
-
 #pragma mark - proxy protocol methods
 
 -(void) didFinishProxyRequestWithIdentifier: (NSString *)identifier withData:(id)data
@@ -275,25 +286,30 @@ NSString *const SDSubDB = @"subDB";
         
     } else if ([identifier isEqualToString:@"Search"]) {
         
-        [[self mutableArrayValueForKey:@"searchModelCollection"] removeAllObjects];
-        
+        BOOL isFirstSearchEmpty = NO;
         if (!data) {
             NSLog(@"Nothing found");
+            BOOL isFirstSearchEmpty = YES;
             [self setPreloaderHidden:YES];
             if ([_server isEqual:SDOpenSubtitles]) {
                 _server = SDPodnapisi;
                 [self restart:nil];
-            } else if ([_server isEqual:SDPodnapisi]) {
+            } else if ([_server isEqual:SDPodnapisi] && isFirstSearchEmpty) {
                 [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
-                [self finishConnections];
+                //[self finishConnections];
             }
             return;
         }
 
         [self setPreloaderHidden:YES];
         
-        [[self mutableArrayValueForKey:@"searchModelCollection"] setArray:data];
-        
+        [[self mutableArrayValueForKey:@"searchModelCollection"] addObjectsFromArray:data];
+
+        // Search 2nd sever 
+        if (![GeneralPreferencesViewController usePreferedLanguage] && [_server isEqual:SDOpenSubtitles]) {
+            _server = SDPodnapisi;
+            [self restart:nil];
+        }
         if ([GeneralPreferencesViewController useQuickMode] && [_server isEqual:SDOpenSubtitles]){
             selectedSubtitle = [searchModelCollection objectAtIndex:0];
             
@@ -313,17 +329,15 @@ NSString *const SDSubDB = @"subDB";
             }
             
             [self downloadSubtitles];
-        } else if(!self.isExpanded) {
             
-            if ([_server isEqual:SDPodnapisi]) {
-                [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
-            } else {
-                [self expandWindow];
-            }
+        } else if ([GeneralPreferencesViewController usePreferedLanguage] && [_server isEqual:SDPodnapisi]) {
+            [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
+        } else if(!self.isExpanded) {
+            [self expandWindow];
         } else if(self.isExpanded){
-            if ([_server isEqual:SDPodnapisi]) {
-                [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
-            }
+//            if ([_server isEqual:SDPodnapisi]) {
+//                [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
+//            }
         }
     }
 }
@@ -355,7 +369,6 @@ NSString *const SDSubDB = @"subDB";
     //pathWithName = [NSString stringWithFormat:@"%@/%@",movie.path ,[selectedSubtitle subFileName]];
     NSString *movieLocalName = [[movie.url lastPathComponent] stringByDeletingPathExtension];
     pathWithName = [NSString stringWithFormat:@"%@/%@.%@",movie.path ,movieLocalName, selectedSubtitle.subFormat];
-    
     BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:pathWithName];
     
     if(exist) {

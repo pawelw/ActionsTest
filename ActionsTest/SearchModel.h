@@ -20,6 +20,8 @@
     NSString *idMovie;
     NSString *subActualCD;
     NSString *subFormat;
+    NSString *server;
+    BOOL isZip;
 }
 
 @property (copy) NSString *index;
@@ -32,6 +34,8 @@
 @property (copy) NSString *idMovie;
 @property (copy) NSString *subActualCD;
 @property (copy) NSString *subFormat;
+@property (copy) NSString *server;
+@property BOOL isZip;
 
 +(SearchModel *)initAsSingleton;
 -(id)copyWithZone:(NSZone *)zone;

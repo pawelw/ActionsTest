@@ -113,6 +113,7 @@
             [searchModel setLanguageName:[key valueForKey:@"LanguageName"]];
             [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
             [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
+            [searchModel setServer:SDOpenSubtitles];
             
             ///////////
             //[searchModel setSubFormat:[key valueForKey:@"SubFormat"]];

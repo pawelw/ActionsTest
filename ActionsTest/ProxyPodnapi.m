@@ -151,6 +151,7 @@
         //dic = [filesArray objectAtIndex:0];
         [selectedSubtitle setSubDownloadLink:[NSString stringWithFormat:@"http://www.podnapisi.net/static/podnapisi/%@",[dic objectForKey:@"filename"]]];
         [selectedSubtitle setSubFormat:@"zip"];
+        [selectedSubtitle setIsZip:YES];
         [self doActualdownload];
     } else {
 
@@ -244,6 +245,7 @@
         [searchModel setIndex:[currentFields objectForKey:@"id"]];
         [searchModel setMovieName:[currentFields objectForKey:@"title"]];
         [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
+        [searchModel setServer:SDPodnapisi];
         
         
         // Setting dummy url for validation - Temporary Hack

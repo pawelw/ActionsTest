@@ -50,6 +50,8 @@
 		E52DFDCF165AAFC6002A7AAF /* SubtitlesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DFDCE165AAFC6002A7AAF /* SubtitlesTableView.m */; };
 		E52DFDD2165AB074002A7AAF /* NSView+Apperance.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */; };
 		E52EAD4816625D6000C55913 /* NSString+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EAD4716625D6000C55913 /* NSString+Compare.m */; };
+		E52EAD4C1662748400C55913 /* podnapisi.png in Resources */ = {isa = PBXBuildFile; fileRef = E52EAD4A1662748400C55913 /* podnapisi.png */; };
+		E52EAD4D1662748400C55913 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = E52EAD4B1662748400C55913 /* favicon.ico */; };
 		E53678F316317EFF004E45E2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53678F216317EFF004E45E2 /* MainWindow.xib */; };
 		E539012616449B160095B36C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = E539012516449B160095B36C /* DropView.m */; };
 		E54702CB162F45BE000756EF /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702B7162F45AE000756EF /* NSData+Base64.m */; };
@@ -160,6 +162,8 @@
 		E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Apperance.m"; sourceTree = "<group>"; };
 		E52EAD4616625D6000C55913 /* NSString+Compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Compare.h"; sourceTree = "<group>"; };
 		E52EAD4716625D6000C55913 /* NSString+Compare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Compare.m"; sourceTree = "<group>"; };
+		E52EAD4A1662748400C55913 /* podnapisi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = podnapisi.png; sourceTree = "<group>"; };
+		E52EAD4B1662748400C55913 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
 		E53678F216317EFF004E45E2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../MainWindow.xib; sourceTree = "<group>"; };
 		E539012416449B160095B36C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		E539012516449B160095B36C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
@@ -462,6 +466,8 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E52EAD4A1662748400C55913 /* podnapisi.png */,
+				E52EAD4B1662748400C55913 /* favicon.ico */,
 				E52DFDBC165A53C6002A7AAF /* browse_button_on.png */,
 				E52DFDC1165A5722002A7AAF /* download_button.png */,
 				E52DFDBD165A53C6002A7AAF /* browse_button.png */,
@@ -627,6 +633,8 @@
 				E52DFDBF165A53C6002A7AAF /* browse_button.png in Resources */,
 				E52DFDC2165A5722002A7AAF /* download_button.png in Resources */,
 				E52DFDC4165A5A37002A7AAF /* DownloadButton.xib in Resources */,
+				E52EAD4C1662748400C55913 /* podnapisi.png in Resources */,
+				E52EAD4D1662748400C55913 /* favicon.ico in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
