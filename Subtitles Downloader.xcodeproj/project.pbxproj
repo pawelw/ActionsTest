@@ -49,6 +49,7 @@
 		E52DFDC4165A5A37002A7AAF /* DownloadButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E52DFDC3165A5A37002A7AAF /* DownloadButton.xib */; };
 		E52DFDCF165AAFC6002A7AAF /* SubtitlesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DFDCE165AAFC6002A7AAF /* SubtitlesTableView.m */; };
 		E52DFDD2165AB074002A7AAF /* NSView+Apperance.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */; };
+		E52EAD4816625D6000C55913 /* NSString+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EAD4716625D6000C55913 /* NSString+Compare.m */; };
 		E53678F316317EFF004E45E2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53678F216317EFF004E45E2 /* MainWindow.xib */; };
 		E539012616449B160095B36C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = E539012516449B160095B36C /* DropView.m */; };
 		E54702CB162F45BE000756EF /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702B7162F45AE000756EF /* NSData+Base64.m */; };
@@ -157,6 +158,8 @@
 		E52DFDCE165AAFC6002A7AAF /* SubtitlesTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitlesTableView.m; sourceTree = "<group>"; };
 		E52DFDD0165AB074002A7AAF /* NSView+Apperance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Apperance.h"; sourceTree = "<group>"; };
 		E52DFDD1165AB074002A7AAF /* NSView+Apperance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Apperance.m"; sourceTree = "<group>"; };
+		E52EAD4616625D6000C55913 /* NSString+Compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Compare.h"; sourceTree = "<group>"; };
+		E52EAD4716625D6000C55913 /* NSString+Compare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Compare.m"; sourceTree = "<group>"; };
 		E53678F216317EFF004E45E2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../MainWindow.xib; sourceTree = "<group>"; };
 		E539012416449B160095B36C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		E539012516449B160095B36C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
@@ -487,6 +490,8 @@
 				E52A28CA165E9442001AD28D /* NSString+SHA256.m */,
 				E52A28CC165E960B001AD28D /* NSString+MD5.h */,
 				E52A28CD165E960B001AD28D /* NSString+MD5.m */,
+				E52EAD4616625D6000C55913 /* NSString+Compare.h */,
+				E52EAD4716625D6000C55913 /* NSString+Compare.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -691,6 +696,7 @@
 				E511C8EF166138020011464B /* trees.c in Sources */,
 				E511C8F0166138020011464B /* uncompr.c in Sources */,
 				E511C8F1166138020011464B /* zutil.c in Sources */,
+				E52EAD4816625D6000C55913 /* NSString+Compare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

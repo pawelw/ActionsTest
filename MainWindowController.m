@@ -13,6 +13,7 @@
 #import "ZipFile.h"
 #import "ZipReadStream.h"
 #import "FileInZipInfo.h"
+#import "NSString+Compare.h"
 
 NSString *const SDOpenSubtitles = @"opensubtitles.org";
 NSString *const SDPodnapisi = @"podnapisi.net";
@@ -39,7 +40,7 @@ NSString *const SDSubDB = @"subDB";
     if (self) {
         
         // CONFIGURATION //////////////////////
-        _server     = SDPodnapisi; // Set Main API server
+        _server     = SDOpenSubtitles; // Set Main API server
         isExpanded  = YES;
         //appDelegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
         
@@ -57,9 +58,6 @@ NSString *const SDSubDB = @"subDB";
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(dropNotificationReceived:) name:@"logIn" object:nil];
         [notificationCenter addObserver:self selector:@selector(closingPreferencesReceived:) name:@"preferecncesWillClose" object:nil];
-       // [notificationCenter addObserver:self selector:@selector(hideLoaderReceived:) name:@"hidePreloader" object:nil];
-
-       // [notificationCenter addObserver:self selector:@selector(restart:) name:@"restart" object:nil];
         
 //        nameSorters = [NSArray arrayWithObject:
 //                       [[NSSortDescriptor alloc] initWithKey:@"movieReleaseName" ascending:YES]];
@@ -189,11 +187,11 @@ NSString *const SDSubDB = @"subDB";
 {
     [proxy disconnect];
     self.isConnected = NO;
-    _server = SDPodnapisi;
+    _server = SDOpenSubtitles;
     [self setProxyType];
     
     // Set it again manualy ( BUG: setProxyType return ProxyPodnapi everytmime after nothing found )
-    //proxy = [[Proxy alloc] init];
+    proxy = [[Proxy alloc] init];
     [proxy setDelegate:self];
 }
 
@@ -277,6 +275,8 @@ NSString *const SDSubDB = @"subDB";
         
     } else if ([identifier isEqualToString:@"Search"]) {
         
+        [[self mutableArrayValueForKey:@"searchModelCollection"] removeAllObjects];
+        
         if (!data) {
             NSLog(@"Nothing found");
             [self setPreloaderHidden:YES];
@@ -291,16 +291,24 @@ NSString *const SDSubDB = @"subDB";
         }
 
         [self setPreloaderHidden:YES];
+        
         [[self mutableArrayValueForKey:@"searchModelCollection"] setArray:data];
         
         if ([GeneralPreferencesViewController useQuickMode] && [_server isEqual:SDOpenSubtitles]){
             selectedSubtitle = [searchModelCollection objectAtIndex:0];
             
 // NEED TESTING ( if in quick mode try to use a movie with the same movie release )
+            
+            int rank = 0;
             for (SearchModel* key in searchModelCollection) {
-                if ([[key movieReleaseName] isEqualToString:[pathWithName lastPathComponent]])
-                {
+
+                NSString *a = [key movieReleaseName];
+                NSString *b = [[movie.pathWithFileName lastPathComponent] stringByDeletingPathExtension];
+                int result = [NSString compareString:a withString:b];
+
+                if (rank < result) {
                     selectedSubtitle = key;
+                    rank = result;
                 }
             }
             
