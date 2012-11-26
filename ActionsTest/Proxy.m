@@ -142,7 +142,7 @@
 
 - (void)request: (XMLRPCRequest *)request didFailWithError: (NSError *)error {
     // Call appDelegation method to pop up "No Internet connection Alert"
-    NSLog(@"Proxy Error: %@", error);
+    NSLog(@"Proxy Error: %@", error.description);
     [delegate didFaultProxyRequest];
 }
 

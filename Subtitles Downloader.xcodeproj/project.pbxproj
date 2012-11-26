@@ -67,10 +67,6 @@
 		E54702DD162F45BE000756EF /* XMLRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702C9162F45AE000756EF /* XMLRPCResponse.m */; };
 		E54702E1162F4A27000756EF /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702E0162F4A27000756EF /* LoginModel.m */; };
 		E54702E4162F4DD9000756EF /* Proxy.m in Sources */ = {isa = PBXBuildFile; fileRef = E54702E3162F4DD9000756EF /* Proxy.m */; };
-		E559D41B16638FCB000622C8 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E559D41A16638FCB000622C8 /* icon.iconset */; };
-		E559D41E1663910E000622C8 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E559D41D1663910E000622C8 /* icon.iconset */; };
-		E559D42016639579000622C8 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E559D41F16639579000622C8 /* icon.iconset */; };
-		E559D422166395C3000622C8 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E559D421166395C3000622C8 /* icon.iconset */; };
 		E565FE4D16457096006D34FC /* drop.png in Resources */ = {isa = PBXBuildFile; fileRef = E565FE4C16457096006D34FC /* drop.png */; };
 		E591D5611626D3A900AFEC92 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E591D55F1626D3A900AFEC92 /* InfoPlist.strings */; };
 		E591D5631626D3A900AFEC92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E591D5621626D3A900AFEC92 /* main.m */; };
@@ -91,7 +87,6 @@
 		E5D74AC1163044EE00FC56E3 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */; };
 		E5DB9606166379FF0065B2C5 /* SETTINGS.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB9605166379FF0065B2C5 /* SETTINGS.png */; };
 		E5DB960916638F040065B2C5 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E5DB960816638F040065B2C5 /* icon.iconset */; };
-		E5DB960B16638F4D0065B2C5 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E5DB960A16638F4D0065B2C5 /* icon.iconset */; };
 		E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */; };
 		E5F15F04165AEB1600EBCAC2 /* ProxyPodnapisiXML.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */; };
 		E5F2F48E1650302400A83303 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F2F48D1650302400A83303 /* libz.dylib */; };
@@ -177,6 +172,7 @@
 		E539012516449B160095B36C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
 		E54150621663A8B1007A1A2B /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		E54150631663A8B1007A1A2B /* background@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background@2.jpg"; sourceTree = "<group>"; };
+		E54150661663C9B7007A1A2B /* Subtitles Downloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Subtitles Downloader.entitlements"; sourceTree = "<group>"; };
 		E54702B6162F45AE000756EF /* NSData+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E54702B7162F45AE000756EF /* NSData+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		E54702B8162F45AE000756EF /* NSStringAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
@@ -421,6 +417,7 @@
 		E591D5471626D3A900AFEC92 = {
 			isa = PBXGroup;
 			children = (
+				E54150661663C9B7007A1A2B /* Subtitles Downloader.entitlements */,
 				E559D421166395C3000622C8 /* icon.iconset */,
 				E559D41F16639579000622C8 /* icon.iconset */,
 				E559D41D1663910E000622C8 /* icon.iconset */,
@@ -660,11 +657,6 @@
 				E52EAD4D1662748400C55913 /* favicon.ico in Resources */,
 				E5DB9606166379FF0065B2C5 /* SETTINGS.png in Resources */,
 				E5DB960916638F040065B2C5 /* icon.iconset in Resources */,
-				E5DB960B16638F4D0065B2C5 /* icon.iconset in Resources */,
-				E559D41B16638FCB000622C8 /* icon.iconset in Resources */,
-				E559D41E1663910E000622C8 /* icon.iconset in Resources */,
-				E559D42016639579000622C8 /* icon.iconset in Resources */,
-				E559D422166395C3000622C8 /* icon.iconset in Resources */,
 				E54150641663A8B1007A1A2B /* background.jpg in Resources */,
 				E54150651663A8B1007A1A2B /* background@2.jpg in Resources */,
 			);
@@ -826,6 +818,8 @@
 		E591D5711626D3AA00AFEC92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Subtitles Downloader.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -846,6 +840,8 @@
 		E591D5721626D3AA00AFEC92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Subtitles Downloader.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
