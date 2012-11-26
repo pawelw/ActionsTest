@@ -15,7 +15,7 @@
 
 @implementation AppDelegate
 
-@synthesize mainWindowController;
+@synthesize mainWindowController, fileURL;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -23,10 +23,13 @@
     self.window = mainWindowController.window;
     
     NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-    [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:SDUsePreferedLanguageKey];
+    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:SDUsePreferedLanguageKey];
+    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:SDUseQuickModeKey];
     
     NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
     [defaultValues setObject:[movieDirectory path] forKey:SDDefaultDirectory];
+    
+    [defaultValues setObject:@"eng" forKey:SDPreferedLanguageKey];
     
     // Register the dictionary of defaults
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
@@ -37,6 +40,18 @@
         mainWindowController = [[MainWindowController alloc] init];
     }
      //[mainWindowController showWindow:nil];
+}
+
+-(void) application:(NSApplication *)sender openFiles:(NSArray *)filenames
+{
+    NSString *path = [NSString stringWithString:[filenames objectAtIndex:0]];
+    fileURL = [[NSURL alloc] initFileURLWithPath:path];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"logIn" object:self];
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
+    return YES;
 }
 
 

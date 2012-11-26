@@ -185,14 +185,16 @@ NSString *const SDSubDB = @"subDB";
 {
     [self finishConnections];
     
-    DropView *dropView = [object valueForKey:@"object"];
+    NSLog(@"%@", [[object valueForKey:@"object"] fileURL]);
+    NSURL *url = [[object valueForKey:@"object"] fileURL];
+    NSLog(@"%@", [url path]);
     
-    movie.path = [[dropView.fileURL path] stringByDeletingLastPathComponent];
-    movie.url = dropView.fileURL;
+    movie.path = [[url path] stringByDeletingLastPathComponent];
+    movie.url = [[object valueForKey:@"object"] fileURL];
     movie.pathWithFileName = [movie.url path];
     movie.name = [movie.pathWithFileName lastPathComponent];
     
-    selectedFilesURLs = [[NSArray alloc] initWithObjects:dropView.fileURL, nil];
+    selectedFilesURLs = [[NSArray alloc] initWithObjects:[[object valueForKey:@"object"] fileURL], nil];
     self.isConnected ? [self initSearchCall] : [self initLoginCall];
 }
 

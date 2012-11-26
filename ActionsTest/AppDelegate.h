@@ -22,6 +22,7 @@
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (nonatomic, readonly) NSWindowController *aboutWindowController;
 @property (nonatomic, retain) NSString *server;
+@property(nonatomic, retain) NSURL *fileURL;
 
 @property (nonatomic) NSInteger focusedAdvancedControlIndex;
 

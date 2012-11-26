@@ -106,7 +106,6 @@
 										<string key="NSFrame">{{94, 26}, {289, 14}}</string>
 										<reference key="NSSuperview" ref="890377812"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:1505</string>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="173121788">
@@ -252,7 +251,7 @@
 									<object class="NSTextField" id="293755995">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{15, 40}, {305, 14}}</string>
+										<string key="NSFrame">{{15, 40}, {300, 14}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="392541147"/>
@@ -261,7 +260,7 @@
 										<object class="NSTextFieldCell" key="NSCell" id="214819561">
 											<int key="NSCellFlags">68157504</int>
 											<int key="NSCellFlags2">272761856</int>
-											<string key="NSContents">Note: With this option selected you don't have an option</string>
+											<string key="NSContents">Note: With this option selected you don't have a chance</string>
 											<reference key="NSSupport" ref="26"/>
 											<string key="NSCellIdentifier">_NS:1505</string>
 											<reference key="NSControlView" ref="293755995"/>
@@ -273,7 +272,7 @@
 									<object class="NSButton" id="306738685">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{16, 56}, {309, 18}}</string>
+										<string key="NSFrame">{{16, 56}, {358, 18}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="293755995"/>
@@ -282,7 +281,7 @@
 										<object class="NSButtonCell" key="NSCell" id="920577432">
 											<int key="NSCellFlags">-2080374784</int>
 											<int key="NSCellFlags2">268435456</int>
-											<string key="NSContents">Don't show subtitles list, match automatically</string>
+											<string key="NSContents">Don't show subtitles list, match automatically (faster)</string>
 											<reference key="NSSupport" ref="229654814"/>
 											<string key="NSCellIdentifier">_NS:9</string>
 											<reference key="NSControlView" ref="306738685"/>
@@ -882,7 +881,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">237</int>
+			<int key="maxID">239</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

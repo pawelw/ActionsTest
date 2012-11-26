@@ -6,7 +6,27 @@
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>avi</string>
+				<string>mp4</string>
+				<string>mov</string>
+				<string>mpg</string>
+				<string>mpeg</string>
+				<string>wmv</string>
+				<string>rmvb</string>
+				<string>mkv</string>
+				<string>asf</string>
+				<string>divx</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Video File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>NSDocumentClass</key>
+			<string>NSDocument</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>

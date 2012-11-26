@@ -39,4 +39,13 @@
 
 
 
+- (IBAction)visitOpensubtitles:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://opensubtitles.org"]];
+}
+
+- (IBAction)visitPodnapisi:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.podnapisi.net"]];
+}
 @end

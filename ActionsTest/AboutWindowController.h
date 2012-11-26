@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface AboutWindowController : NSWindowController
+
 @property (strong) IBOutlet NSTextField *opensubtitlesTexField;
+
+- (IBAction)visitOpensubtitles:(id)sender;
+- (IBAction)visitPodnapisi:(id)sender;
 
 @end
