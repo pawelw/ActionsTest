@@ -20,17 +20,17 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
-    NSDictionary * allObjects;
-    NSString     * key;
-    
-    allObjects = [ [ NSUserDefaults standardUserDefaults ] dictionaryRepresentation ];
-    
-    for( key in allObjects )
-    {
-        [ [ NSUserDefaults standardUserDefaults ] removeObjectForKey: key ];
-    }
-    
-    [ [ NSUserDefaults standardUserDefaults ] synchronize ];
+//    NSDictionary * allObjects;
+//    NSString     * key;
+//    
+//    allObjects = [ [ NSUserDefaults standardUserDefaults ] dictionaryRepresentation ];
+//    
+//    for( key in allObjects )
+//    {
+//        [ [ NSUserDefaults standardUserDefaults ] removeObjectForKey: key ];
+//    }
+//    
+//    [ [ NSUserDefaults standardUserDefaults ] synchronize ];
     
     // Insert code here to initialize your applications
     self.window = mainWindowController.window;

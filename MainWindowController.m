@@ -185,9 +185,7 @@ NSString *const SDSubDB = @"subDB";
 {
     [self finishConnections];
     
-    NSLog(@"%@", [[object valueForKey:@"object"] fileURL]);
     NSURL *url = [[object valueForKey:@"object"] fileURL];
-    NSLog(@"%@", [url path]);
     
     movie.path = [[url path] stringByDeletingLastPathComponent];
     movie.url = [[object valueForKey:@"object"] fileURL];
