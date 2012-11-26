@@ -19,6 +19,19 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
+    NSDictionary * allObjects;
+    NSString     * key;
+    
+    allObjects = [ [ NSUserDefaults standardUserDefaults ] dictionaryRepresentation ];
+    
+    for( key in allObjects )
+    {
+        [ [ NSUserDefaults standardUserDefaults ] removeObjectForKey: key ];
+    }
+    
+    [ [ NSUserDefaults standardUserDefaults ] synchronize ];
+    
     // Insert code here to initialize your applications
     self.window = mainWindowController.window;
     
@@ -26,8 +39,11 @@
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:SDUsePreferedLanguageKey];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:SDUseQuickModeKey];
     
-    NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSMoviesDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
-    [defaultValues setObject:[movieDirectory path] forKey:SDDefaultDirectory];
+    //NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
+    
+    
+    // Using hardcoded /movis path because sandbox returns diferet path ( yur aplication folder )
+    [defaultValues setObject:@"/Movies" forKey:SDDefaultDirectory];
     
     [defaultValues setObject:@"eng" forKey:SDPreferedLanguageKey];
     

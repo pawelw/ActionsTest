@@ -106,12 +106,13 @@
 										<string key="NSFrame">{{94, 26}, {289, 14}}</string>
 										<reference key="NSSuperview" ref="890377812"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:1505</string>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="173121788">
 											<int key="NSCellFlags">68157504</int>
 											<int key="NSCellFlags2">272761856</int>
-											<string key="NSContents">usr/pawel/movies/</string>
+											<string key="NSContents">/Movies</string>
 											<object class="NSFont" key="NSSupport" id="26">
 												<string key="NSName">LucidaGrande</string>
 												<double key="NSSize">11</double>

@@ -59,7 +59,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="720691288">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="509771804">
@@ -80,7 +80,7 @@
 													<array class="NSMutableArray" key="NSSubviews"/>
 													<string key="NSFrameSize">{641, 383}</string>
 													<reference key="NSSuperview" ref="652848595"/>
-													<reference key="NSNextKeyView" ref="549915049"/>
+													<reference key="NSNextKeyView" ref="882686937"/>
 													<string key="NSReuseIdentifierKey">_NS:13</string>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -339,7 +339,7 @@
 									</array>
 									<string key="NSFrame">{{320, 23}, {643, 401}}</string>
 									<reference key="NSSuperview" ref="509771804"/>
-									<reference key="NSNextKeyView" ref="882686937"/>
+									<reference key="NSNextKeyView" ref="652848595"/>
 									<bool key="NSViewIsLayerTreeHost">YES</bool>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">133682</int>
@@ -702,6 +702,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{943, 399}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="509771804"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
