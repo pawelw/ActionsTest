@@ -8,11 +8,12 @@
 
 #import "DropView.h"
 #import "Alerter.h"
+#import "MovieModel.h"
 
 NSImageView *imageView;
 
 @implementation DropView
-@synthesize fileURL, borderColor;
+@synthesize borderColor;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -106,13 +107,23 @@ NSImageView *imageView;
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
     NSPasteboard *pasteboard = [sender draggingPasteboard];
-    NSArray* fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
+    NSArray* filenames = [pasteboard propertyListForType:NSFilenamesPboardType];
 
-    if ( fileNames.count < 1 ) return NO;
+    if ( filenames.count < 1 ) return NO;
     
-    for ( NSString* file in fileNames ) {
-        fileURL = [NSURL URLFromPasteboard:pasteboard];
-        [notificationCenter postNotificationName:@"logIn" object:self];
+    for ( NSString* file in filenames ) {
+        MovieModel *movie = [MovieModel new];
+        
+        movie.pathWithFileName = [NSString stringWithString:[filenames objectAtIndex:0]];
+        movie.path = [movie.pathWithFileName stringByDeletingLastPathComponent];
+        movie.url = [[NSURL alloc] initFileURLWithPath:movie.pathWithFileName];
+        movie.name = [movie.pathWithFileName lastPathComponent];
+        
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:movie,@"movie", nil];
+        
+        [notificationCenter postNotificationName:@"beginConnection" object:self userInfo:options];
+        
+        //[notificationCenter postNotificationName:@"beginConnection" object:self];
     }
 
     return YES;

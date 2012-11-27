@@ -21,7 +21,6 @@
     NSNotificationCenter *notificationCenter;
 }
 
-@property(nonatomic, retain) NSURL *fileURL;
 @property (retain) NSColor* borderColor;
 
 @end

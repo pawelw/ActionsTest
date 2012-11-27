@@ -47,11 +47,12 @@ extern NSString *serverType;
     NSMutableData * zippedSubsData;
     NSNotificationCenter *notificationCenter;
     NSString *pathWithName;
-    NSData *readyToSaveData;
+    NSData *subtitlesAsData;
+    NSString *server;
     
     // Bool 
     BOOL preloaderHidden;
-    BOOL isConnected;
+    BOOL _isConnected;
     BOOL isExpanded;
     
     // Classes

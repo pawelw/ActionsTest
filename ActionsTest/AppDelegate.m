@@ -12,10 +12,11 @@
 #import "MASPreferencesWindowController.h"
 #import "GeneralPreferencesViewController.h"
 #import "AboutWindowController.h"
+#import "MovieModel.h"
 
 @implementation AppDelegate
 
-@synthesize mainWindowController, fileURL;
+@synthesize mainWindowController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -60,10 +61,21 @@
 
 -(void) application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
-    NSString *path = [NSString stringWithString:[filenames objectAtIndex:0]];
-    fileURL = [[NSURL alloc] initFileURLWithPath:path];
+    MovieModel *movie = [MovieModel new];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"logIn" object:self];
+    if (filenames.count < 1) {
+        NSLog(@"No files selected. URLs array is empty");
+        return;
+    }
+    
+    movie.pathWithFileName = [NSString stringWithString:[filenames objectAtIndex:0]];
+    movie.path = [movie.pathWithFileName stringByDeletingLastPathComponent];
+    movie.url = [[NSURL alloc] initFileURLWithPath:movie.pathWithFileName];
+    movie.name = [movie.pathWithFileName lastPathComponent];
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:movie,@"movie", nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"beginConnection" object:self userInfo:options];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {

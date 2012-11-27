@@ -18,16 +18,17 @@
 
 
 @interface Proxy : NSObject <XMLRPCConnectionDelegate> {
+    
     id <ProxyDelegate> delegate;
+    AppDelegate *appDelegate;
     XMLRPCConnectionManager *manager;
-    NSMutableData *subtitleFileData;
-    NSURLConnection *urlConnection;
     LoginModel *loginModel;
     
-    AppDelegate *appDelegate;
+    NSMutableData *subtitleFileData;
+    NSURLConnection *urlConnection;
+    
 }
 @property(nonatomic, retain) NSMutableData *subtitleFileData;
-//@property(nonatomic, retain) XMLRPCConnectionManager *manager;
 @property (nonatomic, retain) id <ProxyDelegate> delegate;
 
 -(void) login;
