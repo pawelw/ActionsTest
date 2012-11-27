@@ -21,19 +21,6 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "375668896.909893"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "302"
-         endingLineNumber = "302"
-         landmarkName = "-didFinishProxyRequestWithIdentifier:withData:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "MainWindowController.m"
          timestampString = "375666820.955729"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
@@ -60,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "375704174.180304"
+         timestampString = "375719090.063615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "345"
-         endingLineNumber = "345"
+         startingLineNumber = "338"
+         endingLineNumber = "338"
          landmarkName = "-fileDownloadFinishedWithData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -108,29 +95,29 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "MainWindowController.m"
-         timestampString = "375668896.909893"
+         filePath = "ActionsTest/ProxyPodnapi.m"
+         timestampString = "375715501.240935"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "173"
-         endingLineNumber = "173"
-         landmarkName = "-beginConnectionProcess:"
+         startingLineNumber = "308"
+         endingLineNumber = "308"
+         landmarkName = "-parserDidEndDocument:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainWindowController.m"
-         timestampString = "375668896.909893"
+         timestampString = "375719090.063615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "268"
-         endingLineNumber = "268"
-         landmarkName = "-didFinishProxyRequestWithIdentifier:withData:"
+         startingLineNumber = "499"
+         endingLineNumber = "499"
+         landmarkName = "-setServer:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

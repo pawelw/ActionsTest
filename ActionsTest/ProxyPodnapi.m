@@ -12,6 +12,9 @@
 #import "GeneralPreferencesViewController.h"
 #import "NSString+MD5.h"
 #import "NSString+SHA256.h"
+#import "GeneralPreferencesViewController.h"
+#import "LanguagesCollection.h"
+#import "LanguageModel.h"
 
 @implementation ProxyPodnapi
 
@@ -247,7 +250,6 @@
         [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
         [searchModel setServer:SDPodnapisi];
         
-        
         // Setting dummy url for validation - Temporary Hack
         [searchModel setSubDownloadLink:@"http://www.podnapisi.net"];
         
@@ -286,13 +288,37 @@
 }
 
 -(void) parserDidEndDocument:(NSXMLParser *)parser {
+        
+    // Filetr by language if needed
+    NSMutableArray *filteredLanguagesCollection = [NSMutableArray new];
     
-    if (searchModelCollection.count < 1) {
+    if ([GeneralPreferencesViewController usePreferedLanguage]) {
+        NSArray *languagesCollection = [LanguagesCollection populate];
+        LanguageModel *preferedLanguage;
+        
+        for (LanguageModel * key in languagesCollection) {
+            if ([[GeneralPreferencesViewController preferedLanguage] isEqual:key.ISO_639_2]) {
+                preferedLanguage = key;
+            }
+        }
+        
+        for (SearchModel *searchModel in searchModelCollection) {
+            if ([searchModel.languageName isEqual:preferedLanguage.name]) {
+                [filteredLanguagesCollection addObject:searchModel];
+                NSLog(@"%@", searchModel.languageName);
+                NSLog(@"%@", preferedLanguage.name);
+                NSLog(@"%lu", filteredLanguagesCollection.count);
+            }
+        }
+    }
+    
+    if (filteredLanguagesCollection.count < 1) {
         [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:NO];
-
+        
         return;
     }
-    [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection];
+    
+    [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:filteredLanguagesCollection];
 }
 
 

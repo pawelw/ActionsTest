@@ -34,6 +34,8 @@
 		E511C8F0166138020011464B /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = E511C8D5166138020011464B /* uncompr.c */; };
 		E511C8F1166138020011464B /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = E511C8D8166138020011464B /* zutil.c */; };
 		E5216FE916555050005F2DB9 /* ProxyPodnapi.m in Sources */ = {isa = PBXBuildFile; fileRef = E5216FE816555050005F2DB9 /* ProxyPodnapi.m */; };
+		E52430A01664DAFB00A22A49 /* LanguageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E524309F1664DAFB00A22A49 /* LanguageModel.m */; };
+		E52430A41664DCEA00A22A49 /* LanguagesCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = E52430A31664DCE900A22A49 /* LanguagesCollection.m */; };
 		E528D29716559A68005788DA /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E528D29616559A68005788DA /* AboutWindow.xib */; };
 		E528D29A16559AA6005788DA /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E528D29916559AA6005788DA /* AboutWindowController.m */; };
 		E52A28C7165E888F001AD28D /* ProxySubDB.m in Sources */ = {isa = PBXBuildFile; fileRef = E52A28C6165E888F001AD28D /* ProxySubDB.m */; };
@@ -144,6 +146,10 @@
 		E511C8D9166138020011464B /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
 		E5216FE716555050005F2DB9 /* ProxyPodnapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyPodnapi.h; sourceTree = "<group>"; };
 		E5216FE816555050005F2DB9 /* ProxyPodnapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyPodnapi.m; sourceTree = "<group>"; };
+		E524309E1664DAFB00A22A49 /* LanguageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageModel.h; sourceTree = "<group>"; };
+		E524309F1664DAFB00A22A49 /* LanguageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageModel.m; sourceTree = "<group>"; };
+		E52430A21664DCE900A22A49 /* LanguagesCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguagesCollection.h; sourceTree = "<group>"; };
+		E52430A31664DCE900A22A49 /* LanguagesCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguagesCollection.m; sourceTree = "<group>"; };
 		E528D29616559A68005788DA /* AboutWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
 		E528D29816559AA6005788DA /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
 		E528D29916559AA6005788DA /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
@@ -402,6 +408,10 @@
 				E5AC9311162F6E29001F39E0 /* SearchModel.m */,
 				E5D69773165C362900376187 /* MovieModel.h */,
 				E5D69774165C362900376187 /* MovieModel.m */,
+				E524309E1664DAFB00A22A49 /* LanguageModel.h */,
+				E524309F1664DAFB00A22A49 /* LanguageModel.m */,
+				E52430A21664DCE900A22A49 /* LanguagesCollection.h */,
+				E52430A31664DCE900A22A49 /* LanguagesCollection.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -729,6 +739,8 @@
 				E511C8F0166138020011464B /* uncompr.c in Sources */,
 				E511C8F1166138020011464B /* zutil.c in Sources */,
 				E52EAD4816625D6000C55913 /* NSString+Compare.m in Sources */,
+				E52430A01664DAFB00A22A49 /* LanguageModel.m in Sources */,
+				E52430A41664DCEA00A22A49 /* LanguagesCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

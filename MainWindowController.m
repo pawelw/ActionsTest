@@ -259,57 +259,50 @@ NSString *const SDSubDB = @"subDB";
         
     } else if ([identifier isEqualToString:@"Search"]) {
         
+        ////////////////
+        // Nothing Found
+        
         if (!data) {
             NSLog(@"Nothing found");
-            BOOL isFirstSearchEmpty = YES;
             [self setPreloaderHidden:YES];
             if ([server isEqual:SDOpenSubtitles]) {
                 self.server = SDPodnapisi;
                 [self initLoginCall];
-            } else if ([server isEqual:SDPodnapisi] && isFirstSearchEmpty) {
+                return;
+            } else if ([server isEqual:SDPodnapisi] && searchModelCollection.count < 1) {
                 [GeneralPreferencesViewController usePreferedLanguage] ? [Alerter showNotFoundAlertForLanguage] : [Alerter showNotFoundAlert];
-                //[self finishConnections];
+                return;
+            } else {
+                // Keep going
             }
-            return;
         }
-
+        
+        //////////////////
+        // Something found
+        
         [self setPreloaderHidden:YES];
         
+        // If server is Podnapisi and nothing found in Opensubtitles and in quick mode
+        if ([GeneralPreferencesViewController useQuickMode] && [server isEqual:SDPodnapisi] && searchModelCollection.count < 1) {
+            [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
+        }
+        
         [[self mutableArrayValueForKey:@"searchModelCollection"] addObjectsFromArray:data];
-
-        // Search 2nd sever 
-        if (![GeneralPreferencesViewController usePreferedLanguage] && [server isEqual:SDOpenSubtitles]) {
+        
+        // Match by name if in quickmode
+        if ([GeneralPreferencesViewController useQuickMode] && [server isEqual:SDOpenSubtitles]){
+            selectedSubtitle = [SearchModel matchByNameFromCollection:searchModelCollection withMovie:movie];
+            [self downloadSubtitles];
+        // Expand if not in quick mode and window is not expanded
+        } else if(![GeneralPreferencesViewController useQuickMode] && !self.isExpanded) {
+            [self expandWindow];
+        }
+        
+        // Search 2nd sever if in muti lang mode
+        if ([server isEqual:SDOpenSubtitles]) {
+            
             self.server = SDPodnapisi;
             [self initLoginCall];
-        }
-        if ([GeneralPreferencesViewController useQuickMode] && [server isEqual:SDOpenSubtitles]){
-            selectedSubtitle = [searchModelCollection objectAtIndex:0];
-            
-// NEED TESTING ( if in quick mode try to use a movie with the same movie release )
-            
-            int rank = 0;
-            for (SearchModel* key in searchModelCollection) {
-
-                NSString *a = [key movieReleaseName];
-                NSString *b = [[movie.pathWithFileName lastPathComponent] stringByDeletingPathExtension];
-                int result = [NSString compareString:a withString:b];
-
-                if (rank < result) {
-                    selectedSubtitle = key;
-                    rank = result;
-                }
-            }
-            
-            [self downloadSubtitles];
-            
-        } else if ([GeneralPreferencesViewController usePreferedLanguage] && [server isEqual:SDPodnapisi]) {
-            [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
-        } else if(!self.isExpanded) {
-            [self expandWindow];
-        } else if(self.isExpanded){
-//            if ([server isEqual:SDPodnapisi]) {
-//                [Alerter showdidntMatchSubtitles:self withSelector:@selector(didntMatchAlertEnded:code:context:)];
-//            }
         }
     }
 }

@@ -1,5 +1,7 @@
 
 #import "GeneralPreferencesViewController.h"
+#import "LanguagesCollection.h"
+#import "LanguageModel.h"
 
 @implementation GeneralPreferencesViewController
 
@@ -14,6 +16,8 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 - (id)init
 {
     return [super initWithNibName:@"GeneralPreferencesView" bundle:nil];
+    
+    
 }
 
 -(void) awakeFromNib
@@ -144,111 +148,15 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 
 -(NSArray *) languagesArray
 {
-    NSArray *languages = [NSArray arrayWithObjects:
-                       @"Arabic",
-                       @"Armenian",
-                       @"Malay",
-                       @"Albanian",
-                       @"Basque",
-                       @"Bosnian",
-                       @"Bulgarian",
-                       @"Catalan",
-                       @"Chinese",
-                       @"Croatian",
-                       @"Czech",
-                       @"Danish",
-                       @"Dutch",
-                       @"English",
-                       @"Esperanto",
-                       @"Estonian",
-                       @"Finnish",
-                       @"French",
-                       @"Galician",
-                       @"Georgian",
-                       @"German",
-                       @"Greek",
-                       @"Hebrew",
-                       @"Hungarian",
-                       @"Indonesian",
-                       @"Italian",
-                       @"Japanese",
-                       @"Kazakh",
-                       @"Korean",
-                       @"Latvian",
-                       @"Lithuanian",
-                       @"Luxembourgish",
-                       @"Macedonian",
-                       @"Norwegian",
-                       @"Persian",
-                       @"Polish",
-                       @"Portuguese (Portugal)",
-                       @"Portuguese (Brazil)",
-                       @"Romanian",
-                       @"Russian",
-                       @"Serbian",
-                       @"Slovak",
-                       @"Slovenian",
-                       @"Spanish (Spain)",
-                       @"Swedish",
-                       @"Thai",
-                       @"Turkish",
-                       @"Ukrainian",
-                       @"Vietnamese",
-                       nil];
-    
-    NSArray *codes = [NSArray arrayWithObjects:
-                          @"ara",
-                          @"arm",
-                          @"may",
-                          @"alb",
-                          @"baq",
-                          @"bos",
-                          @"bul",
-                          @"cat",
-                          @"chi",
-                          @"hrv",
-                          @"cze",
-                          @"dan",
-                          @"dut",
-                          @"eng",
-                          @"epo",
-                          @"est",
-                          @"fin",
-                          @"fre",
-                          @"glg",
-                          @"geo",
-                          @"nds",
-                          @"gre",
-                          @"heb",
-                          @"hun",
-                          @"ind",
-                          @"ita",
-                          @"jpn",
-                          @"kaz",
-                          @"kor",
-                          @"lav",
-                          @"lit",
-                          @"ltz",
-                          @"mac",
-                          @"nor",
-                          @"per",
-                          @"pol",
-                          @"por (Portugal)",
-                          @"pob (Brazil)",
-                          @"rum",
-                          @"rus",
-                          @"srp",
-                          @"slo",
-                          @"slv",
-                          @"spa",
-                          @"swe",
-                          @"Thai",
-                          @"tur",
-                          @"ukr",
-                          @"vie",
-                          nil];
-    self.languagesDictionary = [NSDictionary dictionaryWithObjects:codes forKeys:languages];
+    NSArray *collection = [LanguagesCollection populate];
+    NSMutableArray *objects = [NSMutableArray new];
+    NSMutableArray *keys = [NSMutableArray new];
+    for (LanguageModel * languageModel in collection) {
+        [objects addObject:languageModel.ISO_639_2];
+        [keys addObject:languageModel.name];
+    }
+    self.languagesDictionary = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 
-    return languages;
+    return keys;
 }
 @end

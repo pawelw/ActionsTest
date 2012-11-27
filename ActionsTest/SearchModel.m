@@ -7,6 +7,8 @@
 //
 
 #import "SearchModel.h"
+#import "MovieModel.h"
+#import "NSString+Compare.h"
 
 @implementation SearchModel
 @synthesize index, zipDownloadLink, languageName, movieName, movieReleaseName, idMovie, subActualCD, subDownloadLink, subFileName, subFormat, server, isZip;
@@ -51,6 +53,26 @@ static SearchModel* _shared = nil;
     another.server = [server copyWithZone: zone];
     
     return another;
+}
+
++ (SearchModel *) matchByNameFromCollection:(NSArray *)collection withMovie:(MovieModel *)m
+{
+    SearchModel *matchedSubs = [collection objectAtIndex:0];
+    
+    int rank = 0;
+    for (SearchModel* key in collection) {
+        
+        NSString *a = [key movieReleaseName];
+        NSString *b = [[m.pathWithFileName lastPathComponent] stringByDeletingPathExtension];
+        int result = [NSString compareString:a withString:b];
+        
+        if (rank < result) {
+            matchedSubs = key;
+            rank = result;
+        }
+    }
+    
+    return matchedSubs;
 }
 
 @end

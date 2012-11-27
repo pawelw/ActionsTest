@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MovieModel.h"
 
 @interface SearchModel : NSObject <NSCopying> {
 
@@ -37,7 +38,8 @@
 @property (copy) NSString *server;
 @property BOOL isZip;
 
-+(SearchModel *)initAsSingleton;
--(id)copyWithZone:(NSZone *)zone;
++ (SearchModel *) matchByNameFromCollection:(NSArray *)collection withMovie:(MovieModel *)m;
++ (SearchModel *) initAsSingleton;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end
