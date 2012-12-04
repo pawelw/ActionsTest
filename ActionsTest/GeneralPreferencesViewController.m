@@ -16,8 +16,6 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
 - (id)init
 {
     return [super initWithNibName:@"GeneralPreferencesView" bundle:nil];
-    
-    
 }
 
 -(void) awakeFromNib
@@ -53,7 +51,6 @@ NSString *const SDDefaultDirectory = @"SDDefaultDirectory";
     NSString *key = [[self.langPopUpButton selectedItem] title];
     NSString *language = [self.languagesDictionary objectForKey:key];
     [GeneralPreferencesViewController setPreferedLanguage:language];
-    NSLog(@"language: %@",language);
 }
 
 - (IBAction)onUseQuickModeCheckboxChanged:(id)sender {

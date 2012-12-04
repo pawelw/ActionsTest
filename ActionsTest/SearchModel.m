@@ -11,7 +11,7 @@
 #import "NSString+Compare.h"
 
 @implementation SearchModel
-@synthesize index, zipDownloadLink, languageName, movieName, movieReleaseName, idMovie, subActualCD, subDownloadLink, subFileName, subFormat, server, isZip;
+@synthesize index, zipDownloadLink, languageName, movieName, movieReleaseName, idMovie, subActualCD, subDownloadLink, subFileName, subFormat, server, isZip, hideTick;
 
 static SearchModel* _shared = nil;
 

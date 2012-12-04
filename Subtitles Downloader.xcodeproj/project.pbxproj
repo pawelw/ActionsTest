@@ -89,6 +89,7 @@
 		E5D74AC1163044EE00FC56E3 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D74ABE1630434900FC56E3 /* OrderedDictionary.m */; };
 		E5DB9606166379FF0065B2C5 /* SETTINGS.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB9605166379FF0065B2C5 /* SETTINGS.png */; };
 		E5DB960916638F040065B2C5 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = E5DB960816638F040065B2C5 /* icon.iconset */; };
+		E5E318E9166E25E800FFE045 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = E5E318E8166E25E800FFE045 /* tick.png */; };
 		E5E6B9BF162F8E9800BD9D35 /* OSHashAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */; };
 		E5F15F04165AEB1600EBCAC2 /* ProxyPodnapisiXML.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F15F03165AEB1600EBCAC2 /* ProxyPodnapisiXML.m */; };
 		E5F2F48E1650302400A83303 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F2F48D1650302400A83303 /* libz.dylib */; };
@@ -247,6 +248,7 @@
 		E5DB9605166379FF0065B2C5 /* SETTINGS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SETTINGS.png; sourceTree = "<group>"; };
 		E5DB960816638F040065B2C5 /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
 		E5DB960A16638F4D0065B2C5 /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
+		E5E318E8166E25E800FFE045 /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
 		E5E6B9BD162F8E9800BD9D35 /* OSHashAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSHashAlgorithm.h; sourceTree = "<group>"; };
 		E5E6B9BE162F8E9800BD9D35 /* OSHashAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSHashAlgorithm.m; sourceTree = "<group>"; };
 		E5F15F02165AEB1600EBCAC2 /* ProxyPodnapisiXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyPodnapisiXML.h; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 		E591D55D1626D3A900AFEC92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E5E318E8166E25E800FFE045 /* tick.png */,
 				E5DB9605166379FF0065B2C5 /* SETTINGS.png */,
 				E52EAD4A1662748400C55913 /* podnapisi.png */,
 				E54150621663A8B1007A1A2B /* background.jpg */,
@@ -669,6 +672,7 @@
 				E5DB960916638F040065B2C5 /* icon.iconset in Resources */,
 				E54150641663A8B1007A1A2B /* background.jpg in Resources */,
 				E54150651663A8B1007A1A2B /* background@2.jpg in Resources */,
+				E5E318E9166E25E800FFE045 /* tick.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

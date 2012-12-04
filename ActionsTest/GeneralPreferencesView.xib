@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -106,7 +106,6 @@
 										<string key="NSFrame">{{94, 26}, {289, 14}}</string>
 										<reference key="NSSuperview" ref="890377812"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:1505</string>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="173121788">
@@ -159,14 +158,14 @@
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									</object>
 								</object>
-								<string key="NSFrame">{{1, 1}, {403, 79}}</string>
+								<string key="NSFrame">{{1, 1}, {403, 80}}</string>
 								<reference key="NSSuperview" ref="783718567"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="146209301"/>
 								<string key="NSReuseIdentifierKey">_NS:11</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{10, 11}, {405, 95}}</string>
+						<string key="NSFrame">{{10, 11}, {405, 96}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="890377812"/>
@@ -210,7 +209,7 @@
 									<object class="NSTextField" id="151829220">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{15, 14}, {121, 14}}</string>
+										<string key="NSFrame">{{15, 1}, {6, 14}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="783718567"/>
@@ -219,7 +218,7 @@
 										<object class="NSTextFieldCell" key="NSCell" id="301430393">
 											<int key="NSCellFlags">68157504</int>
 											<int key="NSCellFlags2">272761856</int>
-											<string key="NSContents">automatically for you.</string>
+											<string key="NSContents"/>
 											<reference key="NSSupport" ref="26"/>
 											<string key="NSCellIdentifier">_NS:1505</string>
 											<reference key="NSControlView" ref="151829220"/>
@@ -231,7 +230,7 @@
 									<object class="NSTextField" id="392541147">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{15, 27}, {311, 14}}</string>
+										<string key="NSFrame">{{15, 14}, {213, 14}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="151829220"/>
@@ -240,7 +239,7 @@
 										<object class="NSTextFieldCell" key="NSCell" id="637609247">
 											<int key="NSCellFlags">68157504</int>
 											<int key="NSCellFlags2">272761856</int>
-											<string key="NSContents">to select subtitles, they will be matched and downloaded </string>
+											<string key="NSContents">and downloaded automatically for you.</string>
 											<reference key="NSSupport" ref="26"/>
 											<string key="NSCellIdentifier">_NS:1505</string>
 											<reference key="NSControlView" ref="392541147"/>
@@ -252,7 +251,7 @@
 									<object class="NSTextField" id="293755995">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{15, 40}, {300, 14}}</string>
+										<string key="NSFrame">{{15, 27}, {305, 14}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="392541147"/>
@@ -261,7 +260,7 @@
 										<object class="NSTextFieldCell" key="NSCell" id="214819561">
 											<int key="NSCellFlags">68157504</int>
 											<int key="NSCellFlags2">272761856</int>
-											<string key="NSContents">Note: With this option selected you don't have a chance</string>
+											<string key="NSContents">Note: With this option selected subtitles will be matched</string>
 											<reference key="NSSupport" ref="26"/>
 											<string key="NSCellIdentifier">_NS:1505</string>
 											<reference key="NSControlView" ref="293755995"/>
@@ -273,7 +272,7 @@
 									<object class="NSButton" id="306738685">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{16, 56}, {358, 18}}</string>
+										<string key="NSFrame">{{16, 43}, {197, 18}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="293755995"/>
@@ -282,7 +281,7 @@
 										<object class="NSButtonCell" key="NSCell" id="920577432">
 											<int key="NSCellFlags">-2080374784</int>
 											<int key="NSCellFlags2">268435456</int>
-											<string key="NSContents">Don't show subtitles list, match automatically (faster)</string>
+											<string key="NSContents">Match automatically (faster)</string>
 											<reference key="NSSupport" ref="229654814"/>
 											<string key="NSCellIdentifier">_NS:9</string>
 											<reference key="NSControlView" ref="306738685"/>
@@ -305,7 +304,7 @@
 									<object class="NSPopUpButton" id="475038522">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{15, 87}, {166, 26}}</string>
+										<string key="NSFrame">{{15, 74}, {166, 26}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="306738685"/>
@@ -384,7 +383,7 @@
 									<object class="NSButton" id="944826112">
 										<reference key="NSNextResponder" ref="240953391"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{16, 126}, {286, 18}}</string>
+										<string key="NSFrame">{{16, 113}, {286, 18}}</string>
 										<reference key="NSSuperview" ref="240953391"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="475038522"/>
@@ -409,14 +408,14 @@
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									</object>
 								</object>
-								<string key="NSFrame">{{1, 1}, {403, 152}}</string>
+								<string key="NSFrame">{{1, 1}, {403, 139}}</string>
 								<reference key="NSSuperview" ref="383194979"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="944826112"/>
 								<string key="NSReuseIdentifierKey">_NS:11</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{10, 100}, {405, 168}}</string>
+						<string key="NSFrame">{{10, 102}, {405, 155}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="240953391"/>
@@ -440,7 +439,7 @@
 						<bool key="NSTransparent">NO</bool>
 					</object>
 				</object>
-				<string key="NSFrameSize">{424, 267}</string>
+				<string key="NSFrameSize">{424, 256}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="383194979"/>

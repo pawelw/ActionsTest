@@ -14,11 +14,12 @@
 @private
     BOOL mouseInside;
     NSTrackingArea *trackingArea;
-    NSButton* pushButton;
     NSTimer *timer;
     NSNotificationCenter *notificationCenter;
     
     AppDelegate *appDelegate;
 }
+
+@property (strong) IBOutlet NSButton *downloadButton;
 
 @end

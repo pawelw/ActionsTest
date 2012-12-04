@@ -41,8 +41,6 @@
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:SDUseQuickModeKey];
     
     //NSURL* movieDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
-    
-    
     // Using hardcoded /movis path because sandbox returns diferet path ( yur aplication folder )
     [defaultValues setObject:@"/Movies" forKey:SDDefaultDirectory];
     
@@ -56,7 +54,7 @@
     if (!mainWindowController) {
         mainWindowController = [[MainWindowController alloc] init];
     }
-     //[mainWindowController showWindow:nil];
+     [mainWindowController showWindow:nil];
 }
 
 -(void) application:(NSApplication *)sender openFiles:(NSArray *)filenames

@@ -21,24 +21,10 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        NSRect frame = NSMakeRect((self.bounds.origin.x + self.bounds.size.width + 145), 1, 90, 33);
-        
-        pushButton = [[NSButton alloc] initWithFrame: frame];
-        pushButton.bezelStyle = NSInlineBezelStyle;
-        [pushButton setButtonType:NSMomentaryChangeButton];
-        pushButton.image = [NSImage imageNamed:@"download_button"];
-        pushButton.alternateImage = [NSImage imageNamed:@"download_button_on"];
-        [pushButton setImagePosition:NSImageOnly];
-        pushButton.title = @"";
-        
-        [pushButton setBordered:NO];
-        pushButton.target = appDelegate.mainWindowController;
-        pushButton.action = @selector(onInlineDownloadClicked:);
-        [pushButton setHidden:YES];
-        [self addSubview:pushButton];
         
         notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(disableDownloadButton:) name:@"disableDownloadButtonxxx" object:nil];
+        
     }
     
     return self;
@@ -50,7 +36,7 @@
         
         if(!value) {
             [self hideDownloadButton];
-        } else {
+        } else if(_downloadButton.isHidden) {
             timer = [NSTimer scheduledTimerWithTimeInterval: .15 target: self selector: @selector(showDownloadButton) userInfo: nil repeats: NO];
         }
         
@@ -61,7 +47,7 @@
 -(void) hideDownloadButton
 {
     [timer invalidate];
-    [pushButton setHidden:YES];
+    [_downloadButton setHidden:YES];
     [self setNeedsDisplay:YES];
 }
 
@@ -80,17 +66,17 @@
         [self setNeedsDisplay:YES];
         return;
     }
-    [pushButton setHidden:NO];
+    [_downloadButton setHidden:NO];
 }
 
 -(void) enableDownloadButton
 {
-    [pushButton setEnabled:YES];
+    [_downloadButton setEnabled:YES];
 }
 
 -(void) disableDownloadButton: (id) object
 {
-    [pushButton setEnabled:NO];
+    [_downloadButton setEnabled:NO];
 }
 
 - (BOOL)mouseInside {

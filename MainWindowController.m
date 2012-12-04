@@ -288,10 +288,17 @@ NSString *const SDSubDB = @"subDB";
         }
         
         [[self mutableArrayValueForKey:@"searchModelCollection"] addObjectsFromArray:data];
+        //[[searchModelCollection objectAtIndex:0] setIsDownloaded:YES];
         
         // Match by name if in quickmode
         if ([GeneralPreferencesViewController useQuickMode] && [server isEqual:SDOpenSubtitles]){
             selectedSubtitle = [SearchModel matchByNameFromCollection:searchModelCollection withMovie:movie];
+            
+            // Move selected object to the front
+            [searchModelCollection removeObject:selectedSubtitle];
+            [searchModelCollection insertObject:selectedSubtitle atIndex:0];
+            
+            [self expandWindow];
             [self downloadSubtitles];
         // Expand if not in quick mode and window is not expanded
         } else if(![GeneralPreferencesViewController useQuickMode] && !self.isExpanded) {
@@ -372,6 +379,8 @@ NSString *const SDSubDB = @"subDB";
         // SHow files in finder
         NSArray *urls = [NSArray arrayWithObjects:[NSURL fileURLWithPath:pathWithName], nil];
         [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:urls];
+        
+        [selectedSubtitle setHideTick:NO];
         
         return;
     }

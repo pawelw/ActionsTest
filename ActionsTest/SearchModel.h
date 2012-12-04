@@ -23,6 +23,7 @@
     NSString *subFormat;
     NSString *server;
     BOOL isZip;
+    BOOL hideTick;
 }
 
 @property (copy) NSString *index;
@@ -37,6 +38,7 @@
 @property (copy) NSString *subFormat;
 @property (copy) NSString *server;
 @property BOOL isZip;
+@property BOOL hideTick;
 
 + (SearchModel *) matchByNameFromCollection:(NSArray *)collection withMovie:(MovieModel *)m;
 + (SearchModel *) initAsSingleton;

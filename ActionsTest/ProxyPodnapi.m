@@ -249,6 +249,7 @@
         [searchModel setMovieName:[currentFields objectForKey:@"title"]];
         [searchModel setLanguageName:[currentFields objectForKey:@"languageName"]];
         [searchModel setServer:SDPodnapisi];
+        [searchModel setHideTick:YES];
         
         // Setting dummy url for validation - Temporary Hack
         [searchModel setSubDownloadLink:@"http://www.podnapisi.net"];
@@ -305,9 +306,6 @@
         for (SearchModel *searchModel in searchModelCollection) {
             if ([searchModel.languageName isEqual:preferedLanguage.name]) {
                 [filteredLanguagesCollection addObject:searchModel];
-                NSLog(@"%@", searchModel.languageName);
-                NSLog(@"%@", preferedLanguage.name);
-                NSLog(@"%lu", filteredLanguagesCollection.count);
             }
         }
     }

@@ -101,11 +101,11 @@
             return;
         }
         
-        SearchModel *searchModel = [[SearchModel alloc] init];
         NSMutableArray *searchModelCollection = [[NSMutableArray alloc] init];
         
         for (NSString* key in responseData) {
             
+            SearchModel *searchModel = [[SearchModel alloc] init];
             [searchModel setMovieName: [key valueForKey:@"MovieName"]];
             [searchModel setZipDownloadLink: [key valueForKey:@"ZipDownloadLink"]];
             [searchModel setSubDownloadLink: [key valueForKey:@"SubDownloadLink"]];
@@ -114,6 +114,7 @@
             [searchModel setIdMovie:[key valueForKey:@"IdMovie"]];
             [searchModel setSubActualCD:[key valueForKey:@"SubActualCD"]];
             [searchModel setServer:SDOpenSubtitles];
+            [searchModel setHideTick:YES];
             
             ///////////
             //[searchModel setSubFormat:[key valueForKey:@"SubFormat"]];
@@ -122,7 +123,6 @@
             NSString *ext = [[searchModel subFileName] pathExtension];
             [searchModel setSubFormat:ext];
             
-            
             // Sometimes Movie Release Name comes empty from the server. this statement replace empty name with MovieName
             if([[key valueForKey:@"MovieReleaseName"] isEqualToString:@""])
                 [searchModel setMovieReleaseName: [key valueForKey:@"MovieName"]];
@@ -130,7 +130,7 @@
                 [searchModel setMovieReleaseName:[key valueForKey:@"MovieReleaseName"]];
             
             // Using key setter method to activate delegation of data to NSTableView
-            [searchModelCollection addObject:[searchModel copy]];
+            [searchModelCollection addObject:searchModel];
         }
         
         [delegate didFinishProxyRequestWithIdentifier:@"Search" withData:searchModelCollection]; // Custom delegate
